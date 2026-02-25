@@ -1,49 +1,34 @@
-import ButtonNavigation from '../Button/ButtonNavigation';
-import NotesContext, { Page, type ContextInterface } from '../../NotesContext';
-import React, { useContext, useEffect, useState } from 'react';
-import { deleteDb, getDb, setDb } from '../../fetchRequestDB';
+import React, { useEffect, useState } from 'react';
+import { deleteDb, getOneElementFromDB, setDb } from '../../fetchRequestDB';
 import type { NoteDb } from '../../App';
 import './NoteTextSection.css';
 import { db } from '../../../lib/fierbase';
-import { equalTo, orderByChild, query, ref, type DatabaseReference, type Query } from 'firebase/database';
+import { ref, type DatabaseReference } from 'firebase/database';
+import { Link, useNavigate, type NavigateFunction } from 'react-router';
+import { useAppSelector } from '../../hook';
 
 export default function NoteTextSection() {
-    const context: ContextInterface = useContext(NotesContext);
-    const noteId: string = context.noteId;
-    const setPage = context.setPage;
-    
+    const noteId = useAppSelector(state => state.noteIdReducer.noteId);
+    const navigate: NavigateFunction = useNavigate();
     const [result, setResult] = useState<NoteDb | undefined>();
-    
-    const notesRef: DatabaseReference = ref(db, `/notes`);
-    const notesQuery: Query = query(
-        notesRef,
-        orderByChild('note_id'),
-        equalTo(noteId)
-    )
 
-    const refToRequiredNote = ref(db, `/notes/${noteId}`)
+    const refToRequiredNote: DatabaseReference = ref(db, `/notes/${noteId}`)
 
     useEffect(() => {
-        getDb<NoteDb>(notesQuery) 
-            .then( (data: NoteDb[] | undefined) =>  data ? setResult(data[0]) : null )
+        getOneElementFromDB<NoteDb>(refToRequiredNote)
+            .then( (data: NoteDb | undefined) =>  data ? setResult(data) : null )
     }, []);
 
-    function saveNote(event: React.MouseEvent<HTMLButtonElement>) {
-        event.preventDefault();
-
+    function saveNote() {
         if (result) {
             setDb<NoteDb>(refToRequiredNote, result);
         }
-
-        setPage(Page.HOME);
+        navigate('/');
     }
 
-    function deleteNote(event: React.MouseEvent<HTMLButtonElement>) {
-        event.preventDefault();
-
+    function deleteNote() {
         deleteDb(refToRequiredNote);
-
-        setPage(Page.HOME);
+        navigate('/');
     }
 
     function changeResult<T extends HTMLInputElement | HTMLTextAreaElement>(event: React.ChangeEvent<T>, type: 'title' | 'content') {
@@ -67,13 +52,24 @@ export default function NoteTextSection() {
     return (
         <section className="note-text">
             <div className='note-text__wrapper-buttons'>
-                <ButtonNavigation page={Page.HOME} >На главную</ButtonNavigation>
-                <button className='note-text__button' onClick={(event) => saveNote(event)}>Сохранить</button>
-                <button className='note-text__button' onClick={(event) => setTimeout(() => {deleteNote(event)}, 500)}>Удалить заметку</button>
+                <Link to='/' className='button'>На главную</Link>
+                <button className='note-text__button' onClick={saveNote}>Сохранить</button>
+                <button className='note-text__button' onClick={deleteNote}>Удалить заметку</button>
             </div>
             <div className='note-text__wrapper-texts'>
-                <input className='note-text__input' type="text" placeholder='Введите заголовок заметки' value={result?.title} onChange={ (event) => changeResult<HTMLInputElement>(event, 'title') }/>
-                <textarea placeholder='Введите текст' className="note-text__textarea" value={result?.content} onChange={ (event) => changeResult<HTMLTextAreaElement>(event, 'content') }></textarea>
+                <input 
+                    className='note-text__input' 
+                    type="text" 
+                    placeholder='Введите заголовок заметки' 
+                    value={result?.title} 
+                    onChange={ (event) => changeResult<HTMLInputElement>(event, 'title') }
+                />
+                <textarea 
+                    placeholder='Введите текст' 
+                    className="note-text__textarea" 
+                    value={result?.content} 
+                    onChange={ (event) => changeResult<HTMLTextAreaElement>(event, 'content') }
+                ></textarea>
             </div>
         </section>
     );
