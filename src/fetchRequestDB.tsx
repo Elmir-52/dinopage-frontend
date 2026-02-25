@@ -1,9 +1,19 @@
-import { get, remove, set, type DatabaseReference, type Query } from "firebase/database";
+import { DataSnapshot, get, remove, set, type DatabaseReference, type Query } from "firebase/database";
+
+export async function getOneElementFromDB<T>(ref: DatabaseReference) {
+  try {
+    const snapshot: DataSnapshot = await get(ref);
+    const data: T = snapshot.val();
+    return data;
+  } catch(e) {
+    alert(`Произошла ошибка :(`);
+    console.error(e);
+  }
+}
 
 export async function getDb<T>(ref: DatabaseReference | Query) {
   try {
-    const snapshot = await get(ref);
-    
+    const snapshot: DataSnapshot = await get(ref);
     const dataArr: T[] = [];
     
     snapshot.forEach((childSnapshot) => {
