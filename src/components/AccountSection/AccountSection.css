@@ -19,9 +19,12 @@
     margin-top: 3.5rem;
 }
 
-.account-section__wrapper-button {
-    text-align: center;
-    margin-top: 4rem;
+.account-section__wrapper-buttons {
+    margin-top: 4.5rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 4rem;
 }
 
 .account-section__delete-button {

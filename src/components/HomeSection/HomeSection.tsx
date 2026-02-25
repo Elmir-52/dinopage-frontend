@@ -11,10 +11,9 @@ import { db } from "../../../lib/fierbase";
 export default function HomeSection() {
     const [modal, setModal] = useState<boolean>(false);
     const [result, setResult] = useState<NoteDb[] | undefined>();
-
+    
     const cookieFull: string = document.cookie;
-    const cookieArr: string[] = cookieFull.split(';');
-    const cookieUserId: string = cookieArr[0].split('=')[1];
+    const cookieUserId: string = cookieFull.split('=')[1];
 
     const notesRef: DatabaseReference = ref(db, '/notes');
     const notesQuery: Query = query(

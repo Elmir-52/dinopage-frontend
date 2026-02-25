@@ -15,8 +15,7 @@ export default function Modal({ open, onClick }: PropsModal) {
     const dialog = useRef<HTMLDialogElement>(null);
 
     const cookieFull: string = document.cookie;
-    const cookieArr: string[] = cookieFull.split(';');
-    const cookieUserId: string = cookieArr[0].split('=')[1];
+    const cookieUserId: string = cookieFull.split('=')[1];
 
     useEffect(() => {
         if (open) {

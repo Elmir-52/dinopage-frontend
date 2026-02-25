@@ -1,12 +1,5 @@
-import Header from "./components/Header/Header";
-import HomeSection from "./components/HomeSection/HomeSection";
-import NotesConstext, { Page, type AllPage } from "./NotesContext";
-import { useState } from "react";
-import NoteTextSection from "./components/NoteTextSection/NoteTextSection";
-import RegistrationSection from "./components/RegistrationSection/RegistrationSection";
+import AppRoutes from "./routes/routes";
 import './App.css';
-import AuthorizationSection from "./components/AuthorizationSection/AuthorizationSection";
-import AccountSection from "./components/AccountSection/AccountSection";
 
 export interface NoteDb { 
     note_id: string,
@@ -23,32 +16,9 @@ export interface UserDb {
 }
 
 export default function App() {
-  const [page, setPage] = useState<AllPage>(Page.HOME);
-  const [noteId, setNoteId] = useState<string>('0');
-
   return (
     <>
-      <Header setPage={setPage}></Header>
-      <main>
-        <NotesConstext.Provider value={ { setPage: (page: AllPage) => setPage(page), noteId: noteId, setNoteId: (id: string) => setNoteId(id) } }>
-
-            {page === Page.HOME ? <HomeSection></HomeSection>
-                  : undefined}
-
-            {page === Page.NOTE_TEXT ? <NoteTextSection></NoteTextSection>
-                  : undefined}
-
-            {page === Page.REG ? <RegistrationSection></RegistrationSection>
-                  : undefined}
-
-            {page === Page.AUTH ? <AuthorizationSection></AuthorizationSection>
-                  : undefined}
-
-            {page === Page.ACCOUNT ? <AccountSection></AccountSection>
-                  : undefined}
-            
-        </NotesConstext.Provider>
-      </main>
+      <AppRoutes />
     </>
   )
 }

@@ -1,18 +1,20 @@
 import { equalTo, orderByChild, query, ref, type DatabaseReference, type Query } from "firebase/database";
-import NotesContext, { Page } from "../../NotesContext";
 import Button from "../Button/Button";
 import './AccountSection.css';
 import { db } from "../../../lib/fierbase";
 import { deleteDb, getDb, getOneElementFromDB } from "../../fetchRequestDB";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import type { NoteDb, UserDb } from "../../App";
+import { Link, useNavigate, type NavigateFunction } from "react-router";
 
 export default function AccountSection() {
+    const navigate: NavigateFunction = useNavigate();
+    const [userName, setUserName] = useState<string>('');
+    const [loading, setLoading] = useState<boolean>(true);
+
+    // получение userId из куки
     const cookieFull: string = document.cookie;
     const cookieUserId: string = cookieFull.split('=')[1];
-
-    const [userName, setUserName] = useState<string>('');
-    const setPage = useContext(NotesContext).setPage;
 
     const refToRequiredUser: DatabaseReference = ref(db, `users/${cookieUserId}`);
 
@@ -24,6 +26,7 @@ export default function AccountSection() {
             equalTo(cookieUserId)
         );
 
+        // получаем все заметки пользователя, если они существуют, то также удаляются
         getDb<NoteDb>(notesQuery)
             .then((notes: NoteDb[] | undefined) => {
                 if (notes) {
@@ -39,21 +42,32 @@ export default function AccountSection() {
 
     useEffect(() => {
         getOneElementFromDB<UserDb>(refToRequiredUser)
-            .then((data: UserDb | undefined) => data ? setUserName(data.name) : undefined)
-    }, [])
+            .then((data: UserDb | undefined) => {
+            if (data) {
+                setUserName(data.name);
+                setLoading(false);
+            }
+        })
+    }, []);
+
+    // если данные загружаются то надпись loading...
+    if (loading) return(
+        <section className="account-section">
+            <p>Loading...</p>
+        </section>
+    )
 
     return (
-        // добавь loading
         <section className="account-section">
             <h2 className="account-section__h2">Добрый день {userName}</h2>
             <p className="account-section__paragraph">Ваш id: {cookieUserId}</p>
-            <div className="account-section__wrapper-button">
-                <Button typeButton="navigation" page={Page.HOME}>На главную</Button>
-            </div>
-            <div className="account-section__wrapper-button">
-                <Button className="account-section__delete-button" typeButton="button" onClick={() => { 
+
+            <div className="account-section__wrapper-buttons">
+                <Link to='/' className="button">На главную</Link>
+
+                <Button className="account-section__delete-button" onClick={() => { 
                     deleteUser();
-                    setPage(Page.HOME);
+                    navigate('/');
                     document.cookie = `user_id=; path=/; max-age=-1`;
                 }}>Удалить аккаунт</Button>
             </div>

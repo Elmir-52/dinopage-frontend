@@ -1,6 +1,4 @@
-import React, { useContext, useState } from "react";
-import NotesContext, { Page, type ContextInterface } from "../../NotesContext";
-import Button from "../Button/Button";
+import React, { useState } from "react";
 import type { UserDb } from "../../App";
 import './RegistrationSection.css'
 import { getDb, setDb } from "../../fetchRequestDB";
@@ -8,11 +6,12 @@ import openEyeImage from '/openeye.svg';
 import closeEyeImage from '/closeeye.svg';
 import { equalTo, orderByChild, query, ref, type DatabaseReference, type Query } from "firebase/database";
 import { db } from "../../../lib/fierbase";
+import { Link, useNavigate, type NavigateFunction } from "react-router";
 
 export default function RegistrationSection() {
     const [user, setUser] = useState<UserDb>({ user_id: crypto.randomUUID(), name: '', password: ''})
     const [openEye, setOpenEye] = useState<boolean>(false);
-    const context: ContextInterface = useContext(NotesContext);
+    const navigate: NavigateFunction = useNavigate();
 
     const usersRef: DatabaseReference = ref(db, '/users');
     const refToRequiredUser = ref(db, `/users/${user.user_id}`);
@@ -32,7 +31,7 @@ export default function RegistrationSection() {
                         setDb<UserDb>(refToRequiredUser, user)
                             .then(() => { 
                                 document.cookie = `user_id=${user.user_id}; path=/; max-age=${(60 * 60 * 24 * 30) * 2}`;
-                                context.setPage(Page.ACCOUNT);
+                                navigate('/account');
                             })
                     } else {
                         alert('Пользователь с таким именем уже есть');
@@ -79,8 +78,8 @@ export default function RegistrationSection() {
 
             <div className="registration-section__wrapper-buttons">
                 <button className="registration-section__button" onClick={() => registrationUser() }>Зарегестрироваться</button>
-                <Button typeButton="navigation" page={Page.AUTH}>Уже есть аккаунт</Button>
-                <Button typeButton="navigation" page={Page.HOME}>На главную</Button>
+                <Link to='/auth' className="button">Уже есть аккаунт</Link>
+                <Link to='/' className="button">На главную</Link>
             </div>
         </section>
     )
