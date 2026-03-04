@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import './Modal.css'
 import { setDb } from "../../fetchRequestDB";
 import type { NoteDb } from "../../App";
@@ -9,6 +9,22 @@ import { db } from "../../../lib/fierbase";
 interface PropsModal {
     open: boolean,
     onClick: (open: boolean) => void,
+}
+
+class Note {
+    note_id: string;
+    user_id: string;
+    title: string;
+    content: string;
+    date: string;
+
+    constructor(note_id: string, user_id: string, title: string, content: string, date: string) {
+        this.note_id = note_id;
+        this.user_id = user_id;
+        this.title = title;
+        this.content = content;
+        this.date = date;
+    }
 }
 
 export default function Modal({ open, onClick }: PropsModal) {
@@ -26,15 +42,15 @@ export default function Modal({ open, onClick }: PropsModal) {
 
     }, [open]);
 
-    const newDate = new Date();
-    const todayDate = `${newDate.getDate()}.${newDate.getMonth() + 1}.${newDate.getFullYear()}`;
-
     const newNoteId: string = crypto.randomUUID();
     const newNoteRef: DatabaseReference = ref(db, `/notes/${newNoteId}`);
+    
+    const noteAdd = useCallback<() => void>(() => {
+        const newDate = new Date();
+        const todayDate = `${newDate.getDate()}.${newDate.getMonth() + 1}.${newDate.getFullYear()}`;
 
-    function noteAdd() {
-        setDb<NoteDb>(newNoteRef, {note_id: newNoteId, user_id: cookieUserId, title: 'Новая заметка', content: '', date: todayDate});
-    }
+        setDb<NoteDb>(newNoteRef, new Note(newNoteId, cookieUserId, 'Новая заметка', '', todayDate));
+    }, []);
 
     return (
         <dialog ref={dialog} className="modal">
