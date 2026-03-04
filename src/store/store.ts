@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import noteIdReducer from "./noteIdSlice";
+import menuVisibilityReducer from "./menuVisibilitySlice";
 
 const store = configureStore({
     reducer: {
-        noteIdReducer
+        noteIdReducer,
+        menuVisibilityReducer,
     }
 });
 
