@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import type { UserDb } from "../../App";
-import './RegistrationSection.css'
+import './_RegistrationSection.scss'
 import { getDb, setDb } from "../../fetchRequestDB";
 import openEyeImage from '/openeye.svg';
 import closeEyeImage from '/closeeye.svg';
 import { equalTo, orderByChild, query, ref, type DatabaseReference, type Query } from "firebase/database";
 import { db } from "../../../lib/fierbase";
-import { Link, useNavigate, type NavigateFunction } from "react-router";
+import { useNavigate, type NavigateFunction } from "react-router";
+import Button from "../Button/Button";
 
 export default function RegistrationSection() {
     const [user, setUser] = useState<UserDb>({ user_id: crypto.randomUUID(), name: '', password: ''})
@@ -63,24 +64,20 @@ export default function RegistrationSection() {
     }
 
     return (
-        <section className="registration-section">
-            <h3 className="registration-section__h3">Регистрация</h3>
-            <input className="registration-section__input" type="text" placeholder='Введите имя' value={user.name} onChange={(event) => changeUser(event, 'name')}/>
-            <div className="registration-section__password-wrapper">
+        <section className="registration">
+            <h3 className="registration__h3">Регистрация</h3>
+            <input className="registration__input" type="text" placeholder='Введите имя' value={user.name} onChange={(event) => changeUser(event, 'name')}/>
+            <div className="registration__password-wrapper">
                 {
-                    openEye ? <input className="registration-section__password-input" type="text" placeholder='Введите пароль' value={user.password} onChange={(event) => changeUser(event, 'password')}/>
-                        : <input className="registration-section__password-input" type="password" placeholder='Введите пароль' value={user.password} onChange={(event) => changeUser(event, 'password')}/>
+                    openEye ? <input className="registration__password-input" type="text" placeholder='Введите пароль' value={user.password} onChange={(event) => changeUser(event, 'password')}/>
+                        : <input className="registration__password-input" type="password" placeholder='Введите пароль' value={user.password} onChange={(event) => changeUser(event, 'password')}/>
                 }
-                <button onClick={() => setOpenEye(prev => !prev)} className="registration-section__button-eye">
-                    <img className="registration-section__image-eye" src={!openEye ? closeEyeImage : openEyeImage} alt="иконка глаза" />
+                <button onClick={() => setOpenEye(prev => !prev)} className="registration__button-eye">
+                    <img className="registration__image-eye" src={!openEye ? closeEyeImage : openEyeImage} alt="иконка глаза" />
                 </button>
             </div>
 
-            <div className="registration-section__wrapper-buttons">
-                <button className="registration-section__button" onClick={() => registrationUser() }>Зарегестрироваться</button>
-                <Link to='/auth' className="button">Уже есть аккаунт</Link>
-                <Link to='/' className="button">На главную</Link>
-            </div>
+            <Button className="registration__button" onClick={() => registrationUser() }>Зарегестрироваться</Button>
         </section>
     )
 }

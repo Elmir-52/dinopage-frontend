@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import type { UserDb } from "../../App";
-import './AuthorizationSection.css'
+import './_AuthorizationSection.scss'
 import { getDb } from "../../fetchRequestDB";
 import openEyeImage from '/openeye.svg';
 import closeEyeImage from '/closeeye.svg';
@@ -63,23 +63,21 @@ export default function AuthorizationSection() {
     }
 
     return (
-        <section className="authorization-section">
-            <h3 className="authorization-section__h3">Авторизация</h3>
-            <input className="authorization-section__input" type="text" placeholder='Введите имя' value={user.name} onChange={(event) => changeUser(event, 'name')}/>
-            <div className="authorization-section__password-wrapper">
+        <section className="authorization">
+            <h3 className="authorization__h3">Авторизация</h3>
+            <input className="authorization__input" type="text" placeholder='Введите имя' value={user.name} onChange={(event) => changeUser(event, 'name')}/>
+            <div className="authorization__password-wrapper">
                 {
-                    openEye ? <input className="authorization-section__password-input" type="text" placeholder='Введите пароль' value={user.password} onChange={(event) => changeUser(event, 'password')}/>
-                        : <input className="authorization-section__password-input" type="password" placeholder='Введите пароль' value={user.password} onChange={(event) => changeUser(event, 'password')}/>
+                    openEye ? <input className="authorization__password-input" type="text" placeholder='Введите пароль' value={user.password} onChange={(event) => changeUser(event, 'password')}/>
+                        : <input className="authorization__password-input" type="password" placeholder='Введите пароль' value={user.password} onChange={(event) => changeUser(event, 'password')}/>
                 }
-                <button onClick={() => setOpenEye(prev => !prev)} className="registration-section__button-eye">
-                    <img className="authorization-section__image-eye" src={!openEye ? closeEyeImage : openEyeImage} alt="иконка глаза" />
+                <button onClick={() => setOpenEye(prev => !prev)} className="registration__button-eye">
+                    <img className="authorization__image-eye" src={!openEye ? closeEyeImage : openEyeImage} alt="иконка глаза" />
                 </button>
             </div>
 
-            <div className="authorization-section__wrapper-buttons">
-                <button className="authorization-section__button" onClick={ () => authorizationUser() }>Войти в аккаунт</button>
-                <Link to='/' className="button">На главную</Link>
-            </div>
+            <button className="authorization__button" onClick={ () => authorizationUser() }>Войти в аккаунт</button>
+            <Link to='/reg' className="authorization__link">Зарегестрироваться</Link>
         </section>
     )
 }

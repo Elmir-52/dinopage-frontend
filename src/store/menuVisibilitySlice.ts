@@ -5,7 +5,7 @@ interface MenuVisibilityState {
 }
 
 const initialState: MenuVisibilityState  = {
-    open: true
+    open: false,
 }
 
 const menuVisibilitySlice = createSlice({

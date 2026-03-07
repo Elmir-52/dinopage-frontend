@@ -1,5 +1,5 @@
 import { type ReactNode } from "react";
-import './Button.css'
+import './_Button.scss'
 
 type PropsButton = {
     className?: string;
