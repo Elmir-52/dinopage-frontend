@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useRef } from "react";
-import './Modal.css'
+import './_Modal.scss'
 import { setDb } from "../../fetchRequestDB";
 import type { NoteDb } from "../../App";
-import cross from '/cross.svg'
 import { ref, type DatabaseReference } from "firebase/database";
 import { db } from "../../../lib/fierbase";
+import Button from "../Button/Button";
 
 interface PropsModal {
     open: boolean,
@@ -39,13 +39,16 @@ export default function Modal({ open, onClick }: PropsModal) {
         } else {
             dialog.current?.close();
         }
+    });
 
-    }, [open]);
-
-    const newNoteId: string = crypto.randomUUID();
-    const newNoteRef: DatabaseReference = ref(db, `/notes/${newNoteId}`);
     
     const noteAdd = useCallback<() => void>(() => {
+        const arrayOfNumbersForNewNoteId: BigUint64Array<ArrayBuffer> = crypto.getRandomValues(new BigUint64Array(2));
+        const newNoteId: string = `${arrayOfNumbersForNewNoteId[0].toString(36).padStart(13, '0')}-${arrayOfNumbersForNewNoteId[1].toString(36).padStart(13, '0')}`;
+        console.log(newNoteId);
+
+        const newNoteRef: DatabaseReference = ref(db, `/notes/${newNoteId}`);
+        
         const newDate = new Date();
         const todayDate = `${newDate.getDate()}.${newDate.getMonth() + 1}.${newDate.getFullYear()}`;
 
@@ -54,8 +57,8 @@ export default function Modal({ open, onClick }: PropsModal) {
 
     return (
         <dialog ref={dialog} className="modal">
-            <button onClick={ () => onClick(false) } className="modal__cross-button"><img className="modal__cross-image" src={cross} alt="крестик" /></button>
-            <button onClick={ () => { noteAdd(); onClick(false) } } className="modal__button">Создать новую заметку</button>
+            <Button className="modal__button" onClick={ () => { noteAdd(); onClick(false) } }>Создать новую заметку</Button>
+            <Button className="modal__cancel" onClick={ () => onClick(false) }>Отмена</Button>
         </dialog>
     );
 }

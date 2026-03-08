@@ -10,7 +10,10 @@ import { useNavigate, type NavigateFunction } from "react-router";
 import Button from "../Button/Button";
 
 export default function RegistrationSection() {
-    const [user, setUser] = useState<UserDb>({ user_id: crypto.randomUUID(), name: '', password: ''})
+    const arrayOfNumbersForNewUserId: BigUint64Array<ArrayBuffer> = crypto.getRandomValues(new BigUint64Array(2));
+    const newUserId: string = `${arrayOfNumbersForNewUserId[0].toString(36).padStart(13, '0')}-${arrayOfNumbersForNewUserId[1].toString(36).padStart(13, '0')}`;
+    console.log(newUserId);
+    const [user, setUser] = useState<UserDb>({ user_id: newUserId, name: '', password: ''})
     const [openEye, setOpenEye] = useState<boolean>(false);
     const navigate: NavigateFunction = useNavigate();
 
