@@ -1,5 +1,5 @@
 import AppRoutes from "./routes/routes";
-import './App.css';
+import './App.scss';
 
 export interface NoteDb { 
     note_id: string,
@@ -16,6 +16,7 @@ export interface UserDb {
 }
 
 export default function App() {
+  // document.cookie = 'user_id=; path=/; max-age=-1'
   return (
     <>
       <AppRoutes />

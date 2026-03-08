@@ -1,6 +1,6 @@
 import logoApp from '/logo-app.png';
 import logoMenu from '/menu.svg'
-import './Header.scss';
+import './_Header.scss';
 import { useAppDispatch } from '../../hook';
 import { setMenuVisibility } from '../../store/menuVisibilitySlice';
 

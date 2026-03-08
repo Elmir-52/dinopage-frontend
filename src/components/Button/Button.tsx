@@ -8,6 +8,5 @@ type PropsButton = {
 }
 
 export default function Button({ className = 'button', children, onClick }: PropsButton) {
-
     return <button className={className} onClick={onClick}>{children}</button>
 }

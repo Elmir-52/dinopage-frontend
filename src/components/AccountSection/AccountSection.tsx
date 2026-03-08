@@ -1,11 +1,11 @@
 import { equalTo, orderByChild, query, ref, type DatabaseReference, type Query } from "firebase/database";
 import Button from "../Button/Button";
-import './AccountSection.css';
+import './_AccountSection.scss';
 import { db } from "../../../lib/fierbase";
 import { deleteDb, getDb, getOneElementFromDB } from "../../fetchRequestDB";
 import { useEffect, useState } from "react";
 import type { NoteDb, UserDb } from "../../App";
-import { Link, useNavigate, type NavigateFunction } from "react-router";
+import { useNavigate, type NavigateFunction } from "react-router";
 
 export default function AccountSection() {
     const navigate: NavigateFunction = useNavigate();
@@ -52,20 +52,18 @@ export default function AccountSection() {
 
     // если данные загружаются то надпись loading...
     if (loading) return(
-        <section className="account-section">
-            <p>Loading...</p>
+        <section className="account">
+            <p className="account__loading">Loading...</p>
         </section>
     )
 
     return (
-        <section className="account-section">
-            <h2 className="account-section__h2">Добрый день {userName}</h2>
-            <p className="account-section__paragraph">Ваш id: {cookieUserId}</p>
+        <section className="account">
+            <h2 className="account__h2">Добрый день {userName}</h2>
+            <p className="account__paragraph">Ваш id: {cookieUserId}</p>
 
-            <div className="account-section__wrapper-buttons">
-                <Link to='/' className="button">На главную</Link>
-
-                <Button className="account-section__delete-button" onClick={() => { 
+            <div className="account__wrapper-buttons">
+                <Button className="account__delete-button" onClick={() => { 
                     deleteUser();
                     navigate('/');
                     document.cookie = `user_id=; path=/; max-age=-1`;

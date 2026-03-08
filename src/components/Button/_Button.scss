@@ -1,7 +1,8 @@
+@use '../../sass/mixins';
+
 .button {
-    display: flex;
+    @include mixins.flex;
     justify-content: center;
-    align-items: center;
     text-decoration: none;
     color: #000;
     width: 13rem;

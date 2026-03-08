@@ -1,5 +1,5 @@
 import logoAdd from '/logoAdd.svg';
-import './ButtonNoteAdd.css';
+import './_ButtonNoteAdd.scss';
 
 interface PropsButtonNoteAdd {
     onClick: (open: boolean) => void;

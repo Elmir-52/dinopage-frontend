@@ -1,4 +1,4 @@
-import './ButtonNote.css'
+import './_ButtonNote.scss'
 import type { NoteDb } from '../../App';
 import { useAppDispatch } from '../../hook';
 import { setNoteId, type NoteIdActionPayload } from '../../store/noteIdSlice';

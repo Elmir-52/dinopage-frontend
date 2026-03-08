@@ -1,9 +1,9 @@
 import { Route, Routes, type RouteObject } from "react-router";
 import AuthorizationView from "../views/AuthorizationView/AuthorizationView";
 import MainView from "../views/MainView/MainView";
-import RegistrationView from "../views/RegistrationView/RegistrationView";
 import AccountView from "../views/AccountView/AccountView";
 import NoteTextView from "../views/NoteTextView/NoteTextView";
+import RegistrationView from "../views/RegistrationView/RegistrationView";
 
 export default function AppRoutes() {
     const navigationRoutes: RouteObject[] = [

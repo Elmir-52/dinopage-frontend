@@ -3,11 +3,11 @@
 .navigation-bar {
     @include mixins.flex(column);
     gap: 1rem;
-    position: absolute;
+    position: fixed;
+    top: 110px;
     width: 200px;
     width: 80px;
-    top: 110px;
-    right: 1em;
+    right: 1.1em;
     height: calc(100vh - 110px);
     padding: 1.5rem 0;
     background: #fff;

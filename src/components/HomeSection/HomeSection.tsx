@@ -1,7 +1,7 @@
 import { useEffect, useState  } from "react";
 import ButtonNote from "../ButtonNote/ButtonNote";
 import ButtonNoteAdd from "../ButtonNoteAdd/ButtonNoteAdd";
-import './HomeSection.css';
+import './_HomeSection.scss';
 import Modal from "../Modal/Modal";
 import { getDb } from "../../fetchRequestDB";
 import type { NoteDb } from "../../App";
@@ -25,7 +25,6 @@ export default function HomeSection() {
     useEffect(() => {
         getDb<NoteDb>(notesQuery)
             .then((data: NoteDb[] | undefined) => { setResult(data) })
-            
     }, [modal]);
         
     return (
@@ -37,7 +36,7 @@ export default function HomeSection() {
                 })
             }
 
-            <ButtonNoteAdd onClick={(open: boolean) => cookieUserId ? setModal(open) : alert('Пожалуйста зарегестрируйтесь либо войдите в аккаунт')} ></ButtonNoteAdd>
+            <ButtonNoteAdd onClick={(open: boolean) => setModal(open)} ></ButtonNoteAdd>
             <Modal open={modal} onClick={(open: boolean) => setModal(open)}></Modal>
         </section>
     );

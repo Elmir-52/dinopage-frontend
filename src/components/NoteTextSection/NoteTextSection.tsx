@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { deleteDb, getOneElementFromDB, setDb } from '../../fetchRequestDB';
 import type { NoteDb } from '../../App';
-import './NoteTextSection.css';
+import './_NoteTextSection.scss';
 import { db } from '../../../lib/fierbase';
 import { ref, type DatabaseReference } from 'firebase/database';
 import { Link, useNavigate, type NavigateFunction } from 'react-router';
 import { useAppSelector } from '../../hook';
+import Button from '../Button/Button';
 
 export default function NoteTextSection() {
     const noteId = useAppSelector(state => state.noteIdReducer.noteId);
@@ -53,14 +54,14 @@ export default function NoteTextSection() {
         <section className="note-text">
             <div className='note-text__wrapper-buttons'>
                 <Link to='/' className='button'>На главную</Link>
-                <button className='note-text__button' onClick={saveNote}>Сохранить</button>
-                <button className='note-text__button' onClick={deleteNote}>Удалить заметку</button>
+                <Button onClick={saveNote}>Сохранить</Button>
+                <Button onClick={deleteNote}>Удалить заметку</Button>
             </div>
             <div className='note-text__wrapper-texts'>
                 <input 
                     className='note-text__input' 
                     type="text" 
-                    placeholder='Введите заголовок заметки' 
+                    placeholder='Введите заголовок' 
                     value={result?.title} 
                     onChange={ (event) => changeResult<HTMLInputElement>(event, 'title') }
                 />
