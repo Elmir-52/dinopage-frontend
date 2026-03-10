@@ -1,10 +1,10 @@
-import Header from "../../components/Header/Header";
 import NoteTextSection from "../../components/NoteTextSection/NoteTextSection";
+import TaskFeed from "../../components/TaskFeed/TaskFeed";
 
 export default function NoteTextView() {
     return(
         <>
-            <Header />
+            <TaskFeed />
             <NoteTextSection />
         </>
     )

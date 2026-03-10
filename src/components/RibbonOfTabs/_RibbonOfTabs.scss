@@ -1,0 +1,26 @@
+@use '../../sass/mixins';
+
+$background-of-toolbar: #1a50ad;
+
+.tool-bar {
+    @include mixins.flex;
+    background: $background-of-toolbar;
+    padding: 0 0.8em;
+    padding-top: 0.6em;
+
+    &__button {
+        background: $background-of-toolbar;
+        color: #fff;
+        border: none;
+        font-size: 1.1em;
+        padding: 0.3em 1em;
+        cursor: pointer;
+        border-radius: 4px 4px 0 0;
+    }
+
+    &__active {
+        background: #fff;
+        color: $background-of-toolbar;
+    }
+}
+
