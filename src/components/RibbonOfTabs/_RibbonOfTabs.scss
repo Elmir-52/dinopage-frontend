@@ -5,6 +5,7 @@ $background-of-toolbar: #1a50ad;
 .tool-bar {
     @include mixins.flex;
     background: $background-of-toolbar;
+    width: 100%;
     padding: 0 0.8em;
     padding-top: 0.6em;
 

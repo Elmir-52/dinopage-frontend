@@ -1,74 +1,60 @@
-import React, { useEffect, useState } from 'react';
-import { deleteDb, getOneElementFromDB, setDb } from '../../fetchRequestDB';
+import React, { useEffect } from 'react';
+import { getOneElementFromDB } from '../../fetchRequestDB';
 import type { NoteDb } from '../../App';
 import './_NoteTextSection.scss';
 import { db } from '../../../lib/fierbase';
 import { ref, type DatabaseReference } from 'firebase/database';
-import { Link, useNavigate, type NavigateFunction } from 'react-router';
-import { useAppSelector } from '../../hook';
-import Button from '../Button/Button';
+import { useAppDispatch, useAppSelector } from '../../hook';
+import { setRequedNote, type RequiredNoteActionPayload } from '../../store/requiredNoteSlice';
 
 export default function NoteTextSection() {
     const noteId = useAppSelector(state => state.noteIdReducer.noteId);
-    const navigate: NavigateFunction = useNavigate();
-    const [result, setResult] = useState<NoteDb | undefined>();
+    const { ...requiredNote } = useAppSelector(state => state.requiredNoteReducer.requiredNote);
+    const dispatch = useAppDispatch();
 
     const refToRequiredNote: DatabaseReference = ref(db, `/notes/${noteId}`)
 
     useEffect(() => {
         getOneElementFromDB<NoteDb>(refToRequiredNote)
-            .then( (data: NoteDb | undefined) =>  data ? setResult(data) : null )
+            .then( (data: NoteDb | undefined) =>  {
+                if (data) {
+                    const requiredNoteActionPayload: RequiredNoteActionPayload = {
+                        requiredNote: data,
+                    };
+
+                    dispatch(setRequedNote(requiredNoteActionPayload));
+                }
+            })
     }, []);
 
-    function saveNote() {
-        if (result) {
-            setDb<NoteDb>(refToRequiredNote, result);
-        }
-        navigate('/');
-    }
-
-    function deleteNote() {
-        deleteDb(refToRequiredNote);
-        navigate('/');
-    }
-
     function changeResult<T extends HTMLInputElement | HTMLTextAreaElement>(event: React.ChangeEvent<T>, type: 'title' | 'content') {
-        setResult((prev: NoteDb | undefined) => {
-            if (!prev) {
-                return undefined
-            } else if (type === 'title') {
-                return {
-                    ...prev,
-                    title: event.target.value
-                }
-            } else if (type === 'content') {
-                return {
-                    ...prev,
-                    content: event.target.value
-                }
-            }
-        })
+        if (type === 'title') {
+            requiredNote.title = event.target.value;
+            dispatch(setRequedNote({ requiredNote }));
+            return;
+        }
+
+        if (type === 'content') {
+            requiredNote.content = event.target.value;
+            dispatch(setRequedNote({ requiredNote }));
+            return;
+        }
     }
 
     return (
         <section className="note-text">
-            <div className='note-text__wrapper-buttons'>
-                <Link to='/' className='button'>На главную</Link>
-                <Button onClick={saveNote}>Сохранить</Button>
-                <Button onClick={deleteNote}>Удалить заметку</Button>
-            </div>
             <div className='note-text__wrapper-texts'>
                 <input 
                     className='note-text__input' 
                     type="text" 
                     placeholder='Введите заголовок' 
-                    value={result?.title} 
+                    value={requiredNote.title} 
                     onChange={ (event) => changeResult<HTMLInputElement>(event, 'title') }
                 />
                 <textarea 
                     placeholder='Введите текст' 
                     className="note-text__textarea" 
-                    value={result?.content} 
+                    value={requiredNote.content} 
                     onChange={ (event) => changeResult<HTMLTextAreaElement>(event, 'content') }
                 ></textarea>
             </div>

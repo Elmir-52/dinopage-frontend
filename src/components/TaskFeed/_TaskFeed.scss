@@ -1,4 +1,7 @@
+@use '../../sass/mixins';
+
 .task-feed {
+    @include mixins.flex(column, start);
     position: sticky;
     top: 0;
     width: 100%;

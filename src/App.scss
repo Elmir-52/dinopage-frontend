@@ -12,3 +12,8 @@ body {
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     background: #e8e8e88d;
 }
+
+button:active,
+button:focus {
+    outline: none;
+}
