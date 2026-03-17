@@ -8,33 +8,38 @@
         width: 32em;
         height: 18em;
         margin: auto;
+        padding: 1em 1.5em;
         border: none;
         border-radius: 8px;
     }
 
-    &__button {
-        @include mixins.flex;
-        justify-content: center;
-        width: 70%;
-        height: 4em;
-        border-radius: 1rem;
-        cursor: pointer;
-        font-size: 1.5em;
-        background: #fff;
-        border: 2px solid #a7a7a7;
+    &__message {
+        font-size: 1.6em;
+    }
 
-        // стили для Link
-        text-decoration: none;
-        color: #000;
+    &__buttons {
+        @include mixins.flex;
+        gap: 4em;
+    }
+
+    &__execute {
+        color: #fff;
+        background: green;
+        font-size: 1.3em;
+        cursor: pointer;
+        padding: 0.5em 1em;
+        border: none;
+        border-radius: 10px;
     }
     
     &__cancel {
-        background: none;
-        border: none;
-        color: red;
-        font-size: 1.4em;
-        text-decoration: underline;
+        color: #fff;
+        background: red;
+        font-size: 1.3em;
         cursor: pointer;
+        padding: 0.5em 1em;
+        border: none;
+        border-radius: 10px;
     }
 }
 
