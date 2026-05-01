@@ -24,6 +24,7 @@ const initialState: State = {
         title: '', 
         content: '',
         date: '',
+        backgroundColor: '',
     }
 }
 

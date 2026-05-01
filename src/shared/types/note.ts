@@ -3,5 +3,6 @@ export interface Note {
     user_id: string,
     title: string, 
     content: string,
-    date: string
+    date: string,
+    backgroundColor: string;
 }

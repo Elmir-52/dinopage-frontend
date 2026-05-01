@@ -1,4 +1,4 @@
-import './_ButtonNote.scss'
+import './NoteCard.scss'
 import { useAppDispatch } from '../../hook';
 import { useNavigate, type NavigateFunction } from 'react-router';
 import { setRequedNote } from '../../store/requiredNoteSlice';
@@ -8,21 +8,23 @@ interface PropsButtonNote {
     content: Note,
 }
 
-export default function ButtonNote({ content }: PropsButtonNote) {
+export default function NoteCard({ content }: PropsButtonNote) {
     const dispatch = useAppDispatch();
     const navigate: NavigateFunction = useNavigate();
 
     return(
         <button 
+            style={{backgroundColor: content.backgroundColor}}
             onClick={() => { 
                 navigate('/note-text');
                 dispatch(setRequedNote({requiredNote: content}));
             }} 
-            className='button-note'
+            className='note-card'
         >
-            <h3 className='button-note__title'>{content.title}</h3>
-            <hr />
-            <p className='button-note__date'>{content.date}</p>
+            <div className='note-card__line'></div>
+            <div className="note-card__label">
+                <p className='note-card__title'>{content.title}</p>
+            </div>
         </button>
     )
 }
