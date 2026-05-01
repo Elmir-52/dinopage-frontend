@@ -4,29 +4,14 @@ import ButtonNoteAdd from "../ButtonNoteAdd/ButtonNoteAdd";
 import './_HomeSection.scss';
 import Modal from "../Modal/Modal";
 import { getDb, setDb } from "../../fetchRequestDB";
-import type { NoteDb } from "../../App";
 import { equalTo, orderByChild, query, ref, type DatabaseReference, type Query } from "firebase/database";
 import { db } from "../../../lib/fierbase";
+import type { Note } from "../../shared/types/note";
 
-class Note {
-    note_id: string;
-    user_id: string;
-    title: string;
-    content: string;
-    date: string;
-
-    constructor(note_id: string, user_id: string, title: string, content: string, date: string) {
-        this.note_id = note_id;
-        this.user_id = user_id;
-        this.title = title;
-        this.content = content;
-        this.date = date;
-    }
-}
 
 export default function HomeSection() {
     const [stateModal, setStateModal] = useState<boolean>(false);
-    const [result, setResult] = useState<NoteDb[] | undefined>();
+    const [result, setResult] = useState<Note[] | undefined>();
     
     const cookieFull: string = document.cookie;
     const cookieUserId: string = cookieFull.split('=')[1];
@@ -39,20 +24,27 @@ export default function HomeSection() {
     );
 
     useEffect(() => {
-        getDb<NoteDb>(notesQuery)
-            .then((data: NoteDb[] | undefined) => { setResult(data) })
+        getDb<Note>(notesQuery)
+            .then((data: Note[] | undefined) => { setResult(data) })
     }, [stateModal]);
 
     const noteAdd = useCallback<() => void>(() => {
         const arrayOfNumbersForNewNoteId: BigUint64Array<ArrayBuffer> = crypto.getRandomValues(new BigUint64Array(2));
         const newNoteId: string = `${arrayOfNumbersForNewNoteId[0].toString(36).padStart(13, '0')}-${arrayOfNumbersForNewNoteId[1].toString(36).padStart(13, '0')}`;
-
-        const newNoteRef: DatabaseReference = ref(db, `/notes/${newNoteId}`);
         
         const newDate = new Date();
         const todayDate = `${newDate.getDate()}.${newDate.getMonth() + 1}.${newDate.getFullYear()}`;
-
-        setDb<NoteDb>(newNoteRef, new Note(newNoteId, cookieUserId, 'Новая заметка', '', todayDate));
+        
+        const newNote: Note = {
+            note_id: newNoteId,
+            user_id: cookieUserId,
+            title: 'Новая заметка',
+            content: '',
+            date: todayDate,
+        }
+        
+        const newNoteRef: DatabaseReference = ref(db, `/notes/${newNoteId}`);
+        setDb<Note>(newNoteRef, newNote);
     }, []);
         
     return (

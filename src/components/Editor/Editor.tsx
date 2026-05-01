@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from '../../hook';
 import { setTitle } from '../../store/requiredNoteSlice';
 import GetContentFromEditorPlugin from '../../plugins/GetContentFromEditorPlugin';
 import { useNavigate } from 'react-router';
+import type { Note } from '../../shared/types/note';
 
 const theme = {
     text: {
@@ -30,7 +31,7 @@ const extension = defineExtension({
 export default function Editor() {    
     const inputElement = useRef<HTMLInputElement | null>(null);
     const dispatch = useAppDispatch();
-    const requiredNote = useAppSelector(state => state.requiredNoteReducer.requiredNote);
+    const requiredNote: Note = useAppSelector(state => state.requiredNoteReducer.requiredNote);
     const navigate = useNavigate();
 
     useEffect(() => {

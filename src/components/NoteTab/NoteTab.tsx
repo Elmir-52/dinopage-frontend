@@ -5,9 +5,10 @@ import { useAppSelector } from '../../hook';
 import { ref } from 'firebase/database';
 import { db } from '../../../lib/fierbase';
 import { deleteDb } from '../../fetchRequestDB';
+import type { Note } from '../../shared/types/note';
 
 export default function NoteTab() {
-    const requiredNote = useAppSelector(state => state.requiredNoteReducer.requiredNote);
+    const requiredNote: Note = useAppSelector(state => state.requiredNoteReducer.requiredNote);
     const navigate = useNavigate()
 
     const refToRequiredNote = ref(db, `/notes/${requiredNote.note_id}`);

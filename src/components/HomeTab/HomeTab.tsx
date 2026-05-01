@@ -8,12 +8,13 @@ import { useNavigate } from 'react-router';
 import { ref } from 'firebase/database';
 import { db } from '../../../lib/fierbase';
 import { useAppSelector } from '../../hook';
+import type { Note } from '../../shared/types/note';
 
 export default function HomeTab() {
     const [editor] = useLexicalComposerContext();
     const [colorDialogVisibility, setColorDialogVisibility] = useState<boolean>(false);
     const navigate = useNavigate();
-    const requiredNote = useAppSelector(state => state.requiredNoteReducer.requiredNote);
+    const requiredNote: Note = useAppSelector(state => state.requiredNoteReducer.requiredNote);
 
     const refToRequiredNote = ref(db, `/notes/${requiredNote.note_id}`);
     

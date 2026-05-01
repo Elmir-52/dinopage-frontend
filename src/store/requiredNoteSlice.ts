@@ -1,8 +1,8 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { NoteDb } from "../App";
+import type { Note } from "../shared/types/note";
 
 export interface RequiredNoteActionPayload {
-    requiredNote: NoteDb;
+    requiredNote: Note;
 }
 
 export interface TitleActionPayload {
@@ -14,7 +14,7 @@ export interface ContentActionPayload {
 }
 
 interface State {
-    requiredNote: NoteDb
+    requiredNote: Note;
 }
 
 const initialState: State = {

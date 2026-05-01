@@ -1,11 +1,11 @@
 import './_ButtonNote.scss'
-import type { NoteDb } from '../../App';
 import { useAppDispatch } from '../../hook';
 import { useNavigate, type NavigateFunction } from 'react-router';
 import { setRequedNote } from '../../store/requiredNoteSlice';
+import type { Note } from '../../shared/types/note';
 
 interface PropsButtonNote {
-    content: NoteDb,
+    content: Note,
 }
 
 export default function ButtonNote({ content }: PropsButtonNote) {
