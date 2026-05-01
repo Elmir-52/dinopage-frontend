@@ -1,0 +1,25 @@
+@use '../../sass/mixins';
+
+$background-of-toolbar: #1a50ad;
+
+.tab-bar {
+    @include mixins.flex;
+    align-items: flex-start;
+    gap: 1.5em;
+    width: 100%;
+    padding: 0.6em 1em;
+
+    &__button {
+        color: $background-of-toolbar;
+        background: none;
+        border: none;
+        font-size: 1.1em;
+        cursor: pointer;
+    }
+
+    &__active {
+        background: #fff;
+        border-bottom: 3px solid $background-of-toolbar;
+    }
+}
+

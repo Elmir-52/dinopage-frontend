@@ -1,11 +1,9 @@
-import NoteTextSection from "../../components/NoteTextSection/NoteTextSection";
-import TaskFeed from "../../components/TaskFeed/TaskFeed";
+import Editor from "../../components/Editor/Editor";
 
 export default function NoteTextView() {
     return(
         <>
-            <TaskFeed />
-            <NoteTextSection />
+            <Editor />
         </>
     )
 }

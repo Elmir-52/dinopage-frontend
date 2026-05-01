@@ -2,13 +2,14 @@
 
 .note-tab {
     @include mixins.flex;
-    justify-content: space-between;
-    width: 40%;
+    justify-content: center;
+    gap: 3em;
+    width: 90%;
     margin: auto;
 
     &__button {
-        width: 5em;
-        height: 5em;
+        width: 4em;
+        height: 4em;
         background: none;
         border: none;
         cursor: pointer;

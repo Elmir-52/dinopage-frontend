@@ -1,0 +1,15 @@
+@use '../../sass/mixins';
+@use '../../sass/variables';
+
+.task-bar {
+    @include mixins.flex(column, start);
+    position: sticky;
+    top: 0.5em;
+    width: 98%;
+    height: variables.$task-bar-height;
+    margin: 0 auto;
+    margin-bottom: 3em;
+    border-radius: 1em;
+    background: #fff;
+    z-index: 10;
+}

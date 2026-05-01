@@ -5,6 +5,14 @@ export interface RequiredNoteActionPayload {
     requiredNote: NoteDb;
 }
 
+export interface TitleActionPayload {
+    title: string;
+}
+
+export interface ContentActionPayload {
+    content: string;
+}
+
 interface State {
     requiredNote: NoteDb
 }
@@ -25,11 +33,19 @@ const requiredNoteSlice = createSlice({
     reducers: {
         setRequedNote(state, action: PayloadAction<RequiredNoteActionPayload>) {
             state.requiredNote = action.payload.requiredNote;
+        },
+        
+        setTitle(state, action: PayloadAction<TitleActionPayload>) {
+            state.requiredNote.title = action.payload.title;
+        },
+
+        setContent(state, action: PayloadAction<ContentActionPayload>) {
+            state.requiredNote.content = action.payload.content;
         }
     }
 });
 
-export const { setRequedNote } = requiredNoteSlice.actions;
+export const { setRequedNote, setTitle, setContent } = requiredNoteSlice.actions;
 
 const requiredNoteReducer = requiredNoteSlice.reducer;
 export default requiredNoteReducer

@@ -36,7 +36,7 @@ export default function HomeSection() {
         notesRef,
         orderByChild('user_id'),
         equalTo(cookieUserId)
-    )
+    );
 
     useEffect(() => {
         getDb<NoteDb>(notesQuery)

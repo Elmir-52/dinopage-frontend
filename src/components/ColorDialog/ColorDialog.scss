@@ -1,0 +1,25 @@
+.set-color-dialog {
+    position: absolute;
+    top: 35px;
+    border: 1px solid black;
+    border-radius: 14px;
+    overflow: hidden;
+    
+    ul {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1em;
+        background-color: #fff;
+        padding: 0.6em;
+
+        li {
+            button {
+                width: 20px;
+                height: 20px;
+                border: 1px solid gray;
+                border-radius: 50%;
+                cursor: pointer;
+            }
+        }
+    }
+}

@@ -1,0 +1,39 @@
+@use '../../sass/mixins';
+
+.home-tab {
+    @include mixins.flex;
+    gap: 1em;
+    width: 90%;
+    margin: auto;
+
+    button {
+        font-size: 16px;
+        border: 1px solid gray;
+        border-radius: 8px;
+        cursor: pointer;
+        padding: 3.5px 9px;
+    }
+
+    &__button {
+        font-family: 'Consolas', 'Roboto', sans-serif;
+
+        em, u {
+            font-family: 'Consolas', 'Roboto', sans-serif;
+        }
+    }
+
+    &__color-text {
+        position: relative;
+    }
+
+    .home-tab__save {
+        width: 35px;
+        padding: 0;
+        border: none;
+        background: none;
+
+        img {
+            width: 100%;
+        }
+    }
+}

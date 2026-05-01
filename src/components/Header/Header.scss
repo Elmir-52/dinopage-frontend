@@ -3,20 +3,14 @@
 .header {
     @include mixins.flex;
     height: 110px;
-    padding: 0.4em 1.3em;
+    padding: 0 1.3em;
     margin-bottom: 70px;
     background: #3153ff;
     position: sticky;
     top: 0;
 
-    &__h1 {
-        font-size: 3em;
-        font-weight: 350;
-        color: #fff;
-    }
-
     &__logo {
-        width: 6em;
+        width: 5em;
     }
 
 
