@@ -1,5 +1,5 @@
 import './TabBar.scss';
-import { TABS } from '../../shared/data/tabs.data';
+import { TABS } from '../../shared/data/tabs';
 
 interface RibbonOfTabsProps {
     activeTab: string;
