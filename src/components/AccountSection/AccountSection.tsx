@@ -1,74 +1,84 @@
-import { equalTo, orderByChild, query, ref, type DatabaseReference, type Query } from "firebase/database";
 import Button from "../Button/Button";
 import './_AccountSection.scss';
-import { db } from "../../../lib/fierbase";
-import { deleteDb, getDb, getOneElementFromDB } from "../../fetchRequestDB";
 import { useEffect, useState } from "react";
-import type { NoteDb, UserDb } from "../../App";
 import { useNavigate, type NavigateFunction } from "react-router";
+import type { User } from "../../shared/types/user";
+import getCookie from "../../utils/getCookie";
 
 export default function AccountSection() {
     const navigate: NavigateFunction = useNavigate();
     const [userName, setUserName] = useState<string>('');
+    const [userId, setUserId] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(true);
 
-    // получение userId из куки
-    const cookieFull: string = document.cookie;
-    const cookieUserId: string = cookieFull.split('=')[1];
+    const cookieUserId: string | undefined = getCookie('user_id');
 
-    const refToRequiredUser: DatabaseReference = ref(db, `users/${cookieUserId}`);
-
-    function deleteUser() {
-        const notesRef: DatabaseReference = ref(db, '/notes');
-        const notesQuery: Query = query(
-            notesRef,
-            orderByChild('user_id'),
-            equalTo(cookieUserId)
-        );
-
-        // получаем все заметки пользователя, если они существуют, то также удаляются
-        getDb<NoteDb>(notesQuery)
-            .then((notes: NoteDb[] | undefined) => {
-                if (notes) {
-                    notes.map((note: NoteDb) => {
-                        const refToRequiredNote: DatabaseReference = ref(db, `notes/${note.note_id}`);
-                        deleteDb(refToRequiredNote);
-                    });
+    async function deleteUser() {
+        try {
+            const res = await fetch('http://localhost:3000/api/user/delete', {
+                method: 'DELETE',
+                headers: {
+                    "Authorization": `${cookieUserId}`,
                 }
-            })
+            });
 
-        deleteDb(refToRequiredUser)
+            if (res.ok) {
+                document.cookie = `user_id=; path=/; max-age=-1`;
+                navigate('/');
+            } else {
+                const message = await res.json();
+                throw new Error(`${message}`);
+            }
+        } catch(error) {
+            const err = error as Error;
+            console.log(err.message);
+        }
     }
 
     useEffect(() => {
-        getOneElementFromDB<UserDb>(refToRequiredUser)
-            .then((data: UserDb | undefined) => {
-            if (data) {
-                setUserName(data.name);
-                setLoading(false);
+        async function getUserData() {
+            try {
+                const res = await fetch('http://localhost:3000/api/user/get', {
+                    headers: {
+                        "Authorization": `${cookieUserId}`,
+                    }
+                });
+
+                if (res.ok) {
+                    const userData: User = await res.json();
+                    setUserName(userData.name);
+                    setUserId(userData.user_id);
+                    setLoading(false);
+                } else {
+                    const message = await res.json();
+                    throw new Error(`${message}`);
+                }
+            } catch(error) {
+                const err = error as Error;
+                console.error(err.message);
             }
-        })
+        }
+
+        getUserData();
     }, []);
 
-    // если данные загружаются то надпись loading...
     if (loading) return(
         <section className="account">
             <p className="account__loading">Loading...</p>
         </section>
-    )
+    );
 
     return (
         <section className="account">
             <h2 className="account__h2">Добрый день {userName}</h2>
-            <p className="account__paragraph">Ваш id: {cookieUserId}</p>
+            <p className="account__paragraph">Ваш id: {userId}</p>
 
             <div className="account__wrapper-buttons">
-                <Button className="account__delete-button" onClick={() => { 
-                    deleteUser();
-                    navigate('/');
-                    document.cookie = `user_id=; path=/; max-age=-1`;
-                }}>Удалить аккаунт</Button>
+                <Button 
+                    className="account__delete-button" 
+                    onClick={() => deleteUser()}
+                >Удалить аккаунт</Button>
             </div>
         </section>
-    )
+    );
 }

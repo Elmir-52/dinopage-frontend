@@ -2,20 +2,29 @@ import { useNavigate } from 'react-router';
 import Button from '../Button/Button';
 import './_NoteTab.scss';
 import { useAppSelector } from '../../hook';
-import { ref } from 'firebase/database';
-import { db } from '../../../lib/fierbase';
-import { deleteDb } from '../../fetchRequestDB';
 import type { Note } from '../../shared/types/note';
 
 export default function NoteTab() {
     const requiredNote: Note = useAppSelector(state => state.requiredNoteReducer.requiredNote);
     const navigate = useNavigate()
 
-    const refToRequiredNote = ref(db, `/notes/${requiredNote.note_id}`);
-
-    function deleteNote() {
-        deleteDb(refToRequiredNote);
-        navigate('/');
+    async function deleteNote() {
+        try {
+            const res = await fetch('http://localhost:3000/api/notes/note', {
+                    method: 'DELETE',
+                    body: JSON.stringify(requiredNote.note_id),
+                });
+            
+            if (res.ok) {
+                navigate('/');
+            } else {
+                const message = res.json();
+                throw new Error(`${message}`);
+            }
+        } catch(error) {
+            const err = error as Error;
+            console.error(err.message);
+        }
     }
 
     return(

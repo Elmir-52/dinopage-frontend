@@ -1,55 +1,43 @@
 import React, { useState } from "react";
-import type { UserDb } from "../../App";
 import './_RegistrationSection.scss'
-import { getDb, setDb } from "../../fetchRequestDB";
 import openEyeImage from '/openeye.svg';
 import closeEyeImage from '/closeeye.svg';
-import { equalTo, orderByChild, query, ref, type DatabaseReference, type Query } from "firebase/database";
-import { db } from "../../../lib/fierbase";
 import { useNavigate, type NavigateFunction } from "react-router";
 import Button from "../Button/Button";
+import type { User } from "../../shared/types/user";
 
 export default function RegistrationSection() {
     const arrayOfNumbersForNewUserId: BigUint64Array<ArrayBuffer> = crypto.getRandomValues(new BigUint64Array(2));
     const newUserId: string = `${arrayOfNumbersForNewUserId[0].toString(36).padStart(13, '0')}-${arrayOfNumbersForNewUserId[1].toString(36).padStart(13, '0')}`;
-    console.log(newUserId);
-    const [user, setUser] = useState<UserDb>({ user_id: newUserId, name: '', password: ''})
+    const [user, setUser] = useState<User>({ user_id: newUserId, name: '', password: ''})
     const [openEye, setOpenEye] = useState<boolean>(false);
     const navigate: NavigateFunction = useNavigate();
 
-    const usersRef: DatabaseReference = ref(db, '/users');
-    const refToRequiredUser = ref(db, `/users/${user.user_id}`);
-    const userQuery: Query = query(
-        usersRef,
-        orderByChild('name'),
-        equalTo(user.name)
-    )
+    async function registration() {
+        try {
+            if (user.name && user.password) {
+                const res = await fetch('http://localhost:3000/api/user/reg', {
+                    method: 'POST',
+                    body: JSON.stringify({ name: user.name, password: user.password })
+                });
 
-    function registrationUser(): void {
-        if(user.name && user.password) {
-            
-            getDb<UserDb>(userQuery)
-                .then((data: UserDb[] | undefined) => {
-                    
-                    if (data?.length === 0) {
-                        setDb<UserDb>(refToRequiredUser, user)
-                            .then(() => { 
-                                document.cookie = `user_id=${user.user_id}; path=/; max-age=${(60 * 60 * 24 * 30) * 2}`;
-                                navigate('/account');
-                            })
-                    } else {
-                        alert('Пользователь с таким именем уже есть');
-                    }
-
-                })
-                
-        } else {
-            alert('Введите имя и пароль');
+                if (res.ok) {
+                    const data = await res.json();
+                    document.cookie = `user_id=${data}; path=/; max-age=${(60 * 60 * 24 * 30) * 2}`;
+                    navigate('/account');
+                } else {
+                    const data = await res.json();
+                    throw new Error(`${data}`);
+                }
+            }
+        } catch(error) {
+            const err = error as Error;
+            console.error(err.message);
         }
     }
 
     function changeUser(event: React.ChangeEvent<HTMLInputElement>, property: string): void {
-        setUser((prev: UserDb) => {
+        setUser((prev: User) => {
             if (property === 'name') {
                 return {
                     ...prev,
@@ -80,7 +68,7 @@ export default function RegistrationSection() {
                 </button>
             </div>
 
-            <Button className="registration__button" onClick={() => registrationUser() }>Зарегестрироваться</Button>
+            <Button className="registration__button" onClick={() => registration() }>Зарегистрироваться</Button>
         </section>
     )
 }

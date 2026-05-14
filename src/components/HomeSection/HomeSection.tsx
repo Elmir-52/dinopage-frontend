@@ -1,35 +1,46 @@
 import { useCallback, useEffect, useState  } from "react";
 import NoteCard from "../NoteCard/NoteCard";
-import ButtonNoteAdd from "../ButtonNoteAdd/ButtonNoteAdd";
+import ButtonNoteAdd from "../CreateNoteButton/CreateNoteButton";
 import './HomeSection.scss';
 import Modal from "../Modal/Modal";
-import { getDb, setDb } from "../../fetchRequestDB";
-import { equalTo, orderByChild, query, ref, type DatabaseReference, type Query } from "firebase/database";
-import { db } from "../../../lib/fierbase";
 import type { Note } from "../../shared/types/note";
 import { NOTE_CARD_BACKGROUNDS } from "../../shared/data/noteCardBackgrounds";
 
+interface HomeSectionProps { 
+    userId: string
+}
 
-export default function HomeSection() {
+export default function HomeSection({ userId }: HomeSectionProps) {
     const [stateModal, setStateModal] = useState<boolean>(false);
+    const [rerender, setRerender] = useState<boolean>(false);
     const [result, setResult] = useState<Note[] | undefined>();
-    
-    const cookieFull: string = document.cookie;
-    const cookieUserId: string = cookieFull.split('=')[1];
-
-    const notesRef: DatabaseReference = ref(db, '/notes');
-    const notesQuery: Query = query(
-        notesRef,
-        orderByChild('user_id'),
-        equalTo(cookieUserId)
-    );
 
     useEffect(() => {
-        getDb<Note>(notesQuery)
-            .then((data: Note[] | undefined) => { setResult(data) })
-    }, [stateModal]);
+        async function getUserNotes() {
+            try {
+                const res = await fetch('http://localhost:3000/api/notes', {
+                    headers: {
+                        "Authorization": userId,
+                    },
+                });
 
-    const createNote = useCallback<() => void>(() => {
+                if (res.ok) {
+                    const notes: Note[] = await res.json();
+                    setResult(notes);
+                } else {
+                    const message = res.json();
+                    throw new Error(`${message}`);
+                }
+            } catch(error) {
+                const err = error as Error;
+                console.error(err.message);
+            }
+        }
+
+        getUserNotes();
+    }, [rerender]);
+
+    const createNote = useCallback<() => void>(async () => {
         const arrayOfNumbersForNewNoteId: BigUint64Array<ArrayBuffer> = crypto.getRandomValues(new BigUint64Array(2));
         const newNoteId: string = `${arrayOfNumbersForNewNoteId[0].toString(36).padStart(13, '0')}-${arrayOfNumbersForNewNoteId[1].toString(36).padStart(13, '0')}`;
         
@@ -43,19 +54,35 @@ export default function HomeSection() {
         
         const newNote: Note = {
             note_id: newNoteId,
-            user_id: cookieUserId,
+            user_id: userId,
             title: 'Новая заметка',
             content: '',
             date: todayDate,
             backgroundColor: randomColor(0, NOTE_CARD_BACKGROUNDS.length - 1),
         }
         
-        const newNoteRef: DatabaseReference = ref(db, `/notes/${newNoteId}`);
-        setDb<Note>(newNoteRef, newNote);
+        try {
+            const res = await fetch('http://localhost:3000/api/notes/note', {
+                method: 'POST',
+                body: JSON.stringify(newNote),
+            });
+
+            if (res.ok) {
+                setRerender(prev => !prev);
+            } else {
+                const message = res.json();
+                throw new Error(`${message}`);
+            }
+        } catch(error) {
+            const err = error as Error;
+            console.error(err.message);
+        }
     }, []);
         
     return (
         <section className="home-section">
+
+            {/* <NoteCard content={{note_id: '', user_id: '', title: 'my note title for example', content: '', date: 'may 3 2026', backgroundColor: '#9333EA60'}}></NoteCard> */}
 
             {
                 result?.map(el => {

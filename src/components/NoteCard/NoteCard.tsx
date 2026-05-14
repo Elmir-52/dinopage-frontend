@@ -14,17 +14,17 @@ export default function NoteCard({ content }: PropsButtonNote) {
 
     return(
         <button 
-            style={{backgroundColor: content.backgroundColor}}
+            className='note-card'
             onClick={() => { 
                 navigate('/note-text');
                 dispatch(setRequedNote({requiredNote: content}));
             }} 
-            className='note-card'
         >
-            <div className='note-card__line'></div>
-            <div className="note-card__label">
+            <div className='note-card__wrap'>
+                <div className='note-card__header' style={{backgroundColor: content.backgroundColor}}></div>
                 <p className='note-card__title'>{content.title}</p>
             </div>
+            <p className='note-card__date'>{content.date}</p>
         </button>
     )
 }

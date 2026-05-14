@@ -1,51 +1,40 @@
 import React, { useState } from "react";
-import type { UserDb } from "../../App";
 import './_AuthorizationSection.scss'
-import { getDb } from "../../fetchRequestDB";
 import openEyeImage from '/openeye.svg';
 import closeEyeImage from '/closeeye.svg';
-import { equalTo, orderByChild, query, ref, type DatabaseReference, type Query } from "firebase/database";
-import { db } from "../../../lib/fierbase";
 import { Link, useNavigate, type NavigateFunction } from "react-router";
+import type { User } from "../../shared/types/user";
 
 export default function AuthorizationSection() {
-    const [user, setUser] = useState<UserDb>({ user_id: '', name: '', password: '' })
+    const [user, setUser] = useState<User>({ user_id: '', name: '', password: '' })
     const [openEye, setOpenEye] = useState<boolean>(false);
     const navigate: NavigateFunction = useNavigate();
+    
+    async function authorization() {
+        try {
+            if (user.name && user.password) {
+                const res = await fetch('http://localhost:3000/api/user/auth', {
+                    method: 'POST',
+                    body: JSON.stringify({ name: user.name, password: user.password })
+                });
 
-    const usersRef: DatabaseReference = ref(db, '/users');
-    const userQuery: Query = query(
-        usersRef,
-        orderByChild('name'),
-        equalTo(user.name)
-    )
-
-    function authorizationUser(): void {
-        if(user.name && user.password) {
-
-            getDb<UserDb>(userQuery)
-                .then((data: UserDb[] | undefined) => {
-
-                    if (data && data?.length === 0) {
-                        alert('Возможно вы не зарегистрировались на сайте');
-                    } else if (data && data[0].password === user.password) {
-                        const userFromDB: UserDb = data[0];
-                        document.cookie = `user_id=${userFromDB.user_id}; path=/; max-age=${(60 * 60 * 24 * 30) * 2}`;
-                        navigate('/account');
-
-                    } else {
-                        alert('Возможно вы неправильно ввели пароль')
-                    }
-
-                })
-
-        } else {
-            alert('Введите имя и пароль');
+                if (res.ok) {
+                    const data = await res.json();
+                    document.cookie = `user_id=${data}; path=/; max-age=${(60 * 60 * 24 * 30) * 2}`;
+                    navigate('/account');
+                } else {
+                    const data = await res.json();
+                    throw new Error(`${data}`);
+                }
+            }
+        } catch(error) {
+            const err = error as Error;
+            console.error(err.message);
         }
     }
 
     function changeUser(event: React.ChangeEvent<HTMLInputElement>, property: string): void {
-        setUser((prev: UserDb) => {
+        setUser((prev: User) => {
             if (property === 'name') {
                 return {
                     ...prev,
@@ -76,7 +65,7 @@ export default function AuthorizationSection() {
                 </button>
             </div>
 
-            <button className="authorization__button" onClick={ () => authorizationUser() }>Войти в аккаунт</button>
+            <button className="authorization__button" onClick={ () => authorization() }>Войти в аккаунт</button>
             <Link to='/reg' className="authorization__link">Зарегестрироваться</Link>
         </section>
     )

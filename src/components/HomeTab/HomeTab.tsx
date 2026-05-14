@@ -3,10 +3,7 @@ import { useState } from 'react';
 import { FORMAT_TEXT_COMMAND } from 'lexical';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import ColorDialog from '../ColorDialog/ColorDialog';
-import { setDb } from '../../fetchRequestDB';
 import { useNavigate } from 'react-router';
-import { ref } from 'firebase/database';
-import { db } from '../../../lib/fierbase';
 import { useAppSelector } from '../../hook';
 import type { Note } from '../../shared/types/note';
 
@@ -15,12 +12,24 @@ export default function HomeTab() {
     const [colorDialogVisibility, setColorDialogVisibility] = useState<boolean>(false);
     const navigate = useNavigate();
     const requiredNote: Note = useAppSelector(state => state.requiredNoteReducer.requiredNote);
-
-    const refToRequiredNote = ref(db, `/notes/${requiredNote.note_id}`);
     
-    function saveNote() {
-        setDb(refToRequiredNote, requiredNote);
-        navigate('/');
+    async function saveNote() {
+        try {
+            const res = await fetch('http://localhost:3000/api/notes/note', {
+                method: 'PUT',
+                body: JSON.stringify(requiredNote),
+            });
+
+            if (res.ok) {
+                navigate('/');
+            } else {
+                const message = res.json();
+                throw new Error(`${message}`);
+            }
+        } catch(error) {
+            const err = error as Error;
+            console.error(err.message);
+        }
     }
 
     return(

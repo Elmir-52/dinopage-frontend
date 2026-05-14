@@ -9,7 +9,7 @@ export default function Header() {
 
     return (
         <header className='header'>
-            <img className='header__logo' src={logoApp} alt="логотип заметок" />
+            {/* <img className='header__logo' src={logoApp} alt="логотип заметок" /> */}
 
             <button className='header__button-menu' onClick={() => dispatch(setMenuVisibility())}>
                 <img className='header__image-menu' src={logoMenu} alt="логотип меню" />
