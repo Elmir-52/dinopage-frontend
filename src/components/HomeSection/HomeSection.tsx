@@ -81,9 +81,6 @@ export default function HomeSection({ userId }: HomeSectionProps) {
         
     return (
         <section className="home-section">
-
-            {/* <NoteCard content={{note_id: '', user_id: '', title: 'my note title for example', content: '', date: 'may 3 2026', backgroundColor: '#9333EA60'}}></NoteCard> */}
-
             {
                 result?.map(el => {
                     return <NoteCard key={el.note_id} content={el}></NoteCard>

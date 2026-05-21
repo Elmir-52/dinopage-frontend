@@ -10,7 +10,7 @@
     cursor: pointer;
     border: none;
     border-radius: 18px;
-    box-shadow: 0 4px 6px #00000050;
+    box-shadow: 0 4px 6px #00000040;
     background-color: #fff;
     transition: all 0.1s ease;
 
@@ -30,8 +30,9 @@
         height: 40px;
         text-align: left;
         font-size: 17px;
-        font-weight: 500;
+        font-weight: 700;
         word-break: break-word;
+        overflow: hidden;
     }
 
     &__date {
@@ -39,6 +40,6 @@
     }
 
     &:hover {
-        transform: scale(1.05);
+        transform: scale(1.04);
     }
 }

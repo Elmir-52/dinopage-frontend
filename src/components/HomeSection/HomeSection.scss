@@ -1,10 +1,11 @@
 .home-section {
     display: grid;
     grid-template-columns: repeat(auto-fill, 150px);
+    align-items: center;
     width: 90%;
     margin: 0 auto 3rem;
     padding: 2.2rem;
-    gap: 30px;
+    gap: 40px;
 }
 
 @media (max-width: 530px) {
