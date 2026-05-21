@@ -7,7 +7,7 @@ import getCookie from "../../utils/getCookie";
 
 export default function AccountSection() {
     const navigate: NavigateFunction = useNavigate();
-    const [userName, setUserName] = useState<string>('');
+    const [userEmail, setUserEmail] = useState<string>('');
     const [userId, setUserId] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -45,9 +45,9 @@ export default function AccountSection() {
                 });
 
                 if (res.ok) {
-                    const userData: User = await res.json();
-                    setUserName(userData.name);
-                    setUserId(userData.user_id);
+                    const user: User = await res.json();
+                    setUserEmail(user.email);
+                    setUserId(user.user_id);
                     setLoading(false);
                 } else {
                     const message = await res.json();
@@ -70,7 +70,7 @@ export default function AccountSection() {
 
     return (
         <section className="account">
-            <h2 className="account__h2">Добрый день {userName}</h2>
+            <h2 className="account__h2">Добрый день {userEmail}</h2>
             <p className="account__paragraph">Ваш id: {userId}</p>
 
             <div className="account__wrapper-buttons">

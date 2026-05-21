@@ -4,30 +4,28 @@ import openEyeImage from '/openeye.svg';
 import closeEyeImage from '/closeeye.svg';
 import { useNavigate, type NavigateFunction } from "react-router";
 import Button from "../Button/Button";
-import type { User } from "../../shared/types/user";
+import type { User, UserDataForRequestToBackend } from "../../shared/types/user";
 
 export default function RegistrationSection() {
-    const arrayOfNumbersForNewUserId: BigUint64Array<ArrayBuffer> = crypto.getRandomValues(new BigUint64Array(2));
-    const newUserId: string = `${arrayOfNumbersForNewUserId[0].toString(36).padStart(13, '0')}-${arrayOfNumbersForNewUserId[1].toString(36).padStart(13, '0')}`;
-    const [user, setUser] = useState<User>({ user_id: newUserId, name: '', password: ''})
+    const [user, setUser] = useState<UserDataForRequestToBackend>({ email: '', password: ''})
     const [openEye, setOpenEye] = useState<boolean>(false);
     const navigate: NavigateFunction = useNavigate();
 
     async function registration() {
         try {
-            if (user.name && user.password) {
+            if (user.email && user.password) {
                 const res = await fetch('http://localhost:3000/api/user/reg', {
                     method: 'POST',
-                    body: JSON.stringify({ name: user.name, password: user.password })
+                    body: JSON.stringify(user),
                 });
 
                 if (res.ok) {
-                    const data = await res.json();
-                    document.cookie = `user_id=${data}; path=/; max-age=${(60 * 60 * 24 * 30) * 2}`;
+                    const user: User = await res.json() as User;
+                    document.cookie = `user_id=${user.user_id}; path=/; max-age=${(60 * 60 * 24 * 30) * 2}`;
                     navigate('/account');
                 } else {
-                    const data = await res.json();
-                    throw new Error(`${data}`);
+                    const errorMessage = await res.json();
+                    throw new Error(`${errorMessage}`);
                 }
             }
         } catch(error) {
@@ -36,32 +34,34 @@ export default function RegistrationSection() {
         }
     }
 
-    function changeUser(event: React.ChangeEvent<HTMLInputElement>, property: string): void {
-        setUser((prev: User) => {
-            if (property === 'name') {
-                return {
-                    ...prev,
-                    name: event.target.value
+    function changeUser(event: React.ChangeEvent<HTMLInputElement>, property: 'email' | 'password'): void {
+        if (property === 'email') {
+            setUser((prev: UserDataForRequestToBackend) => {
+                    return {
+                        ...prev,
+                        email: event.target.value
+                    }
                 }
-            } else if (property === 'password') {
-                return {
-                    ...prev,
-                    password: event.target.value
+            ); 
+        } else {
+            setUser((prev: UserDataForRequestToBackend) => {
+                    return {
+                        ...prev,
+                        password: event.target.value
+                    }
                 }
-            } else {
-                return prev;
-            }
-        });
+            ); 
+        }
     }
 
     return (
         <section className="registration">
             <h3 className="registration__h3">Регистрация</h3>
-            <input className="registration__input" type="text" placeholder='Введите имя' value={user.name} onChange={(event) => changeUser(event, 'name')}/>
+            <input className="registration__input" type="email" placeholder='email' value={user.email} onChange={(event) => changeUser(event, 'email')}/>
             <div className="registration__password-wrapper">
                 {
-                    openEye ? <input className="registration__password-input" type="text" placeholder='Введите пароль' value={user.password} onChange={(event) => changeUser(event, 'password')}/>
-                        : <input className="registration__password-input" type="password" placeholder='Введите пароль' value={user.password} onChange={(event) => changeUser(event, 'password')}/>
+                    openEye ? <input className="registration__password-input" type="text" placeholder='password' value={user.password} onChange={(event) => changeUser(event, 'password')}/>
+                        : <input className="registration__password-input" type="password" placeholder='password' value={user.password} onChange={(event) => changeUser(event, 'password')}/>
                 }
                 <button onClick={() => setOpenEye(prev => !prev)} className="registration__button-eye">
                     <img className="registration__image-eye" src={!openEye ? closeEyeImage : openEyeImage} alt="иконка глаза" />
