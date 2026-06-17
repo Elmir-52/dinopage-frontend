@@ -6,30 +6,30 @@ interface ColorButton {
 export const COLOR_BUTTONS: ColorButton[] = [
     {
         text: 'Red',
-        textColor: '#ff0000',
+        textColor: 'red',
     },
     {
         text: 'Blue',
-        textColor: '#0000ff',
+        textColor: 'blue',
     },
     {
         text: 'Green',
-        textColor: '#00ff00',
+        textColor: 'green',
     },
     {
         text: 'Yellow',
-        textColor: '#ffff00',
+        textColor: 'yellow',
     },
     {
         text: 'Aqua',
-        textColor: '#00ffff',
-    },
-    {
-        text: 'White',
-        textColor: '#ffffff',
+        textColor: 'aqua',
     },
     {
         text: 'Black',
-        textColor: '#000000',
+        textColor: 'black',
+    },
+    {
+        text: 'Brown',
+        textColor: 'brown',
     },
 ];

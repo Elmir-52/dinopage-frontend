@@ -3,14 +3,18 @@ import NoteCard from "../NoteCard/NoteCard";
 import ButtonNoteAdd from "../CreateNoteButton/CreateNoteButton";
 import './HomeSection.scss';
 import Modal from "../Modal/Modal";
-import type { Note } from "../../shared/types/note";
+import type { CreateNote, Note } from "../../shared/types/note";
 import { NOTE_CARD_BACKGROUNDS } from "../../shared/data/noteCardBackgrounds";
+import { randomColor } from "../../utils/randomColor";
+import { getToken } from "../../utils/authService";
+import { refreshTokens } from "../../utils/refreshTokens";
+import { useNavigate, type NavigateFunction } from "react-router";
+import { HttpError } from "../../errors/httpError";
 
-interface HomeSectionProps { 
-    userId: string
-}
+export default function HomeSection() {
+    let accessToken = getToken();
 
-export default function HomeSection({ userId }: HomeSectionProps) {
+    const navigate: NavigateFunction = useNavigate();
     const [stateModal, setStateModal] = useState<boolean>(false);
     const [rerender, setRerender] = useState<boolean>(false);
     const [result, setResult] = useState<Note[] | undefined>();
@@ -18,22 +22,31 @@ export default function HomeSection({ userId }: HomeSectionProps) {
     useEffect(() => {
         async function getUserNotes() {
             try {
-                const res = await fetch('http://localhost:3000/api/notes', {
+                let response = await fetch(`http://localhost:3000/notes`, {
                     headers: {
-                        "Authorization": userId,
-                    },
+                        'Authorization': `Bearer ${accessToken}`,
+                    }
                 });
 
-                if (res.ok) {
-                    const notes: Note[] = await res.json();
-                    setResult(notes);
-                } else {
-                    const message = res.json();
-                    throw new Error(`${message}`);
+                if (response.status === 401) {
+                    await refreshTokens();
+                    
+                    accessToken = getToken();
+                    response = await fetch(`http://localhost:3000/notes`, {
+                        headers: {
+                            'Authorization': `Bearer ${accessToken}`,
+                        }
+                    });
                 }
+
+                const notes: Note[] = await response.json();
+                setResult(notes);
             } catch(error) {
-                const err = error as Error;
-                console.error(err.message);
+                if (error instanceof HttpError) {
+                    if (error.status === 401) {
+                        navigate('/login');
+                    }
+                }
             }
         }
 
@@ -41,55 +54,58 @@ export default function HomeSection({ userId }: HomeSectionProps) {
     }, [rerender]);
 
     const createNote = useCallback<() => void>(async () => {
-        const arrayOfNumbersForNewNoteId: BigUint64Array<ArrayBuffer> = crypto.getRandomValues(new BigUint64Array(2));
-        const newNoteId: string = `${arrayOfNumbersForNewNoteId[0].toString(36).padStart(13, '0')}-${arrayOfNumbersForNewNoteId[1].toString(36).padStart(13, '0')}`;
-        
-        const newDate = new Date();
-        const todayDate = `${newDate.getDate()}.${newDate.getMonth() + 1}.${newDate.getFullYear()}`;
-
-        function randomColor(min: number, max: number) {
-            const index = Math.floor(Math.random() * (max - min + 1)) + min;
-            return NOTE_CARD_BACKGROUNDS[index];
-        }
-        
-        const newNote: Note = {
-            note_id: newNoteId,
-            user_id: userId,
-            title: 'Новая заметка',
+        const newNote: CreateNote = {
+            title: '',
             content: '',
-            date: todayDate,
-            backgroundColor: randomColor(0, NOTE_CARD_BACKGROUNDS.length - 1),
+            color: randomColor(0, NOTE_CARD_BACKGROUNDS.length - 1),
         }
         
         try {
-            const res = await fetch('http://localhost:3000/api/notes/note', {
+            let response = await fetch('http://localhost:3000/notes', {
                 method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json',
+                },
                 body: JSON.stringify(newNote),
             });
 
-            if (res.ok) {
-                setRerender(prev => !prev);
-            } else {
-                const message = res.json();
-                throw new Error(`${message}`);
+            if (response.status === 401) {
+                await refreshTokens();
+                    
+                accessToken = getToken();
+                response = await fetch('http://localhost:3000/notes', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newNote),
+                });
             }
+
+            setRerender(prev => !prev);
         } catch(error) {
-            const err = error as Error;
-            console.error(err.message);
+            if (error instanceof HttpError) {
+                if (error.status === 401) {
+                    navigate('/login');
+                }
+            }
         }
     }, []);
+
         
     return (
         <section className="home-section">
             {
                 result?.map(el => {
-                    return <NoteCard key={el.note_id} content={el}></NoteCard>
+                    return <NoteCard key={el.noteId} content={el}></NoteCard>
                 })
             }
 
             <ButtonNoteAdd onClick={(open: boolean) => setStateModal(open)} ></ButtonNoteAdd>
             <Modal
-                message={'Создать новую заметку'}
+                message='Create new note'
                 stateModal={stateModal}
                 setStateModal={(open: boolean) => setStateModal(open)}
                 onClick={() => createNote()}

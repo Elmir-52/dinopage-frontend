@@ -40,6 +40,7 @@ export default function ColorDialog({ dialogVisibility, changeDialogVisibiloty }
                                 changeDialogVisibiloty(false);
                             }} 
                             style={{backgroundColor: colorButton.textColor}}
+                            title={colorButton.textColor}
                         ></button>
                     </li>
                 })    

@@ -21,8 +21,8 @@ export default function Modal({ message, stateModal, setStateModal, onClick }: P
         <dialog ref={dialog} className="modal">
             <p className="modal__message" >{message}</p>
             <div className="modal__buttons">
-                <button className="modal__cancel" onClick={ () => setStateModal(false) }>Отмена</button>
-                <button className="modal__execute" onClick={ () => { onClick(); setStateModal(false) } }>Выполнить</button>
+                <button className="modal__cancel" onClick={ () => setStateModal(false) }>No</button>
+                <button className="modal__execute" onClick={ () => { onClick(); setStateModal(false) } }>Yes</button>
             </div>
         </dialog>
     );

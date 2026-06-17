@@ -12,6 +12,7 @@
   "dependencies": {
     "@lexical/react": "^0.43.0",
     "@lexical/selection": "^0.43.0",
+    "@lexical/utils": "^0.45.0",
     "@reduxjs/toolkit": "^2.11.2",
     "json-server": "^1.0.0-beta.3",
     "lexical": "^0.43.0",
@@ -19,7 +20,8 @@
     "react-dom": "^19.1.1",
     "react-hook-form": "^7.78.0",
     "react-redux": "^9.2.0",
-    "react-router": "^7.13.0"
+    "react-router": "^7.13.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",

@@ -1,8 +1,19 @@
 export interface Note {
-    note_id: string,
-    user_id: string,
-    title: string, 
-    content: string,
-    date: string,
-    backgroundColor: string;
+    noteId: string;
+    title: string;
+    content: string;
+    createdAt: string;
+    updatedAt: string;
+    color: string;
+}
+
+export interface CreateNote {
+    title: string;
+    content: string;
+    color: string;
+}
+
+export interface UpdateNote {
+    title: string;
+    content: string;
 }

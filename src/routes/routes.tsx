@@ -1,17 +1,17 @@
 import { Route, Routes, type RouteObject } from "react-router";
-import AuthorizationView from "../views/AuthorizationView/AuthorizationView";
 import MainView from "../views/MainView/MainView";
-import AccountView from "../views/AccountView/AccountView";
 import NoteTextView from "../views/NoteTextView/NoteTextView";
 import RegistrationView from "../views/RegistrationView/RegistrationView";
+import LoginView from "../views/LoginView/LoginView";
+import ProfileView from "../views/ProfileView/ProfileView";
 
 export default function AppRoutes() {
     const navigationRoutes: RouteObject[] = [
         {path: '/', element: <MainView />},
-        {path: '/note-text', element: <NoteTextView />},
-        {path: '/auth', element: <AuthorizationView />},
+        {path: '/notes/:noteId', element: <NoteTextView />},
+        {path: '/login', element: <LoginView />},
         {path: '/reg', element: <RegistrationView />},
-        {path: '/account', element: <AccountView />},
+        {path: '/profile', element: <ProfileView />},
     ]
 
     return(

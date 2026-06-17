@@ -1,15 +1,16 @@
 @use '../../sass/mixins';
 
 .note-tab {
-    @include mixins.flex;
+    @include mixins.flex(column);
     justify-content: center;
-    gap: 3em;
-    width: 90%;
-    margin: auto;
+    gap: 1em;
+    height: 100%;
+    background: #fff;
+    padding: 0 0.5em;
 
     &__button {
-        width: 4em;
-        height: 4em;
+        width: 3em;
+        height: 3em;
         background: none;
         border: none;
         cursor: pointer;
