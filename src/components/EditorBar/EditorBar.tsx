@@ -6,6 +6,8 @@ import { refreshTokens } from "../../utils/refreshTokens";
 import { HttpError } from "../../errors/httpError";
 import type { UpdateNote } from "../../shared/types/note";
 import type { EditorState } from "lexical";
+import Modal from "../Modal/Modal";
+import { useState } from "react";
 
 interface EditorBarProps {
     noteTitleInputRef: React.RefObject<HTMLInputElement | null>
@@ -15,6 +17,7 @@ export default function EditorBar({ noteTitleInputRef }: EditorBarProps) {
     const [editor] = useLexicalComposerContext();
     const { noteId } = useParams();
     const navigate = useNavigate();
+    const [modalState, setModalState] = useState<boolean>(false);
 
     let accessToken = getToken();
 
@@ -98,7 +101,7 @@ export default function EditorBar({ noteTitleInputRef }: EditorBarProps) {
         <div className='editor-bar'>
             <div className="editor-bar__buttons-wrapper">
                 <Link to='/' className="editor-bar__action">
-                    <img src="/dino (1).png" alt="Dino logo"/> 
+                    <img src="/dino (1).png" alt="Dino logo" title="Go to home"/> 
                     Home
                 </Link>
 
@@ -111,7 +114,7 @@ export default function EditorBar({ noteTitleInputRef }: EditorBarProps) {
                     Save
                 </button>
 
-                <button className="editor-bar__action" onClick={deleteNote}>
+                <button className="editor-bar__action" onClick={() => setModalState(true)}>
                     <img 
                         src="/musorka.png" 
                         alt="Save logo" 
@@ -119,6 +122,13 @@ export default function EditorBar({ noteTitleInputRef }: EditorBarProps) {
                     />
                     Delete
                 </button>
+
+                <Modal 
+                    message="Do you want to delete your note?"
+                    stateModal={modalState}
+                    setStateModal={setModalState}
+                    onClick={deleteNote}
+                />
             </div>
         </div>
     );

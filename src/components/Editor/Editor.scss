@@ -25,6 +25,7 @@
         font-size: 24px;
         border: none;
         border-bottom: 1px solid #00000046;
+        font-weight: 600;
     
         &:focus {
             outline: none;
@@ -38,6 +39,7 @@
     &__content-editable {
         width: 100%;
         padding: 0 30px 100px 30px;
+        line-height: 1.5;
     
         &:focus {
             outline: none;
@@ -63,7 +65,7 @@
 }
 
 .code {
-    padding: 3px 8px;
+    padding: 2px 8px;
     color: #ff0000;
     background: #eeeeee;
     border-radius: 3px;

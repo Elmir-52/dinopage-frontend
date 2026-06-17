@@ -4,6 +4,7 @@ import type { UserFormData } from "../../shared/types/user";
 import Form from '../Form/Form';
 import { setToken } from '../../utils/authService';
 import type { AuthResponse } from '../../shared/types/authResponse';
+import { HttpError } from '../../errors/httpError';
 
 export default function LoginSection() {
     const navigate: NavigateFunction = useNavigate();
@@ -17,6 +18,10 @@ export default function LoginSection() {
             },
             body: JSON.stringify(user),
         });
+
+        if (response.status === 401) {
+            throw new HttpError(response.status, 'Email or password is invalid');
+        }
 
         const { accessToken }: AuthResponse = await response.json();
         setToken(accessToken);

@@ -1,17 +1,18 @@
-import Button from "../Button/Button";
 import './ProfileSection.scss';
 import { useEffect, useState } from "react";
 import { useNavigate, type NavigateFunction } from "react-router";
 import type { User } from "../../shared/types/user";
-import { getToken } from "../../utils/authService";
+import { getToken, setToken } from "../../utils/authService";
 import { refreshTokens } from "../../utils/refreshTokens";
 import { HttpError } from "../../errors/httpError";
+import Modal from '../Modal/Modal';
 
 export default function ProfileSection() {
     const navigate: NavigateFunction = useNavigate();
     const [userEmail, setUserEmail] = useState<string>('');
     const [userId, setUserId] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(true);
+    const [modalState, setModalState] = useState<boolean>(false);
 
     let accessToken = getToken();
 
@@ -72,6 +73,7 @@ export default function ProfileSection() {
                 });
             }
 
+            setToken('');
             navigate('/login');
         } catch(error) {
             console.error(error);
@@ -90,11 +92,18 @@ export default function ProfileSection() {
             <p className="account__paragraph">Your id: {userId}</p>
 
             <div className="account__wrapper-buttons">
-                <Button 
+                <button 
                     className="account__delete-button" 
-                    onClick={() => deleteUser()}
-                >Delete profile</Button>
+                    onClick={() => setModalState(true)}
+                >Delete profile</button>
             </div>
+
+            <Modal
+                message="Do you want to delete your profile?"
+                stateModal={modalState}
+                setStateModal={setModalState}
+                onClick={deleteUser}
+            />
         </section>
     );
 }

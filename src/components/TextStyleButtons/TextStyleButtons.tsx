@@ -1,11 +1,11 @@
-import { FORMAT_TEXT_COMMAND, type LexicalEditor } from "lexical";
+import { FORMAT_TEXT_COMMAND } from "lexical";
 import './TextStyleButtons.scss';
+import FontSizesList from "../FontSizesList/FontSizesList";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 
-interface TextEditButtonsProps {
-    editor: LexicalEditor
-}
+export default function TextStyleButtons() {
+    const [editor] = useLexicalComposerContext();
 
-export default function TextStyleButtons({ editor }: TextEditButtonsProps) {
     return (
         <div className="text-style">
             <button 
@@ -38,6 +38,8 @@ export default function TextStyleButtons({ editor }: TextEditButtonsProps) {
             >
                 &lt;&#47;&gt; {/* символы </> */}
             </button>
+
+            <FontSizesList />
         </div>
     );
 }

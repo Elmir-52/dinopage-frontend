@@ -1,0 +1,15 @@
+.text-color {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1em;
+    border: none;
+    border-radius: 14px;
+    
+    button {
+        width: 30px;
+        height: 30px;
+        border: 1px solid #d7d7d7;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+}
