@@ -1,6 +1,6 @@
 @use '../../sass/mixins';
 
-.account {
+.profile {
     @include mixins.flex(column);
     gap: 4rem;
     width: 90%;
@@ -38,8 +38,7 @@
 }
 
 @media (max-width: 700px) {
-    .account {
+    .profile {
         font-size: 12px;
     }
-
 }

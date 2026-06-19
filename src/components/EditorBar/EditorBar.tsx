@@ -1,13 +1,13 @@
 import { Link, useNavigate, useParams } from "react-router";
 import './EditorBar.scss';
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { getToken } from "../../utils/authService";
-import { refreshTokens } from "../../utils/refreshTokens";
 import { HttpError } from "../../errors/httpError";
 import type { UpdateNote } from "../../shared/types/note";
 import type { EditorState } from "lexical";
 import Modal from "../Modal/Modal";
 import { useState } from "react";
+import { requestToBackend } from "../../utils/requestToBackend";
+import MessageModal from "../MessageModal/MessageModal";
 
 interface EditorBarProps {
     noteTitleInputRef: React.RefObject<HTMLInputElement | null>
@@ -17,9 +17,9 @@ export default function EditorBar({ noteTitleInputRef }: EditorBarProps) {
     const [editor] = useLexicalComposerContext();
     const { noteId } = useParams();
     const navigate = useNavigate();
-    const [modalState, setModalState] = useState<boolean>(false);
-
-    let accessToken = getToken();
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [isMessageModalOpen, setIsMessageModalOpen] = useState<boolean>(false);
+    const [messageModalMessage, setMessageModalMessage] = useState<string>('');
 
     async function saveNote() {
         let noteTitle: string | undefined = noteTitleInputRef.current?.value;
@@ -33,67 +33,49 @@ export default function EditorBar({ noteTitleInputRef }: EditorBarProps) {
         }
 
         try {
-            let response = await fetch(`http://localhost:3000/notes/${noteId}`, {
+            const response = await requestToBackend<UpdateNote>({
+                url: `http://localhost:3000/notes/${noteId}`,
                 method: 'PATCH',
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(updateNote),
+                body: updateNote
             });
-    
-            if (response.status === 401) {
-                await refreshTokens();
-                
-                accessToken = getToken();
-                response = await fetch(`http://localhost:3000/notes`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${accessToken}`,
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(updateNote),
-                });
-            }
+
+            if (!response.ok) throw new Error();
 
             navigate('/');
         } catch(error) {
             if (error instanceof HttpError) {
                 if (error.status === 401) {
-                    navigate('/login');
+                    setMessageModalMessage("Unauthorized: the note hasn't been saved");
+                    setIsMessageModalOpen(true);
+                    return;
                 }
             }
+
+            setMessageModalMessage("The note hasn't been saved, save the note locally to your device, and try again later");
+            setIsMessageModalOpen(true);
         }
     }
 
     async function deleteNote() {
         try {
-            let response = await fetch(`http://localhost:3000/notes/${noteId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                },
+            const response = await requestToBackend({
+                url: `http://localhost:3000/notes/${noteId}`,
+                method: 'DELETE'
             });
-    
-            if (response.status === 401) {
-                await refreshTokens();
-                
-                accessToken = getToken();
-                response = await fetch(`http://localhost:3000/notes`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Authorization': `Bearer ${accessToken}`,
-                    },
-                });
-            }
 
-            navigate('/');
+            if (!response.ok) throw new Error();
+
+            if (response.ok) navigate('/');
         } catch(error) {
             if (error instanceof HttpError) {
                 if (error.status === 401) {
                     navigate('/login');
+                    return;
                 }
             }
+
+            setMessageModalMessage("The note hasn't been deleted, please try again later");
+            setIsMessageModalOpen(true);
         }
     }
 
@@ -101,7 +83,7 @@ export default function EditorBar({ noteTitleInputRef }: EditorBarProps) {
         <div className='editor-bar'>
             <div className="editor-bar__buttons-wrapper">
                 <Link to='/' className="editor-bar__action">
-                    <img src="/dino (1).png" alt="Dino logo" title="Go to home"/> 
+                    <img src="/dino.png" alt="Dino logo" title="Go to home"/> 
                     Home
                 </Link>
 
@@ -114,7 +96,7 @@ export default function EditorBar({ noteTitleInputRef }: EditorBarProps) {
                     Save
                 </button>
 
-                <button className="editor-bar__action" onClick={() => setModalState(true)}>
+                <button className="editor-bar__action" onClick={() => setIsModalOpen(true)}>
                     <img 
                         src="/musorka.png" 
                         alt="Save logo" 
@@ -125,9 +107,15 @@ export default function EditorBar({ noteTitleInputRef }: EditorBarProps) {
 
                 <Modal 
                     message="Do you want to delete your note?"
-                    stateModal={modalState}
-                    setStateModal={setModalState}
-                    onClick={deleteNote}
+                    isModalOpen={isModalOpen}    
+                    setIsModalOpen={(open: boolean) => setIsModalOpen(open)}
+                    onClick={() => deleteNote()}
+                />
+
+                <MessageModal
+                    message={messageModalMessage}
+                    isMessageModalOpen={isMessageModalOpen}
+                    setIsMessageModalOpen={(open: boolean) => setIsMessageModalOpen(open)}
                 />
             </div>
         </div>

@@ -10,29 +10,45 @@ export default function LoginSection() {
     const navigate: NavigateFunction = useNavigate();
     
     async function login(user: UserFormData) {
-        const response = await fetch('http://localhost:3000/auth/login', {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(user),
-        });
+        try {
+            const response = await fetch('http://localhost:3000/auth/login', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(user),
+            });
+    
+            const data = await response.json();
+    
+            if (response.status === 401) {
+                throw new HttpError(response.status, data.message);
+            }
+    
+            if (!response.ok) {
+                throw new Error();
+            }
+    
+            const { accessToken }: AuthResponse = data;
+            setToken(accessToken);
+            navigate('/profile');
+        } catch(error) {
+            if (error instanceof HttpError) throw error;
 
-        if (response.status === 401) {
-            throw new HttpError(response.status, 'Email or password is invalid');
+            if (!navigator.onLine) {
+                throw new Error('Turn on your Wi-Fi or mobile Internet')
+            }
+            
+            throw new Error('Something went wrong, please try again later');
         }
-
-        const { accessToken }: AuthResponse = await response.json();
-        setToken(accessToken);
-        navigate('/profile');
     }
 
     return (
-        <section className="authorization">
-            <h3 className="authorization__h3">Login</h3>
-            <Form buttonText='Log in' submitFunction={login} />
-            <Link to='/reg' className="authorization__link">Register</Link>
+        <section className="login">
+            <h3 className="login__h3">Login</h3>
+            <Form buttonText='Log in' submitFunction={(user: UserFormData) => login(user)} />
+            <Link to='/reg' className="login__link">Register</Link>
         </section>
     )
 }

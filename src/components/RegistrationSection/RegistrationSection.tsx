@@ -4,29 +4,50 @@ import type { UserFormData } from "../../shared/types/user";
 import Form from "../Form/Form";
 import type { AuthResponse } from '../../shared/types/authResponse';
 import { setToken } from '../../utils/authService';
+import { HttpError } from '../../errors/httpError';
 
 export default function RegistrationSection() {
     const navigate: NavigateFunction = useNavigate();
 
     async function registration(user: UserFormData) {
-        const response = await fetch('http://localhost:3000/auth/register', {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(user),
-        });
+        try {
+            const response = await fetch('http://localhost:3000/auth/register', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(user),
+            });
+    
+            const data = await response.json();
+    
+            if (response.status === 409) {
+                throw new HttpError(response.status, data.message);
+            }
+    
+            if (!response.ok) {
+                throw new Error();
+            }
+    
+            const { accessToken }: AuthResponse = data;
+            setToken(accessToken);
+            navigate('/profile');
+        } catch(error) {
+            if (error instanceof HttpError) throw error;
 
-        const { accessToken }: AuthResponse = await response.json();
-        setToken(accessToken);
-        navigate('/profile');
+            if (!navigator.onLine) {
+                throw new Error('Turn on your Wi-Fi or mobile Internet')
+            }
+
+            throw new Error('Something went wrong, please try again later');
+        }
     }
 
     return (
         <section className="registration">
             <h3 className="registration__h3">Registration</h3>
-            <Form buttonText="Register" submitFunction={registration} />
+            <Form buttonText="Register" submitFunction={(user: UserFormData) => registration(user)} />
         </section>
     )
 }

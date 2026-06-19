@@ -2,50 +2,48 @@ import './ProfileSection.scss';
 import { useEffect, useState } from "react";
 import { useNavigate, type NavigateFunction } from "react-router";
 import type { User } from "../../shared/types/user";
-import { getToken, setToken } from "../../utils/authService";
-import { refreshTokens } from "../../utils/refreshTokens";
+import { setToken } from "../../utils/authService";
 import { HttpError } from "../../errors/httpError";
 import Modal from '../Modal/Modal';
+import { requestToBackend } from '../../utils/requestToBackend';
+import MessageModal, { type MessageModalOnClick } from '../MessageModal/MessageModal';
 
 export default function ProfileSection() {
     const navigate: NavigateFunction = useNavigate();
     const [userEmail, setUserEmail] = useState<string>('');
     const [userId, setUserId] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(true);
-    const [modalState, setModalState] = useState<boolean>(false);
-
-    let accessToken = getToken();
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [isMessageModalOpen, setIsMessageModalOpen] = useState<boolean>(false);
+    const [messageModalMessage, setMessageModalMessage] = useState<string>('');
+    const [messageModalOnClick, setMessageModalOnClick] = useState<MessageModalOnClick>(() => () => {});
 
     useEffect(() => {
         async function getUserData() {
             try {
-                let response = await fetch('http://localhost:3000/users/me', {
-                    headers: {
-                        'Authorization': `Bearer ${accessToken}`,
-                    }
+                let response = await requestToBackend({
+                    url: 'http://localhost:3000/users/me',
+                    method: 'GET'
                 });
 
-                if (response.status === 401) {
-                    await refreshTokens();
-                        
-                    accessToken = getToken();
-                    response = await fetch('http://localhost:3000/users/me', {
-                        headers: {
-                            'Authorization': `Bearer ${accessToken}`,
-                        },
-                    });
-                }
+                if (!response.ok) throw new Error();
 
                 const userResponse: User = await response.json();
                 setUserEmail(userResponse.email);
                 setUserId(userResponse.userId);
-                setLoading(false);
             } catch(error) {
                 if (error instanceof HttpError) {
                     if (error.status === 401) {
                         navigate('/login');
+                        return;
                     }
                 }
+
+                setMessageModalMessage("Something went wrong, please try again later");
+                setMessageModalOnClick(() => () => navigate('/'));
+                setIsMessageModalOpen(true);
+            } finally {
+                setLoading(false);
             }
         }
 
@@ -54,55 +52,62 @@ export default function ProfileSection() {
 
     async function deleteUser() {
         try {
-            let response = await fetch('http://localhost:3000/users/me', {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                }
+            let response = await requestToBackend({
+                url: 'http://localhost:3000/users/me',
+                method: 'DELETE'
             });
 
-            if (response.status === 401) {
-                await refreshTokens();
-                    
-                accessToken = getToken();
-                await fetch('http://localhost:3000/users/me', {
-                    method: 'DELETE',
-                    headers: {
-                        'Authorization': `Bearer ${accessToken}`,
-                    },
-                });
-            }
+            if (!response.ok) throw new Error();
 
             setToken('');
             navigate('/login');
         } catch(error) {
-            console.error(error);
+            if (error instanceof HttpError) {
+                if (error.status === 401) {
+                    setMessageModalMessage("Unauthorized: the profile hasn't been deleted");
+                    setMessageModalOnClick(() => () => navigate('/login'));
+                    setIsMessageModalOpen(true);
+                    return;
+                }
+            }
+            setMessageModalMessage("The profile hasn't been delete, please try again later");
+            setMessageModalOnClick(() => () => {});
+            setIsMessageModalOpen(true);
         }
     }
 
     if (loading) return(
-        <section className="account">
-            <p className="account__loading">Loading...</p>
+        <section className="profile">
+            <p className="profile__loading">Loading...</p>
         </section>
     );
 
     return (
-        <section className="account">
-            <h2 className="account__h2">Hello, {userEmail.split('@')[0]}</h2>
-            <p className="account__paragraph">Your id: {userId}</p>
+        <section className="profile">
+            <h2 className="profile__h2">Hello, {userEmail.split('@')[0]}</h2>
+            <p className="profile__paragraph">Your id: {userId}</p>
 
-            <div className="account__wrapper-buttons">
+            <div className="profile__wrapper-buttons">
                 <button 
-                    className="account__delete-button" 
-                    onClick={() => setModalState(true)}
-                >Delete profile</button>
+                    className="profile__delete-button" 
+                    onClick={() => setIsModalOpen(true)}
+                >
+                    Delete profile
+                </button>
             </div>
 
             <Modal
                 message="Do you want to delete your profile?"
-                stateModal={modalState}
-                setStateModal={setModalState}
-                onClick={deleteUser}
+                isModalOpen={isModalOpen}
+                setIsModalOpen={(open: boolean) => setIsModalOpen(open)}
+                onClick={() => deleteUser()}
+            />
+
+            <MessageModal
+                message={messageModalMessage}
+                isMessageModalOpen={isMessageModalOpen}
+                setIsMessageModalOpen={(open: boolean) => setIsMessageModalOpen(open)}
+                onClick={() => messageModalOnClick()}
             />
         </section>
     );

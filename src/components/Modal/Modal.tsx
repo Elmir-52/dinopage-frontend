@@ -1,28 +1,41 @@
-import { useRef } from "react";
-import './_Modal.scss'
+import { useEffect, useRef } from "react";
+import './Modal.scss'
 
 interface PropsModal {
     message: string
-    stateModal: boolean,
-    setStateModal: (open: boolean) => void,
+    isModalOpen: boolean,
+    setIsModalOpen: (open: boolean) => void,
     onClick: () => void;
 }
 
-export default function Modal({ message, stateModal, setStateModal, onClick }: PropsModal) {
+export default function Modal({ message, isModalOpen, setIsModalOpen, onClick }: PropsModal) {
     const dialog = useRef<HTMLDialogElement>(null);
 
-    if (stateModal) {
-        dialog.current?.showModal();
-    } else {
-        dialog.current?.close();
-    }
+    useEffect(() => {
+        if (isModalOpen) {
+            dialog.current?.showModal();
+        } else {
+            dialog.current?.close();
+        }
+    }, [isModalOpen]);
 
     return (
         <dialog ref={dialog} className="modal">
             <p className="modal__message" >{message}</p>
             <div className="modal__buttons">
-                <button className="modal__cancel" onClick={ () => setStateModal(false) }>No</button>
-                <button className="modal__execute" onClick={ () => { onClick(); setStateModal(false) } }>Yes</button>
+                <button 
+                    className="modal__cancel" 
+                    onClick={ () => setIsModalOpen(false) }
+                >
+                    No
+                </button>
+                
+                <button 
+                    className="modal__execute" 
+                    onClick={ () => { onClick(); setIsModalOpen(false); }}
+                >
+                    Yes
+                </button>
             </div>
         </dialog>
     );

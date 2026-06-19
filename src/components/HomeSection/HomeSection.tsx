@@ -6,38 +6,29 @@ import Modal from "../Modal/Modal";
 import type { CreateNote, Note } from "../../shared/types/note";
 import { NOTE_CARD_BACKGROUNDS } from "../../shared/data/noteCardBackgrounds";
 import { randomColor } from "../../utils/randomColor";
-import { getToken } from "../../utils/authService";
-import { refreshTokens } from "../../utils/refreshTokens";
 import { useNavigate, type NavigateFunction } from "react-router";
 import { HttpError } from "../../errors/httpError";
+import { requestToBackend } from "../../utils/requestToBackend";
+import MessageModal, { type MessageModalOnClick } from "../MessageModal/MessageModal";
 
 export default function HomeSection() {
-    let accessToken = getToken();
-
     const navigate: NavigateFunction = useNavigate();
-    const [stateModal, setStateModal] = useState<boolean>(false);
     const [rerender, setRerender] = useState<boolean>(false);
     const [result, setResult] = useState<Note[] | undefined>();
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [isMessageModalOpen, setIsMessageModalOpen] = useState<boolean>(false);
+    const [messageModalMessage, setMessageModalMessage] = useState<string>('');
+    const [messageModalOnClick, setMessageModalOnClick] = useState<MessageModalOnClick>(() => () => {});
 
     useEffect(() => {
         async function getUserNotes() {
             try {
-                let response = await fetch(`http://localhost:3000/notes`, {
-                    headers: {
-                        'Authorization': `Bearer ${accessToken}`,
-                    }
-                });
+                const response = await requestToBackend({
+                    url: 'http://localhost:3000/notes',
+                    method: 'GET'
+                })
 
-                if (response.status === 401) {
-                    await refreshTokens();
-                    
-                    accessToken = getToken();
-                    response = await fetch(`http://localhost:3000/notes`, {
-                        headers: {
-                            'Authorization': `Bearer ${accessToken}`,
-                        }
-                    });
-                }
+                if (!response.ok) throw new Error();
 
                 const notes: Note[] = await response.json();
                 setResult(notes);
@@ -45,8 +36,13 @@ export default function HomeSection() {
                 if (error instanceof HttpError) {
                     if (error.status === 401) {
                         navigate('/login');
+                        return;
                     }
                 }
+
+                setMessageModalMessage("Something went wrong, please try again later");
+                setMessageModalOnClick(() => () => {});
+                setIsMessageModalOpen(true);
             }
         }
 
@@ -61,36 +57,26 @@ export default function HomeSection() {
         }
         
         try {
-            let response = await fetch('http://localhost:3000/notes', {
+            const response = await requestToBackend<CreateNote>({
+                url: 'http://localhost:3000/notes',
                 method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(newNote),
+                body: newNote
             });
 
-            if (response.status === 401) {
-                await refreshTokens();
-                    
-                accessToken = getToken();
-                response = await fetch('http://localhost:3000/notes', {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${accessToken}`,
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(newNote),
-                });
-            }
+            if (!response.ok) throw new Error();
 
             setRerender(prev => !prev);
         } catch(error) {
             if (error instanceof HttpError) {
                 if (error.status === 401) {
                     navigate('/login');
+                    return;
                 }
             }
+
+            setMessageModalMessage("A note hasn't been created, please try again later");
+            setMessageModalOnClick(() => () => {});
+            setIsMessageModalOpen(true);
         }
     }, []);
 
@@ -103,13 +89,21 @@ export default function HomeSection() {
                 })
             }
 
-            <ButtonNoteAdd onClick={(open: boolean) => setStateModal(open)} ></ButtonNoteAdd>
+            <ButtonNoteAdd onClick={(open: boolean) => setIsModalOpen(open)} ></ButtonNoteAdd>
+            
             <Modal
-                message='Create new note'
-                stateModal={stateModal}
-                setStateModal={(open: boolean) => setStateModal(open)}
+                message="Create new note"
+                isModalOpen={isModalOpen}
+                setIsModalOpen={(open: boolean) => setIsModalOpen(open)}
                 onClick={() => createNote()}
-            ></Modal>
+            />
+
+            <MessageModal
+                message={messageModalMessage}
+                isMessageModalOpen={isMessageModalOpen}
+                setIsMessageModalOpen={(open: boolean) => setIsMessageModalOpen(open)}
+                onClick={() => messageModalOnClick()}
+            />
         </section>
     );
 }

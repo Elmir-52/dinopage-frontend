@@ -5,6 +5,7 @@ import closeEyeImage from '/closeeye.svg';
 import './Form.scss';
 import type { UserFormData } from "../../shared/types/user";
 import { UserFormDataSchema } from "../../schemas/userFormData";
+import { HttpError } from "../../errors/httpError";
 
 interface IForm {
     email: string;
@@ -47,7 +48,7 @@ export default function Form({ buttonText, submitFunction }: FormProps) {
         try {
             await submitFunction(result.data);
         } catch(error) {
-            if (error instanceof Error) {
+            if (error instanceof Error || error instanceof HttpError) {
                 setError('root', { type: 'manual', message: error.message });
             }
         }
@@ -56,6 +57,7 @@ export default function Form({ buttonText, submitFunction }: FormProps) {
     return (
         <form className="form" onSubmit={handleSubmit(onSubmit)}>
             {rootError && <label className="form__global-error">{rootError}</label>} 
+
             <div className="form__wrapper">
                 {emailError && <label htmlFor="email">{emailError}</label>}
                 <input 
@@ -102,7 +104,7 @@ export default function Form({ buttonText, submitFunction }: FormProps) {
                 </button>
             </div>
         
-            <button className="form__button" >
+            <button className="form__button">
                 {buttonText}
             </button>
         </form>

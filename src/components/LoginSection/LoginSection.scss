@@ -1,6 +1,6 @@
 @use '../../sass/mixins';
 
-.authorization {
+.login {
     @include mixins.flex(column);
     width: 1200px;
     margin: auto;
