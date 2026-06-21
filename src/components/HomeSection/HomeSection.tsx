@@ -82,7 +82,7 @@ export default function HomeSection() {
         
     return (
         <section className="grid grid-cols-[repeat(auto-fill,150px)] justify-center items-center 
-        gap-5 w-[90%] mx-auto mb-12">
+        gap-7 w-[90%] mx-auto mb-12">
             {
                 result?.map(el => {
                     return <NoteCard key={el.noteId} content={el}></NoteCard>
