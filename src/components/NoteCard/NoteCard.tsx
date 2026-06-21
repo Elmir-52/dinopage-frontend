@@ -1,4 +1,3 @@
-import './NoteCard.scss'
 import { useNavigate, type NavigateFunction } from 'react-router';
 import type { Note } from '../../shared/types/note';
 import { MONTHS } from '../../shared/data/months';
@@ -15,21 +14,22 @@ export default function NoteCard({ content }: PropsButtonNote) {
 
     return(
         <button 
-            className='note-card'
+            className='flex flex-col justify-between items-center w-full h-45 p-2 cursor-pointer 
+            rounded-2xl shadow-xl bg-white transition-transform hover:scale-104'
             onClick={() => { 
                 navigate(`/notes/${content.noteId}`);
             }} 
         >
-            <div className='note-card__wrap'>
+            <div className='w-full'>
                 <div 
-                    className='note-card__header' 
+                    className='w-full h-6 rounded-2xl mb-2.5' 
                     style={{ backgroundColor: `${content.color}40`, }}
-                ></div>
+                />
 
                 <p 
                     className={content.title ? 
-                        'note-card__title' : 
-                        'note-card__title note-card__title_untitled'
+                        'w-full h-13 mx-auto text-left text-[18px] font-semibold overflow-hidden' : 
+                        'w-full h-13 mx-auto text-left text-[18px] font-semibold overflow-hidden text-black/40'
                     }
                 >
                     {content.title ? content.title : 'Untitled note'}
@@ -37,7 +37,7 @@ export default function NoteCard({ content }: PropsButtonNote) {
 
             </div>
 
-            <p className='note-card__date'>{updatedAt}</p>
+            <p className='text-gray-400'>{updatedAt}</p>
         </button>
     )
 }
