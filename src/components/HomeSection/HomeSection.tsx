@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState  } from "react";
 import NoteCard from "../NoteCard/NoteCard";
 import ButtonNoteAdd from "../CreateNoteButton/CreateNoteButton";
-import './HomeSection.scss';
 import Modal from "../Modal/Modal";
 import type { CreateNote, Note } from "../../shared/types/note";
 import { NOTE_CARD_BACKGROUNDS } from "../../shared/data/noteCardBackgrounds";
@@ -82,7 +81,8 @@ export default function HomeSection() {
 
         
     return (
-        <section className="home-section">
+        <section className="grid grid-cols-[repeat(auto-fill,150px)] justify-center items-center 
+        gap-5 w-[90%] mx-auto mb-12">
             {
                 result?.map(el => {
                     return <NoteCard key={el.noteId} content={el}></NoteCard>
