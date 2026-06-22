@@ -1,4 +1,3 @@
-import './RegistrationSection.scss'
 import { useNavigate, type NavigateFunction } from "react-router";
 import type { UserFormData } from "../../shared/types/user";
 import Form from "../Form/Form";
@@ -45,8 +44,8 @@ export default function RegistrationSection() {
     }
 
     return (
-        <section className="registration">
-            <h3 className="registration__h3">Registration</h3>
+        <section className="flex flex-col items-center gap-8">
+            <h3 className="font-[Nunito] text-5xl font-medium mb-4">Registration</h3>
             <Form buttonText="Register" submitFunction={(user: UserFormData) => registration(user)} />
         </section>
     )

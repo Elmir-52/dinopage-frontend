@@ -45,7 +45,7 @@ export default function LoginSection() {
 
     return (
         <section className="flex flex-col items-center gap-8">
-            <h3 className="font-[Nunito] text-5xl font-medium">Login</h3>
+            <h3 className="font-[Nunito] text-5xl font-medium mb-4">Login</h3>
             <Form buttonText='Log in' submitFunction={(user: UserFormData) => login(user)} />
             
             <Link 
