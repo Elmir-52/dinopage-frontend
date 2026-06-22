@@ -1,4 +1,3 @@
-import './LoginSection.scss'
 import { Link, useNavigate, type NavigateFunction } from "react-router";
 import type { UserFormData } from "../../shared/types/user";
 import Form from '../Form/Form';
@@ -45,10 +44,16 @@ export default function LoginSection() {
     }
 
     return (
-        <section className="login">
-            <h3 className="login__h3">Login</h3>
+        <section className="flex flex-col items-center gap-8">
+            <h3 className="font-[Nunito] text-5xl font-medium">Login</h3>
             <Form buttonText='Log in' submitFunction={(user: UserFormData) => login(user)} />
-            <Link to='/reg' className="login__link">Register</Link>
+            
+            <Link 
+                to='/reg' 
+                className="font-[Nunito] text-2xl text-blue-600 underline"
+            >
+                Register
+            </Link>
         </section>
     )
 }
