@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import openEyeImage from '/openeye.svg';
 import closeEyeImage from '/closeeye.svg';
-import './Form.scss';
 import type { UserFormData } from "../../shared/types/user";
 import { UserFormDataSchema } from "../../schemas/userFormData";
 import { HttpError } from "../../errors/httpError";
@@ -55,14 +54,33 @@ export default function Form({ buttonText, submitFunction }: FormProps) {
     }
 
     return (
-        <form className="form" onSubmit={handleSubmit(onSubmit)}>
-            {rootError && <label className="form__global-error">{rootError}</label>} 
+        <form 
+            className="flex flex-col justify-center items-center bg-white w-[90%] h-75 gap-7.5 
+            rounded-2xl relative md:w-[70%] lg:w-[50%]" 
+            onSubmit={handleSubmit(onSubmit)}
+        >
+            {rootError && <label 
+                    className="text-xs absolute top-2.5 text-red-600"
+                >
+                    {rootError}
+                </label>
+            } 
 
-            <div className="form__wrapper">
-                {emailError && <label htmlFor="email">{emailError}</label>}
+            <div className="w-[90%] h-12 relative">
+                {emailError && 
+                    <label 
+                        className="text-xs absolute top-12.5 text-red-600" 
+                        htmlFor="email"
+                    >
+                        {emailError}
+                    </label>
+                }
+
                 <input 
-                    id="email"
-                    className={emailError && 'form__invalid'}
+                    className={emailError ? 
+                        'w-full h-full text-2xl px-2 border-b-2 border-solid border-red-600 focus:outline-0 focus:border-blue-600' :
+                        'w-full h-full text-2xl px-2 border-b-2 border-solid border-gray-500 focus:outline-0 focus:border-blue-600'
+                    }
                     type="email" 
                     placeholder='email' 
                     autoComplete="email"
@@ -76,11 +94,21 @@ export default function Form({ buttonText, submitFunction }: FormProps) {
                 />
             </div>
 
-            <div className="form__wrapper">
-                {passwordError && <label htmlFor="email">{passwordError}</label>}
+            <div className="w-[90%] h-12 relative">
+                {passwordError && 
+                    <label 
+                        className="text-xs absolute top-12.5 text-red-600" 
+                        htmlFor="email"
+                    >
+                        {passwordError}
+                    </label>
+                }
+
                 <input
-                    id="password"
-                    className={passwordError && 'form__invalid'}
+                    className={passwordError ? 
+                        'w-full h-full text-2xl px-2 border-b-2 border-solid border-red-600 focus:outline-0 focus:border-blue-600' :
+                        'w-full h-full text-2xl px-2 border-b-2 border-solid border-gray-500 focus:outline-0 focus:border-blue-600'
+                    }
                     type={showPassword ? 'text' : 'password'} 
                     placeholder='password' 
                     autoComplete="current-password"
@@ -93,18 +121,22 @@ export default function Form({ buttonText, submitFunction }: FormProps) {
                     })}
                 />
                 <button 
-                    className="form__open-eye"
+                    className="w-8 cursor-pointer absolute top-3 right-3"
                     type="button"
                     onClick={() => setShowPassword(prev => !prev)} 
                 >
                     <img
+                        className="w-full"
                         src={showPassword ? openEyeImage : closeEyeImage} 
                         alt="иконка глаза" 
                     />
                 </button>
             </div>
         
-            <button className="form__button">
+            <button 
+                className="mt-6.5 px-12.5 py-3 rounded-xl cursor-pointer text-xl 
+                bg-black text-white"
+            >
                 {buttonText}
             </button>
         </form>
