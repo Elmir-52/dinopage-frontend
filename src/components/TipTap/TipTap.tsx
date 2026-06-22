@@ -1,11 +1,12 @@
 import { EditorContent, EditorContext, useEditor } from "@tiptap/react";
 import { BubbleMenu, FloatingMenu } from "@tiptap/react/menus";
 import StarterKit from "@tiptap/starter-kit";
+import { TextStyleKit } from '@tiptap/extension-text-style'
 import { useMemo } from "react";
 
 export default function TipTap() {
     const editor = useEditor({
-        extensions: [StarterKit],
+        extensions: [StarterKit, TextStyleKit],
         editorProps: {
             attributes: {
                 class: 'bg-white w-[80%] h-[90vh] px-7 py-3 focus:outline-0'
