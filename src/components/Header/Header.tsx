@@ -6,7 +6,7 @@ export default function Header() {
     const currentPath = location.pathname;
 
     return (
-        <header className='flex justify-center items-center h-25 sticky top-0 z-10 mb-12.5 '>
+        <header className='font-[Nunito] font-semibold flex justify-center items-center h-25 sticky top-0 z-10 mb-12.5'>
             <nav 
                 className="flex items-center gap-2.5 p-2.5 bg-white/10 backdrop-blur-md 
                 shadow-2xl rounded-4xl"
