@@ -21,7 +21,7 @@ export default function Modal({ message, isModalOpen, setIsModalOpen, onClick }:
     return (
         <dialog 
             ref={dialog} 
-            className="open:flex flex-col justify-between items-center w-80 m-auto pt-8 rounded-3xl 
+            className="open:flex flex-col justify-between items-center w-80 m-auto pt-7.5 rounded-3xl 
             bg-white/10 backdrop-blur-md shadow-2xl"
         >
             <p className="font-[Nunito] w-[80%] text-center text-2xl mb-7.5 font-medium">{message}</p>
