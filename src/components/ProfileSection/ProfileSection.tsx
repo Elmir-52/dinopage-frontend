@@ -1,4 +1,3 @@
-import './ProfileSection.scss';
 import { useEffect, useState } from "react";
 import { useNavigate, type NavigateFunction } from "react-router";
 import type { User } from "../../shared/types/user";
@@ -77,24 +76,22 @@ export default function ProfileSection() {
     }
 
     if (loading) return(
-        <section className="profile">
-            <p className="profile__loading">Loading...</p>
+        <section className="flex flex-col items-center gap-16 w-[90%] m-auto my-32">
+            <p className="text-2xl">Loading...</p>
         </section>
     );
 
     return (
-        <section className="profile">
-            <h2 className="profile__h2">Hello, {userEmail.split('@')[0]}</h2>
-            <p className="profile__paragraph">Your id: {userId}</p>
+        <section className="flex flex-col items-center gap-16 w-[90%] m-auto my-32">
+            <h2 className="text-5xl font-medium text-center">Hello, {userEmail.split('@')[0]}</h2>
+            <p className="text-2xl text-center">Your id: {userId}</p>
 
-            <div className="profile__wrapper-buttons">
-                <button 
-                    className="profile__delete-button" 
-                    onClick={() => setIsModalOpen(true)}
-                >
-                    Delete profile
-                </button>
-            </div>
+            <button 
+                className="font-[Nunito] text-red-600 underline text-xl cursor-pointer" 
+                onClick={() => setIsModalOpen(true)}
+            >
+                Delete profile
+            </button>
 
             <Modal
                 message="Do you want to delete your profile?"
