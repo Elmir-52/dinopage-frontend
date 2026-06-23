@@ -9,7 +9,7 @@ export default function FontSizesList() {
     function applyFontSize(size: string) {
         editor.update(() => {
             const selection = $getSelection();
-            if ($isRangeSelection(selection)) {
+            if ($isRangeSelection(selection) ) {
                 $patchStyleText(selection, {
                     'font-size': size,
                 });

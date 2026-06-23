@@ -17,6 +17,11 @@ interface EditorProps {
 }
 
 const theme = {
+    // heading: {
+    //     h1: '',
+    //     h2: '',
+    //     h3: '',
+    // },
     text: {
         bold: 'bold',
         italic: 'italic',

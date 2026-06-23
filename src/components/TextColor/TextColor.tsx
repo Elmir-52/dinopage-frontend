@@ -11,7 +11,7 @@ export default function TextColor() {
         editor.update(() => {
             const selection = $getSelection();
             if ($isRangeSelection(selection)) {
-                $patchStyleText(selection, { 
+                $patchStyleText(selection, {
                     color
                 });
             }

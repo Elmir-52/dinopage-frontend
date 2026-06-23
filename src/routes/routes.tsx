@@ -4,6 +4,8 @@ import NoteTextView from "../views/NoteTextView/NoteTextView";
 import RegistrationView from "../views/RegistrationView/RegistrationView";
 import LoginView from "../views/LoginView/LoginView";
 import ProfileView from "../views/ProfileView/ProfileView";
+import ExampleView from "../views/ExampleView/ExampleView";
+import PaymentExample from "../views/PaymentExample";
 
 export default function AppRoutes() {
     const navigationRoutes: RouteObject[] = [
@@ -12,6 +14,8 @@ export default function AppRoutes() {
         {path: '/login', element: <LoginView />},
         {path: '/reg', element: <RegistrationView />},
         {path: '/profile', element: <ProfileView />},
+        {path: '/example', element: <ExampleView />},
+        {path: '/pay', element: <PaymentExample />}
     ]
 
     return(

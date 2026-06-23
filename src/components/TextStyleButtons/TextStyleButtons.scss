@@ -5,15 +5,19 @@
     gap: 8px;
     
     &__button {
-        font-size: 18px;
+        font-size: 20px;
         padding: 5px 7px;
         border-radius: 10px;
         border: none;
         background: none;
         cursor: pointer;
 
+        &_active {
+            background: #eaeaea;
+        }
+
         &:hover {
-            background: #d8d8d8;
+            background: #eaeaea;
         }
     }
 }

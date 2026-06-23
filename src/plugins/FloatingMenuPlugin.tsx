@@ -34,10 +34,14 @@ export default function FloatingMenuPlugin({ children }: FloatingMenuPluginProps
     });
   }, [editor]);
 
-  if (!isMenuShown) return null;
-
   return (
-    <div style={{ position: 'absolute', top: coords.y, left: coords.x, zIndex: 10 }}>
+    <div style={{ 
+      display: isMenuShown ? 'block' : 'none', 
+      position: 'absolute', 
+      top: coords.y, 
+      left: coords.x, 
+      zIndex: 10 
+    }}>
        {children}
     </div>
   );
