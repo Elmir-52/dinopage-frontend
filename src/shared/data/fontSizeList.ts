@@ -1,43 +1,33 @@
 export interface FontSizeListElement {
-    name: string,
     value: string,
 }
 
 export const FONT_SIZE_LIST: FontSizeListElement[] = [
     {
-        name: '10',
-        value: '10px',
+        value: '10',
     },
     {
-        name: '11',
-        value: '11px',
+        value: '11',
     },
     {
-        name: '12',
-        value: '12px',
+        value: '12',
     },
     {
-        name: '14',
-        value: '14px',
+        value: '14',
     },
     {
-        name: '16',
-        value: '16px',
+        value: '16',
     },
     {
-        name: '18',
-        value: '18px',
+        value: '18',
     },
     {
-        name: '20',
-        value: '20px',
+        value: '20',
     },
     {
-        name: '24',
-        value: '24px',
+        value: '24',
     },
     {
-        name: '30',
-        value: '30px',
+        value: '30',
     },
 ];

@@ -44,46 +44,43 @@ export default function TipTap({ note }: TipTapProps) {
 
     return (
         <EditorContext.Provider value={providerValue}>
-            <div className="flex flex-col justify-end h-screen">
+            <div className="flex gap-2.5 h-screen">
+                <NoteBar noteTitleInputRef={noteTitleInputRef}/>
 
-                <div className="flex gap-2.5 h-[95%]">
-                    <NoteBar noteTitleInputRef={noteTitleInputRef}/>
+                <div
+                    className="flex flex-col gap-5 w-[80%] h-[98%] m-auto rounded-3xl 
+                    overflow-y-auto border-2 border-solid border-gray-200 shadow-2xl 
+                    bg-white"
+                >
+                    <input
+                        id="title"
+                        className='w-[90%] bg-white outline-0 mx-auto pt-6 pb-2 text-3xl border-b 
+                        border-solid border-gray-400 font-semibold'
+                        ref={noteTitleInputRef}
+                        type="text"
+                        placeholder='Note title'
+                    />
 
-                    <div
-                        className="flex flex-col gap-5 w-[80%] h-[98%] m-auto rounded-3xl 
-                        overflow-y-auto border-2 border-solid border-gray-200 shadow-2xl 
-                        bg-white"
+                    <EditorContent 
+                        editor={editor}
+                        className="w-full min-h-full"
+                    />
+
+                    {/* <FloatingMenu
+                        options={{ 
+                            placement: 'left',
+                            offset: 20,
+                        }} 
+                        editor={editor}
                     >
-                        <input
-                            id="title"
-                            className='w-[90%] bg-white outline-0 mx-auto pt-6 pb-2 text-3xl border-b 
-                            border-solid border-gray-400 font-semibold'
-                            ref={noteTitleInputRef}
-                            type="text"
-                            placeholder='Note title'
+                        <Plus 
+                            className="text-gray-400 cursor-pointer"
                         />
+                    </FloatingMenu> */}
 
-                        <EditorContent 
-                            editor={editor}
-                            className="w-full min-h-full"
-                        />
-
-                        {/* <FloatingMenu
-                            options={{ 
-                                placement: 'left',
-                                offset: 20,
-                            }} 
-                            editor={editor}
-                        >
-                            <Plus 
-                                className="text-gray-400 cursor-pointer"
-                            />
-                        </FloatingMenu> */}
-
-                        <BubbleMenu editor={editor}>
-                            <SubBubbleMenu editor={editor} />
-                        </BubbleMenu>
-                    </div>
+                    <BubbleMenu editor={editor}>
+                        <SubBubbleMenu editor={editor} />
+                    </BubbleMenu>
                 </div>
             </div>
         </EditorContext.Provider>
