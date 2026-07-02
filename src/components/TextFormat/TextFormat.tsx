@@ -15,35 +15,35 @@ export default function TextFormat({ editorState }: TextFormatProps) {
                 className="cursor-pointer"
                 onClick={() => editor?.chain().focus().toggleBold().run()}
             >
-                <Bold size={20} color={editorState.isBold ? '#0000ff' : '#000'} />
+                <Bold size={23} color={editorState.isBold ? '#0000ff' : '#000'} />
             </button>
 
             <button
                 className="cursor-pointer"
                 onClick={() => editor?.chain().focus().toggleItalic().run()}
             >
-                <Italic size={20} color={editorState.isItalic ? '#0000ff' : '#000'} />
+                <Italic size={23} color={editorState.isItalic ? '#0000ff' : '#000'} />
             </button>
 
             <button
                 className="cursor-pointer"
                 onClick={() => editor?.chain().focus().toggleUnderline().run()}
             >
-                <Underline size={20} color={editorState.isUnderline ? '#0000ff' : '#000'} />
+                <Underline size={23} color={editorState.isUnderline ? '#0000ff' : '#000'} />
             </button>
 
             <button
                 className="cursor-pointer"
                 onClick={() => editor?.chain().focus().toggleStrike().run()}
             >
-                <Strikethrough size={20} color={editorState.isStrike ? '#0000ff' : '#000'} />
+                <Strikethrough size={23} color={editorState.isStrike ? '#0000ff' : '#000'} />
             </button>
 
             <button
                 className="cursor-pointer"
                 onClick={() => editor?.chain().focus().toggleCode().run()}
             >
-                <CodeXml size={20} color={editorState.isCode ? '#0000ff' : '#000'} />
+                <CodeXml size={23} color={editorState.isCode ? '#0000ff' : '#000'} />
             </button>
         </div>
     )
