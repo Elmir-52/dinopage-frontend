@@ -7,6 +7,9 @@ import SubBubbleMenu from "../SubBubbleMenu/SubBubbleMenu";
 import Code from "@tiptap/extension-code";
 import NoteBar from "../NoteBar/NoteBar";
 import type { Note } from "../../shared/types/note";
+import { CustomParagraphExtension } from "../ParagraphComponent/ParagraphComponent";
+import FloatingMenu from "../FloatingMenu/FloatingMenu";
+import { closeFloatingMenu } from "../../utils/closeFloatingMenu";
 
 interface TipTapProps {
     note: Note
@@ -14,22 +17,26 @@ interface TipTapProps {
 
 export default function TipTap({ note }: TipTapProps) {
     const noteTitleInputRef = useRef<HTMLInputElement | null>(null);
+    const editorContentRef = useRef<HTMLDivElement | null>(null);
 
     const editor = useEditor({
         extensions: [
-            StarterKit, 
             TextStyleKit,
-
+            
+            StarterKit.configure({
+                paragraph: false,
+            }), 
             Code.configure({
                 HTMLAttributes: {
                     class: 'bg-gray-200 px-2 py-[1px] border-solid border-black rounded-md text-red-600',
                 },
             }),
+            CustomParagraphExtension,
         ],
         editorProps: {
             attributes: {
                 class: 'bg-white w-full min-h-full px-15 py-3 pb-50 focus:outline-0'
-            }
+            },
         },
         content: note.content ? JSON.parse(note.content) : '',
     });
@@ -61,22 +68,15 @@ export default function TipTap({ note }: TipTapProps) {
                         placeholder='Note title'
                     />
 
-                    <EditorContent 
+                    <EditorContent
+                        ref={editorContentRef}
+                        id="editor-content"
                         editor={editor}
-                        className="w-full min-h-full"
+                        className="w-full min-h-full relative"
+                        onMouseLeave={closeFloatingMenu}
                     />
 
-                    {/* <FloatingMenu
-                        options={{ 
-                            placement: 'left',
-                            offset: 20,
-                        }} 
-                        editor={editor}
-                    >
-                        <Plus 
-                            className="text-gray-400 cursor-pointer"
-                        />
-                    </FloatingMenu> */}
+                    <FloatingMenu />
 
                     <BubbleMenu editor={editor}>
                         <SubBubbleMenu editor={editor} />
