@@ -72,13 +72,13 @@ export default function TipTap({ note }: TipTapProps) {
                         ref={editorContentRef}
                         id="editor-content"
                         editor={editor}
-                        className="w-full min-h-full relative"
+                        className="w-full min-h-full"
                         onMouseLeave={closeFloatingMenu}
                     />
 
                     <FloatingMenu />
 
-                    <BubbleMenu editor={editor}>
+                    <BubbleMenu className="z-10" editor={editor}>
                         <SubBubbleMenu editor={editor} />
                     </BubbleMenu>
                 </div>
