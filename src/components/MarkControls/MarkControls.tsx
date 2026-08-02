@@ -1,56 +1,25 @@
 import { useCurrentEditor } from "@tiptap/react";
-import { Bold, CodeXml, icons, Italic, Link, Strikethrough, Underline } from 'lucide-react'
-import type { ReactNode } from "react";
 import { useAppSelector } from "../../hook";
-
-interface TextFormatButton {
-    onClick: () => void;
-    icon: ReactNode;
-}
+import { createMarkControlsArray, type MarkControl } from "../../utils/createMarkControlsArray";
 
 
 export default function MarkControls() {
     const { editor } = useCurrentEditor();
     const editorState = useAppSelector(state => state.editorStateReducer.editorState);
 
-    const textFormatButtons: TextFormatButton[] = [
-        {
-            onClick: () => editor?.chain().focus().toggleBold().run(),
-            icon: <Bold size={20} color={editorState.isBold ? '#0000ff' : '#000'} />,
-        },
-        {
-            onClick: () => editor?.chain().focus().toggleItalic().run(),
-            icon: <Italic size={20} color={editorState.isItalic ? '#0000ff' : '#000'} />,
-        },
-        {
-            onClick: () => editor?.chain().focus().toggleUnderline().run(),
-            icon: <Underline size={20} color={editorState.isUnderline ? '#0000ff' : '#000'} />,
-        },
-        {
-            onClick: () => editor?.chain().focus().toggleStrike().run(),
-            icon: <Strikethrough size={20} color={editorState.isStrike ? '#0000ff' : '#000'} />,
-        },
-        {
-            onClick: () => editor?.chain().focus().toggleCode().run(),
-            icon: <CodeXml size={20} color={editorState.isCode ? '#0000ff' : '#000'} />,
-        },
-        // {
-        //     onClick: () => editor?.chain().focus().toggleCode().run(),
-        //     icon: <Link size={20} color={editorState.isCode ? '#0000ff' : '#000'} />,
-        // },
-    ]
+    const markControls: MarkControl[] = createMarkControlsArray(editor, editorState);
 
     return (
         <div className="grid grid-cols-5 items-center justify-between gap-1.5">
             {
-                textFormatButtons.map((textFormatButton, i) => {
+                markControls.map((markControl, i) => {
                     return <button
                         key={i}
                         className="cursor-pointer hover:bg-gray-200 rounded-lg py-1 px-0.5
                         flex justify-center"
-                        onClick={textFormatButton.onClick}
+                        onClick={markControl.onClick}
                     >
-                        {textFormatButton.icon}
+                        {markControl.icon}
                     </button>
                 })
             }

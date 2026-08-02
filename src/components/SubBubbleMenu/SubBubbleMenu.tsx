@@ -1,5 +1,5 @@
 import { Editor, useEditorState } from "@tiptap/react";
-import TextFormat from "../TextFormat/TextFormat";
+import MarkControls from "../MarkControls/MarkControls";
 import { subBubbleMenuStateSelector } from "../../utils/subBubbleMenuState";
 import TextColor from "../TextColor/TextColor";
 import FontSize from "../FontSize/FontSize";
@@ -29,7 +29,7 @@ export default function SubBubbleMenu({ editor }: SubBubbleMenuProps) {
             border border-solid border-gray-300"
         >
             
-            <TextFormat />
+            <MarkControls />
             <Divider />
             <TextColor />
             <Divider />
