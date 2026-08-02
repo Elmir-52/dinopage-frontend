@@ -7,9 +7,6 @@ import SubBubbleMenu from "../SubBubbleMenu/SubBubbleMenu";
 import Code from "@tiptap/extension-code";
 import NoteBar from "../NoteBar/NoteBar";
 import type { Note } from "../../shared/types/note";
-import { CustomParagraphExtension } from "../ParagraphComponent/ParagraphComponent";
-import FloatingMenu from "../FloatingMenu/FloatingMenu";
-import { closeFloatingMenu } from "../../utils/closeFloatingMenu";
 
 interface TipTapProps {
     note: Note
@@ -22,16 +19,13 @@ export default function TipTap({ note }: TipTapProps) {
     const editor = useEditor({
         extensions: [
             TextStyleKit,
-            
-            StarterKit.configure({
-                paragraph: false,
-            }), 
+            StarterKit,
+
             Code.configure({
                 HTMLAttributes: {
                     class: 'bg-gray-200 px-2 py-[1px] border-solid border-black rounded-md text-red-600',
                 },
             }),
-            CustomParagraphExtension,
         ],
         editorProps: {
             attributes: {
@@ -73,10 +67,7 @@ export default function TipTap({ note }: TipTapProps) {
                         id="editor-content"
                         editor={editor}
                         className="w-full min-h-full"
-                        onMouseLeave={closeFloatingMenu}
                     />
-
-                    <FloatingMenu />
 
                     <BubbleMenu className="z-10" editor={editor}>
                         <SubBubbleMenu editor={editor} />
