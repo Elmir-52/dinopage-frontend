@@ -7,6 +7,7 @@ import SubBubbleMenu from "../SubBubbleMenu/SubBubbleMenu";
 import Code from "@tiptap/extension-code";
 import NoteBar from "../NoteBar/NoteBar";
 import type { Note } from "../../shared/types/note";
+import Heading from '@tiptap/extension-heading'
 
 interface TipTapProps {
     note: Note
@@ -19,7 +20,14 @@ export default function TipTap({ note }: TipTapProps) {
     const editor = useEditor({
         extensions: [
             TextStyleKit,
-            StarterKit,
+            StarterKit.configure({
+                heading: false,
+            }),
+            Heading.extend({
+                // Разрешаем только базовые стили. 
+                // Так как TextStyle здесь нет, font-size внутри <span> автоматически удалится!
+                marks: 'bold italic strike link code', 
+            }),
 
             Code.configure({
                 HTMLAttributes: {

@@ -7,6 +7,7 @@ import Divider from "../Divider/Divider";
 import { useEffect } from "react";
 import { useAppDispatch } from "../../hook";
 import { setEditorState } from "../../store/editorStateSlice";
+import SetNodeMenuTrigger from "../SetNodeMenuTrigger/SetNodeMenuTrigger";
 
 interface SubBubbleMenuProps {
     editor: Editor
@@ -28,7 +29,8 @@ export default function SubBubbleMenu({ editor }: SubBubbleMenuProps) {
             className="flex flex-col items-center gap-3 bg-white p-2.5 shadow-xl rounded-2xl
             border border-solid border-gray-300"
         >
-            
+            <SetNodeMenuTrigger />
+            <Divider />
             <MarkControls />
             <Divider />
             <TextColor />
