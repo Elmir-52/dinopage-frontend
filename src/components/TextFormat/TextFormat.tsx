@@ -1,11 +1,7 @@
 import { useCurrentEditor } from "@tiptap/react";
 import { Bold, CodeXml, icons, Italic, Link, Strikethrough, Underline } from 'lucide-react'
-import type { SubBubbleMenuStateSelector } from "../../utils/subBubbleMenuState";
 import type { ReactNode } from "react";
-
-interface TextFormatProps {
-    editorState: SubBubbleMenuStateSelector
-}
+import { useAppSelector } from "../../hook";
 
 interface TextFormatButton {
     onClick: () => void;
@@ -13,8 +9,9 @@ interface TextFormatButton {
 }
 
 
-export default function TextFormat({ editorState }: TextFormatProps) {
+export default function TextFormat() {
     const { editor } = useCurrentEditor();
+    const editorState = useAppSelector(state => state.editorStateReducer.editorState);
 
     const textFormatButtons: TextFormatButton[] = [
         {
@@ -46,8 +43,9 @@ export default function TextFormat({ editorState }: TextFormatProps) {
     return (
         <div className="grid grid-cols-5 items-center justify-between gap-1.5">
             {
-                textFormatButtons.map(textFormatButton => {
+                textFormatButtons.map((textFormatButton, i) => {
                     return <button
+                        key={i}
                         className="cursor-pointer hover:bg-gray-200 rounded-lg py-1 px-0.5
                         flex justify-center"
                         onClick={textFormatButton.onClick}
