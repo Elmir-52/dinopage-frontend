@@ -9,7 +9,7 @@ interface TextFormatButton {
 }
 
 
-export default function TextFormat() {
+export default function MarkControls() {
     const { editor } = useCurrentEditor();
     const editorState = useAppSelector(state => state.editorStateReducer.editorState);
 
