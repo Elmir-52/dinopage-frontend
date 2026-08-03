@@ -1,11 +1,11 @@
 import { useCurrentEditor } from "@tiptap/react"
-import { requestToBackend } from "../../utils/requestToBackend";
-import type { UpdateNote } from "../../shared/types/note";
+import { requestToBackend } from "../../../../utils/requestToBackend";
+import type { UpdateNote } from "../../../../shared/types/note";
 import { Link, useNavigate, useParams, type NavigateFunction } from "react-router";
 import { useState } from "react";
-import Modal from "../Modal/Modal";
-import MessageModal from "../MessageModal/MessageModal";
-import { HttpError } from "../../errors/httpError";
+import Modal from "../../../Modal/Modal";
+import MessageModal from "../../../MessageModal/MessageModal";
+import { HttpError } from "../../../../errors/httpError";
 import { Save, Trash2 } from "lucide-react";
 
 interface NoteBarProps {

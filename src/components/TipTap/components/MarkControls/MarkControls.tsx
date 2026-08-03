@@ -1,5 +1,5 @@
 import { useCurrentEditor } from "@tiptap/react";
-import { useAppSelector } from "../../hook";
+import { useAppSelector } from "../../../../hook";
 import { createMarkControlsArray, type MarkControl } from "../../utils/createMarkControlsArray";
 
 

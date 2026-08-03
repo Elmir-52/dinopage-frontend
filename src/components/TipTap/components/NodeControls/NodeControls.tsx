@@ -1,5 +1,5 @@
 import { type CSSProperties, type HTMLProps } from "react";
-import { type NodeControl } from "../../utils/createNodeControlsArray";
+import type { NodeControl } from "../../utils/createNodeControlsArray";
 
 interface NodeControlsProps {
     ref: (node: HTMLElement | null) => void;

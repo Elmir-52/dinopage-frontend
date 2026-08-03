@@ -3,11 +3,12 @@ import { BubbleMenu } from "@tiptap/react/menus";
 import StarterKit from "@tiptap/starter-kit";
 import { TextStyleKit } from '@tiptap/extension-text-style';
 import { useEffect, useMemo, useRef } from "react";
-import SubBubbleMenu from "../SubBubbleMenu/SubBubbleMenu";
 import Code from "@tiptap/extension-code";
-import NoteBar from "../NoteBar/NoteBar";
+import NoteBar from "./components/NoteBar/NoteBar";
 import type { Note } from "../../shared/types/note";
 import Heading from '@tiptap/extension-heading'
+import SubBubbleMenu from "./components/SubBubbleMenu/SubBubbleMenu";
+import { CustomHeading } from "./extensions/custom-heading";
 
 interface TipTapProps {
     note: Note
@@ -21,13 +22,10 @@ export default function TipTap({ note }: TipTapProps) {
         extensions: [
             TextStyleKit,
             StarterKit.configure({
+                // Отключаем встроенный heading, чтобы он не конфликтовал с CustomHeading
                 heading: false,
             }),
-            Heading.extend({
-                // Разрешаем только базовые стили. 
-                // Так как TextStyle здесь нет, font-size внутри <span> автоматически удалится!
-                marks: 'bold italic strike link code', 
-            }),
+            CustomHeading,
 
             Code.configure({
                 HTMLAttributes: {

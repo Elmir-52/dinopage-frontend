@@ -1,7 +1,7 @@
 import { Editor } from '@tiptap/react';
 import { Bold, CodeXml, Italic, Strikethrough, Underline } from 'lucide-react'
-import type { SubBubbleMenuStateSelector } from './subBubbleMenuState';
 import type { ReactNode } from 'react';
+import type { SubBubbleMenuStateSelector } from './subBubbleMenuState';
 
 export interface MarkControl {
     onClick: () => void;

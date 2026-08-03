@@ -1,6 +1,6 @@
 import { useCurrentEditor } from "@tiptap/react";
-import { FONT_SIZE_LIST } from "../../shared/data/fontSizeList";
 import { useEffect, useState } from "react";
+import { FONT_SIZE_LIST } from "../../data/fontSizeList";
 
 export default function FontSize() {
     const { editor } = useCurrentEditor();

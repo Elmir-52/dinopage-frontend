@@ -1,13 +1,13 @@
 import { Editor, useEditorState } from "@tiptap/react";
 import MarkControls from "../MarkControls/MarkControls";
-import { subBubbleMenuStateSelector } from "../../utils/subBubbleMenuState";
 import TextColor from "../TextColor/TextColor";
 import FontSize from "../FontSize/FontSize";
-import Divider from "../Divider/Divider";
 import { useEffect } from "react";
-import { useAppDispatch } from "../../hook";
-import { setEditorState } from "../../store/editorStateSlice";
 import NodeControlsTrigger from "../NodeControlsTrigger/NodeControlsTrigger";
+import { useAppDispatch } from "../../../../hook";
+import { subBubbleMenuStateSelector } from "../../utils/subBubbleMenuState";
+import { setEditorState } from "../../../../store/editorStateSlice";
+import Divider from "../../../Divider/Divider";
 
 interface SubBubbleMenuProps {
     editor: Editor

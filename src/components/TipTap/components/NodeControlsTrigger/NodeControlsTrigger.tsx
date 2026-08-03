@@ -2,9 +2,9 @@ import { ChevronRight } from "lucide-react";
 import NodeControls from "../NodeControls/NodeControls";
 import { useMemo, useState } from "react";
 import { flip, safePolygon, shift, useFloating, useHover, useInteractions } from "@floating-ui/react";
-import { useAppSelector } from "../../hook";
-import { createNodeControlsArray, type NodeControl } from "../../utils/createNodeControlsArray";
+import { useAppSelector } from "../../../../hook";
 import { useCurrentEditor } from "@tiptap/react";
+import { createNodeControlsArray, type NodeControl } from "../../utils/createNodeControlsArray";
 
 export default function NodeControlsTrigger() {
     const [isOpen, setIsOpen] = useState<boolean>(false);

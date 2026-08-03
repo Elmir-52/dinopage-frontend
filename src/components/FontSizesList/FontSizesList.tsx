@@ -1,7 +1,7 @@
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $patchStyleText } from "@lexical/selection";
 import { $getSelection, $isRangeSelection } from "lexical";
-import { FONT_SIZE_LIST, type FontSizeListElement } from "../../shared/data/fontSizeList";
+import { FONT_SIZE_LIST, type FontSizeListElement } from "../TipTap/data/fontSizeList";
 
 export default function FontSizesList() {
     const [editor] = useLexicalComposerContext();

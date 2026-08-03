@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import { subBubbleMenuStateSelector, type SubBubbleMenuStateSelector } from "../utils/subBubbleMenuState";
+import { subBubbleMenuStateSelector, type SubBubbleMenuStateSelector } from "../components/TipTap/utils/subBubbleMenuState";
 
 interface SetEditorStateActionPayload {
     editorState: SubBubbleMenuStateSelector;
