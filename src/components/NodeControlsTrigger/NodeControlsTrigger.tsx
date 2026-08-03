@@ -1,7 +1,7 @@
 import { ChevronRight } from "lucide-react";
 import NodeControls from "../NodeControls/NodeControls";
 import { useEffect, useRef, useState } from "react";
-import { safePolygon, useFloating, useHover, useInteractions } from "@floating-ui/react";
+import { flip, safePolygon, shift, useFloating, useHover, useInteractions } from "@floating-ui/react";
 
 export default function NodeControlsTrigger() {
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -10,6 +10,10 @@ export default function NodeControlsTrigger() {
         placement: 'right',
         open: isOpen,
         onOpenChange: setIsOpen,
+        middleware: [
+            shift(),
+            flip()
+        ]
     });
 
     const hover = useHover(context, {
