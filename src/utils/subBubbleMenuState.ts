@@ -9,6 +9,7 @@ export function subBubbleMenuStateSelector(ctx: EditorStateSnapshot<Editor> | nu
         isUnderline: ctx?.editor.isActive('underline') ?? false,
         isStrike: ctx?.editor.isActive('strike') ?? false,
         isCode: ctx?.editor.isActive('code') ?? false,
+        isParagraph: ctx?.editor.isActive('paragraph') ?? false,
         isHeading1: ctx?.editor.isActive('heading', { level: 1 }) ?? false,
         isHeading2: ctx?.editor.isActive('heading', { level: 2 }) ?? false,
         isHeading3: ctx?.editor.isActive('heading', { level: 3 }) ?? false,

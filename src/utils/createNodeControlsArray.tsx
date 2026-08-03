@@ -14,6 +14,11 @@ export function createNodeControlsArray(
 ): NodeControl[] {
     return [
         {
+            onClick: () => editor?.chain().focus().setParagraph().run(),
+            children: <span>Text</span>,
+            isActive: editorState.isParagraph,
+        },
+        {
             onClick: () => editor?.chain().focus().toggleHeading({ level: 1 }).run(),
             children: <span>Heading 1</span>,
             isActive: editorState.isHeading1,
