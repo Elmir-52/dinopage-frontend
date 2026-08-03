@@ -34,8 +34,14 @@ export default function BubbleToolbar({ editor }: BubbleToolbarProps) {
             <MarkControls />
             <Divider />
             <TextColor />
-            <Divider />
-            <FontSize />
+            {
+                editorState.isParagraph && (
+                    <>
+                        <Divider />
+                        <FontSize />
+                    </>
+                )
+            }
         </div>
     )
 }
