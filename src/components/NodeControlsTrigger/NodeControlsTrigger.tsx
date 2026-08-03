@@ -3,7 +3,7 @@ import NodeControls from "../NodeControls/NodeControls";
 import { useEffect, useRef, useState } from "react";
 import { safePolygon, useFloating, useHover, useInteractions } from "@floating-ui/react";
 
-export default function SetNodeMenuTrigger() {
+export default function NodeControlsTrigger() {
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     const { refs, floatingStyles, context } = useFloating({
@@ -26,7 +26,7 @@ export default function SetNodeMenuTrigger() {
                 ref={refs.setReference}
                 {...getReferenceProps()}
             >
-                <p className="text-xl font-[Nunito]">Text</p>
+                <span className="text-xl font-[Nunito]">Text</span>
                 <ChevronRight />
             </button>
 
