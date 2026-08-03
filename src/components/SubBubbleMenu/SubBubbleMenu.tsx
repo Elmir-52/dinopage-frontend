@@ -14,12 +14,12 @@ interface SubBubbleMenuProps {
 }
 
 export default function SubBubbleMenu({ editor }: SubBubbleMenuProps) {
+    const dispatch = useAppDispatch();
     const editorState = useEditorState({
         editor,
         selector: subBubbleMenuStateSelector
     });
-    const dispatch = useAppDispatch();
-
+    
     useEffect(() => {
         dispatch(setEditorState({ editorState }));
     }, [editorState])

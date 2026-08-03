@@ -1,21 +1,14 @@
-import { isActive, useCurrentEditor } from "@tiptap/react";
-import { createPortal } from "react-dom";
-import { useAppSelector } from "../../hook";
-import { useEffect, useRef, type CSSProperties, type HTMLProps, type ReactNode, type RefObject } from "react";
-import { createNodeControlsArray, type NodeControl } from "../../utils/createNodeControlsArray";
+import { type CSSProperties, type HTMLProps } from "react";
+import { type NodeControl } from "../../utils/createNodeControlsArray";
 
 interface NodeControlsProps {
     ref: (node: HTMLElement | null) => void;
     style: CSSProperties;
     getFloatingProps: (userProps?: HTMLProps<HTMLElement> | undefined) => Record<string, unknown>;
+    nodeControls: NodeControl[];
 }
 
-export default function NodeControls({ ref, style, getFloatingProps }: NodeControlsProps) {
-    const { editor } = useCurrentEditor();
-    const editorState = useAppSelector(state => state.editorStateReducer.editorState);
-
-    const nodeControls: NodeControl[] = createNodeControlsArray(editor, editorState);
-
+export default function NodeControls({ ref, style, getFloatingProps, nodeControls }: NodeControlsProps) {
     return (
         <div
             className="flex flex-col bg-white shadow-xl rounded-xl border border-solid
@@ -36,7 +29,7 @@ export default function NodeControls({ ref, style, getFloatingProps }: NodeContr
                             nodeControl.onClick();
                         }}
                     >
-                        {nodeControl.children}
+                        <span>{nodeControl.content}</span>
                     </button>
                 })
             }
