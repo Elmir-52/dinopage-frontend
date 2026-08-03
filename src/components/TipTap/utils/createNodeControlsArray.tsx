@@ -1,5 +1,5 @@
 import { Editor } from '@tiptap/react';
-import type { SubBubbleMenuStateSelector } from './subBubbleMenuState';
+import type { BubbleToolbarStateSelector } from './bubbleToolbarState';
 
 export interface NodeControl {
     onClick: () => void;
@@ -9,7 +9,7 @@ export interface NodeControl {
 
 export function createNodeControlsArray(
     editor: Editor | null, 
-    editorState: SubBubbleMenuStateSelector
+    editorState: BubbleToolbarStateSelector
 ): NodeControl[] {
     return [
         {

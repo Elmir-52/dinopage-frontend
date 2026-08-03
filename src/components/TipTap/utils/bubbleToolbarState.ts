@@ -2,7 +2,7 @@ import type { Editor, EditorStateSnapshot } from "@tiptap/react";
 
 // ctx может быть в качесве null так как эта функция вызывается в editorStateSlice.ts для 
 // инициализации state
-export function subBubbleMenuStateSelector(ctx: EditorStateSnapshot<Editor> | null) {
+export function bubbleToolbarStateSelector(ctx: EditorStateSnapshot<Editor> | null) {
     return {
         isBold: ctx?.editor.isActive('bold') ?? false,
         isItalic: ctx?.editor.isActive('italic') ?? false,
@@ -17,4 +17,4 @@ export function subBubbleMenuStateSelector(ctx: EditorStateSnapshot<Editor> | nu
     };
 }
 
-export type SubBubbleMenuStateSelector = ReturnType<typeof subBubbleMenuStateSelector>
+export type BubbleToolbarStateSelector = ReturnType<typeof bubbleToolbarStateSelector>

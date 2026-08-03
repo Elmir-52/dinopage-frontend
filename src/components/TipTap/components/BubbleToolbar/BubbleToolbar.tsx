@@ -5,19 +5,19 @@ import FontSize from "../FontSize/FontSize";
 import { useEffect } from "react";
 import NodeControlsTrigger from "../NodeControlsTrigger/NodeControlsTrigger";
 import { useAppDispatch } from "../../../../hook";
-import { subBubbleMenuStateSelector } from "../../utils/subBubbleMenuState";
+import { bubbleToolbarStateSelector } from "../../utils/bubbleToolbarState";
 import { setEditorState } from "../../../../store/editorStateSlice";
 import Divider from "../../../Divider/Divider";
 
-interface SubBubbleMenuProps {
+interface BubbleToolbarProps {
     editor: Editor
 }
 
-export default function SubBubbleMenu({ editor }: SubBubbleMenuProps) {
+export default function BubbleToolbar({ editor }: BubbleToolbarProps) {
     const dispatch = useAppDispatch();
     const editorState = useEditorState({
         editor,
-        selector: subBubbleMenuStateSelector
+        selector: bubbleToolbarStateSelector
     });
     
     useEffect(() => {

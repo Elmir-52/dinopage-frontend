@@ -6,8 +6,7 @@ import { useEffect, useMemo, useRef } from "react";
 import Code from "@tiptap/extension-code";
 import NoteBar from "./components/NoteBar/NoteBar";
 import type { Note } from "../../shared/types/note";
-import Heading from '@tiptap/extension-heading'
-import SubBubbleMenu from "./components/SubBubbleMenu/SubBubbleMenu";
+import BubbleToolbar from "./components/BubbleToolbar/BubbleToolbar";
 import { CustomHeading } from "./extensions/custom-heading";
 
 interface TipTapProps {
@@ -76,7 +75,7 @@ export default function TipTap({ note }: TipTapProps) {
                     />
 
                     <BubbleMenu className="z-10" editor={editor}>
-                        <SubBubbleMenu editor={editor} />
+                        <BubbleToolbar editor={editor} />
                     </BubbleMenu>
                 </div>
             </div>
