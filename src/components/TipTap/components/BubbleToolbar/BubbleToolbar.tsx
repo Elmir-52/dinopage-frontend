@@ -5,7 +5,7 @@ import FontSize from "../FontSize/FontSize";
 import { useEffect } from "react";
 import NodeControlsTrigger from "../NodeControlsTrigger/NodeControlsTrigger";
 import { useAppDispatch } from "../../../../hook";
-import { bubbleToolbarStateSelector } from "../../utils/bubbleToolbarState";
+import { formatStateSelector } from "../../utils/formatStateSelector";
 import { setEditorState } from "../../../../store/editorStateSlice";
 import Divider from "../../../Divider/Divider";
 
@@ -17,7 +17,7 @@ export default function BubbleToolbar({ editor }: BubbleToolbarProps) {
     const dispatch = useAppDispatch();
     const editorState = useEditorState({
         editor,
-        selector: bubbleToolbarStateSelector
+        selector: formatStateSelector
     });
     
     useEffect(() => {

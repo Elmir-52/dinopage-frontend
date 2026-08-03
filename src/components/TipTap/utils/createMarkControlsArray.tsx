@@ -1,7 +1,7 @@
 import { Editor } from '@tiptap/react';
 import { Bold, CodeXml, Italic, Strikethrough, Underline } from 'lucide-react'
 import type { ReactNode } from 'react';
-import type { BubbleToolbarStateSelector } from './bubbleToolbarState';
+import type { FormatStateSelector } from './formatStateSelector';
 
 export interface MarkControl {
     onClick: () => void;
@@ -10,7 +10,7 @@ export interface MarkControl {
 
 export function createMarkControlsArray(
     editor: Editor | null, 
-    editorState: BubbleToolbarStateSelector
+    editorState: FormatStateSelector
 ): MarkControl[] {
     return [
         {
