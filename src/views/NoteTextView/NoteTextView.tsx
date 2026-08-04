@@ -42,7 +42,6 @@ export default function NoteTextView() {
 
     return(
         <>
-            {/*{ note && <Editor note={note} /> } */}
             {!note && <p>Loading...</p>}
             {note && <TipTap note={note}/>}
         </>
