@@ -2,6 +2,8 @@ import { useCurrentEditor } from "@tiptap/react";
 import { useEffect, useState } from "react";
 import { FONT_SIZE_LIST } from "../../data/fontSizeList";
 
+type ChangeFontSizeEvent = React.FocusEvent<HTMLInputElement, Element> | React.ChangeEvent<HTMLSelectElement>;
+
 export default function FontSize() {
     const { editor } = useCurrentEditor();
     
@@ -24,11 +26,21 @@ export default function FontSize() {
         }
     }, [editor]);
 
+    function changeFontSize(event: ChangeFontSizeEvent) {
+        // если user решил поставить выделенному тексту 16px то у него просто 
+        // уберётся font-size inline-style, так как 16px это дефолтный размер текста
+        if (event.target.value === '16') {
+            editor?.chain().focus().unsetFontSize().run();
+        } else {
+            editor?.chain().focus().setFontSize(`${event.target.value}px`).run();
+        }
+    }
+
     return (
         <div className="flex items-center gap-2">
             <input 
                 className="w-25 border border-solid border-gray-400 outline-0 rounded-lg pl-2"
-                onBlur={e => editor?.chain().focus().setFontSize(`${e.target.value}px`).run()}
+                onBlur={changeFontSize}
                 onChange={(e) => setCurrentFontSize(e.target.value)}
                 value={currentFontSize}
                 type="text"
@@ -36,7 +48,7 @@ export default function FontSize() {
             
             <select 
                 onChange={e => { 
-                    editor?.chain().focus().setFontSize(`${e.target.value}px`).run();
+                    changeFontSize(e);
                     setCurrentFontSize(e.target.value);
                 }}
             >
