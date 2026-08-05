@@ -3,15 +3,16 @@ import menuVisibilityReducer from "./menuVisibilitySlice";
 import requiredNoteReducer from "./requiredNoteSlice";
 import editorStateReducer from "./editorStateSlice";
 
-const store = configureStore({
-    reducer: {
-        menuVisibilityReducer,
-        requiredNoteReducer,
-        editorStateReducer,
-    }
-});
+export const makeStore = () => {
+    return configureStore({
+        reducer: {
+            menuVisibilityReducer,
+            requiredNoteReducer,
+            editorStateReducer,
+        }
+    });
+}
 
-export default store;
-
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export type AppStore = ReturnType<typeof makeStore>;
+export type RootState = ReturnType<AppStore['getState']>;
+export type AppDispatch = AppStore['dispatch'];
