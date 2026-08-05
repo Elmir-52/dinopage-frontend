@@ -4,7 +4,7 @@ interface PropsButtonNoteAdd {
     onClick: (open: boolean) => void;
 }
 
-export default function ButtonNoteAdd({ onClick }: PropsButtonNoteAdd) {
+export default function CreateNoteButton({ onClick }: PropsButtonNoteAdd) {
     return(
         <button 
             onClick={() => onClick(true)} 

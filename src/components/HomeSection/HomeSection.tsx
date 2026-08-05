@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState  } from "react";
 import NoteCard from "../NoteCard/NoteCard";
-import ButtonNoteAdd from "../CreateNoteButton/CreateNoteButton";
+import CreateNoteButton from "../CreateNoteButton/CreateNoteButton";
 import Modal from "../Modal/Modal";
 import type { CreateNote, Note } from "../../shared/types/note";
 import { NOTE_CARD_BACKGROUNDS } from "../../shared/data/noteCardBackgrounds";
@@ -89,7 +89,7 @@ export default function HomeSection() {
                 })
             }
 
-            <ButtonNoteAdd onClick={(open: boolean) => setIsModalOpen(open)} ></ButtonNoteAdd>
+            <CreateNoteButton onClick={(open: boolean) => setIsModalOpen(open)} ></CreateNoteButton>
             
             <Modal
                 message="Create new note"
