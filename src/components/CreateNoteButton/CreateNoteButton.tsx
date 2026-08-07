@@ -1,4 +1,6 @@
-import logoAdd from '/logoAdd.svg';
+'use client'
+
+import Image from 'next/image';
 
 interface PropsButtonNoteAdd {
     onClick: (open: boolean) => void;
@@ -13,10 +15,12 @@ export default function CreateNoteButton({ onClick }: PropsButtonNoteAdd) {
             hover:scale-105' 
             title='Создать заметку'
         >
-            <img 
-                className='w-8' 
-                src={logoAdd} 
-                alt="Иконка добавления" />
+            <Image 
+                width={32}
+                height={32}
+                src="/logoAdd.svg" 
+                alt="Иконка добавления" 
+            />
         </button>
     )
 }

@@ -1,24 +1,23 @@
-import { useNavigate, type NavigateFunction } from 'react-router';
+'use client'
+
 import type { Note } from '../../shared/types/note';
 import { MONTHS } from '../../shared/data/months';
+import Link from 'next/link';
 
 interface PropsButtonNote {
     content: Note,
 }
 
 export default function NoteCard({ content }: PropsButtonNote) {
-    const navigate: NavigateFunction = useNavigate();
-
     const updatedAtRaw: Date = new Date(content.updatedAt);
     const updatedAt: string = `${updatedAtRaw.getDate()} ${MONTHS[updatedAtRaw.getMonth()]} ${updatedAtRaw.getFullYear()}`;
 
     return(
-        <button 
+        <Link 
+            href={`/notes/${content.noteId}`}
+            prefetch={false}
             className='flex flex-col justify-between items-center w-full h-45 p-2 cursor-pointer 
             rounded-2xl shadow-xl bg-white transition-transform hover:scale-104'
-            onClick={() => { 
-                navigate(`/notes/${content.noteId}`);
-            }} 
         >
             <div className='w-full'>
                 <div 
@@ -38,6 +37,6 @@ export default function NoteCard({ content }: PropsButtonNote) {
             </div>
 
             <p className='text-gray-400'>{updatedAt}</p>
-        </button>
+        </Link>
     )
 }

@@ -1,17 +1,26 @@
+'use client'
+
 import { useCallback, useEffect, useState  } from "react";
-import NoteCard from "../NoteCard/NoteCard";
 import CreateNoteButton from "../CreateNoteButton/CreateNoteButton";
 import Modal from "../Modal/Modal";
 import type { CreateNote, Note } from "../../shared/types/note";
 import { NOTE_CARD_BACKGROUNDS } from "../../shared/data/noteCardBackgrounds";
 import { randomColor } from "../../utils/randomColor";
-import { useNavigate, type NavigateFunction } from "react-router";
 import { HttpError } from "../../errors/httpError";
 import { requestToBackend } from "../../utils/requestToBackend";
 import MessageModal, { type MessageModalOnClick } from "../MessageModal/MessageModal";
+import { useRouter } from "next/navigation";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import dynamic from "next/dynamic";
+
+// NoteCard импортируется динамически без ssr, ибо внутри него есть код создания даты,
+// при разных часовых поясах будет ошибка гидратации
+const DynamicNoteCard = dynamic(() => import('../NoteCard/NoteCard'), {
+    ssr: false,
+});
 
 export default function HomeSection() {
-    const navigate: NavigateFunction = useNavigate();
+    const router: AppRouterInstance = useRouter();
     const [rerender, setRerender] = useState<boolean>(false);
     const [result, setResult] = useState<Note[] | undefined>();
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -34,7 +43,7 @@ export default function HomeSection() {
             } catch(error) {
                 if (error instanceof HttpError) {
                     if (error.status === 401) {
-                        navigate('/login');
+                        router.push('/login');
                         return;
                     }
                 }
@@ -68,7 +77,7 @@ export default function HomeSection() {
         } catch(error) {
             if (error instanceof HttpError) {
                 if (error.status === 401) {
-                    navigate('/login');
+                    router.push('/login');
                     return;
                 }
             }
@@ -85,11 +94,11 @@ export default function HomeSection() {
         gap-7 w-[90%] mx-auto mb-12">
             {
                 result?.map(el => {
-                    return <NoteCard key={el.noteId} content={el}></NoteCard>
+                    return <DynamicNoteCard key={el.noteId} content={el}></DynamicNoteCard>
                 })
             }
 
-            <CreateNoteButton onClick={(open: boolean) => setIsModalOpen(open)} ></CreateNoteButton>
+            <CreateNoteButton onClick={(open: boolean) => setIsModalOpen(open)}></CreateNoteButton>
             
             <Modal
                 message="Create new note"
