@@ -1,21 +1,21 @@
 'use client'
 
 import { useCallback, useEffect, useState  } from "react";
-import CreateNoteButton from "../CreateNoteButton/CreateNoteButton";
-import Modal from "../Modal/Modal";
-import type { CreateNote, Note } from "../../shared/types/note";
-import { NOTE_CARD_BACKGROUNDS } from "../../shared/data/noteCardBackgrounds";
-import { randomColor } from "../../utils/randomColor";
-import { HttpError } from "../../errors/httpError";
-import { requestToBackend } from "../../utils/requestToBackend";
-import MessageModal, { type MessageModalOnClick } from "../MessageModal/MessageModal";
 import { useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import dynamic from "next/dynamic";
+import { CreateNote, Note } from "@/shared/types/note";
+import { requestToBackend } from "@/utils/requestToBackend";
+import { HttpError } from "@/errors/httpError";
+import { randomColor } from "@/utils/randomColor";
+import { NOTE_CARD_BACKGROUNDS } from "@/shared/data/noteCardBackgrounds";
+import CreateNoteButton from "@/components/CreateNoteButton/CreateNoteButton";
+import MessageModal, { MessageModalOnClick } from "@/components/MessageModal/MessageModal";
+import Modal from "@/components/Modal/Modal";
 
 // NoteCard импортируется динамически без ssr, ибо внутри него есть код создания даты,
 // при разных часовых поясах будет ошибка гидратации
-const DynamicNoteCard = dynamic(() => import('../NoteCard/NoteCard'), {
+const DynamicNoteCard = dynamic(() => import('@/components/NoteCard/NoteCard'), {
     ssr: false,
 });
 
