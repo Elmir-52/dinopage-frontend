@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useState  } from "react";
 import { useRouter } from "next/navigation";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import dynamic from "next/dynamic";
 import { CreateNote, Note } from "@/shared/types/note";
 import { requestToBackend } from "@/utils/requestToBackend";
@@ -20,7 +19,7 @@ const DynamicNoteCard = dynamic(() => import('@/components/NoteCard/NoteCard'), 
 });
 
 export default function HomeSection() {
-    const router: AppRouterInstance = useRouter();
+    const router = useRouter();
     const [rerender, setRerender] = useState<boolean>(false);
     const [result, setResult] = useState<Note[] | undefined>();
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
