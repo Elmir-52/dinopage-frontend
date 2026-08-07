@@ -1,7 +1,7 @@
 'use client'
 
-import type { Note } from '../../shared/types/note';
-import { MONTHS } from '../../shared/data/months';
+import { MONTHS } from '@/shared/data/months';
+import { Note } from '@/shared/types/note';
 import Link from 'next/link';
 
 interface PropsButtonNote {
