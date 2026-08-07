@@ -1,10 +1,11 @@
+'use client'
+
 import { useEffect, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import openEyeImage from '/openeye.svg';
-import closeEyeImage from '/closeeye.svg';
-import type { UserFormData } from "../../shared/types/user";
-import { UserFormDataSchema } from "../../schemas/userFormData";
-import { HttpError } from "../../errors/httpError";
+import Image from "next/image";
+import { UserFormData } from "@/shared/types/user";
+import { UserFormDataSchema } from "@/schemas/userFormData";
+import { HttpError } from "@/errors/httpError";
 
 interface IForm {
     email: string;
@@ -125,10 +126,11 @@ export default function Form({ buttonText, submitFunction }: FormProps) {
                     type="button"
                     onClick={() => setShowPassword(prev => !prev)} 
                 >
-                    <img
-                        className="w-full"
-                        src={showPassword ? openEyeImage : closeEyeImage} 
-                        alt="иконка глаза" 
+                    <Image
+                        width={32}
+                        height={32}
+                        src={showPassword ? '/openeye.svg' : '/closeeye.svg'} 
+                        alt="Иконка глаза"
                     />
                 </button>
             </div>

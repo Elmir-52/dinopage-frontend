@@ -4,7 +4,7 @@ export const HEADER_NAV_LINKS = [
         name: 'Home',
     },
     {
-        path: '/login',
+        path: '/auth/login',
         name: 'Login',
     },
     {

@@ -1,12 +1,15 @@
-import { Link, useNavigate, type NavigateFunction } from "react-router";
-import type { UserFormData } from "../../shared/types/user";
-import Form from '../Form/Form';
-import { setToken } from '../../utils/authService';
-import type { AuthResponse } from '../../shared/types/authResponse';
-import { HttpError } from '../../errors/httpError';
+'use client'
+
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { UserFormData } from "@/shared/types/user";
+import { HttpError } from "@/errors/httpError";
+import { AuthResponse } from "@/shared/types/authResponse";
+import { setToken } from "@/utils/authService";
+import Form from "@/components/Form/Form";
 
 export default function LoginSection() {
-    const navigate: NavigateFunction = useNavigate();
+    const router = useRouter();
     
     async function login(user: UserFormData) {
         try {
@@ -31,7 +34,7 @@ export default function LoginSection() {
     
             const { accessToken }: AuthResponse = data;
             setToken(accessToken);
-            navigate('/profile');
+            router.push('/profile');
         } catch(error) {
             if (error instanceof HttpError) throw error;
 
@@ -45,12 +48,12 @@ export default function LoginSection() {
 
     return (
         <section className="flex flex-col items-center gap-8">
-            <h3 className="font-[Nunito] text-5xl font-medium mb-4">Login</h3>
+            <h3 className="text-5xl font-medium mb-4">Login</h3>
             <Form buttonText='Log in' submitFunction={(user: UserFormData) => login(user)} />
             
-            <Link 
-                to='/reg' 
-                className="font-[Nunito] text-2xl text-blue-600 underline"
+            <Link
+                href='/auth/register' 
+                className="text-2xl text-blue-600 underline"
             >
                 Register
             </Link>

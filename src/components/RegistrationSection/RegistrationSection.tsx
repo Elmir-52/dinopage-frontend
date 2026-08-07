@@ -1,12 +1,14 @@
-import { useNavigate, type NavigateFunction } from "react-router";
-import type { UserFormData } from "../../shared/types/user";
-import Form from "../Form/Form";
-import type { AuthResponse } from '../../shared/types/authResponse';
-import { setToken } from '../../utils/authService';
-import { HttpError } from '../../errors/httpError';
+'use client'
+
+import Form from "@/components/Form/Form";
+import { HttpError } from "@/errors/httpError";
+import { AuthResponse } from "@/shared/types/authResponse";
+import { UserFormData } from "@/shared/types/user";
+import { setToken } from "@/utils/authService";
+import { useRouter } from "next/navigation";
 
 export default function RegistrationSection() {
-    const navigate: NavigateFunction = useNavigate();
+    const router = useRouter();
 
     async function registration(user: UserFormData) {
         try {
@@ -31,7 +33,7 @@ export default function RegistrationSection() {
     
             const { accessToken }: AuthResponse = data;
             setToken(accessToken);
-            navigate('/profile');
+            router.push('/profile');
         } catch(error) {
             if (error instanceof HttpError) throw error;
 
@@ -45,7 +47,7 @@ export default function RegistrationSection() {
 
     return (
         <section className="flex flex-col items-center gap-8">
-            <h3 className="font-[Nunito] text-5xl font-medium mb-4">Registration</h3>
+            <h3 className="text-5xl font-medium mb-4">Registration</h3>
             <Form buttonText="Register" submitFunction={(user: UserFormData) => registration(user)} />
         </section>
     )
