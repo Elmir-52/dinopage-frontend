@@ -42,7 +42,7 @@ export default function HomeSection() {
             } catch(error) {
                 if (error instanceof HttpError) {
                     if (error.status === 401) {
-                        router.push('/login');
+                        router.push('/auth/login');
                         return;
                     }
                 }
@@ -76,7 +76,7 @@ export default function HomeSection() {
         } catch(error) {
             if (error instanceof HttpError) {
                 if (error.status === 401) {
-                    router.push('/login');
+                    router.push('/auth/login');
                     return;
                 }
             }
