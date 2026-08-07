@@ -1,8 +1,8 @@
 'use client'
 
 import { usePathname } from 'next/navigation';
-import { HEADER_NAV_LINKS } from '../../shared/data/headerNavLinks';
 import Link from 'next/link';
+import { HEADER_NAV_LINKS } from '@/shared/data/headerNavLinks';
 
 export default function Header() {
     const currentPath = usePathname();
