@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import './globals.css';
-import Header from '../components/Header/Header';
 import { Roboto } from 'next/font/google'
 import { NextFontWithVariable } from 'next/dist/compiled/@next/font';
-import StoreProvider from '../providers/StoreProvider';
+import Header from '@/components/Header/Header';
+import StoreProvider from '@/providers/StoreProvider';
 
 const roboto: NextFontWithVariable = Roboto({
     subsets: ['cyrillic', 'latin'],
