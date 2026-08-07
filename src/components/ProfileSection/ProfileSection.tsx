@@ -1,14 +1,16 @@
+'use client'
+
 import { useEffect, useState } from "react";
-import { useNavigate, type NavigateFunction } from "react-router";
-import type { User } from "../../shared/types/user";
-import { setToken } from "../../utils/authService";
-import { HttpError } from "../../errors/httpError";
-import Modal from '../Modal/Modal';
-import { requestToBackend } from '../../utils/requestToBackend';
-import MessageModal, { type MessageModalOnClick } from '../MessageModal/MessageModal';
+import Modal from '@/components//Modal/Modal';
+import { useRouter } from "next/navigation";
+import { requestToBackend } from "@/utils/requestToBackend";
+import MessageModal, { MessageModalOnClick } from "@/components/MessageModal/MessageModal";
+import { User } from "@/shared/types/user";
+import { HttpError } from "@/errors/httpError";
+import { setToken } from "@/utils/authService";
 
 export default function ProfileSection() {
-    const navigate: NavigateFunction = useNavigate();
+    const router = useRouter();
     const [userEmail, setUserEmail] = useState<string>('');
     const [userId, setUserId] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(true);
@@ -33,13 +35,13 @@ export default function ProfileSection() {
             } catch(error) {
                 if (error instanceof HttpError) {
                     if (error.status === 401) {
-                        navigate('/login');
+                        router.push('/auth/login');
                         return;
                     }
                 }
 
                 setMessageModalMessage("Something went wrong, please try again later");
-                setMessageModalOnClick(() => () => navigate('/'));
+                setMessageModalOnClick(() => () => router.push('/docs'));
                 setIsMessageModalOpen(true);
             } finally {
                 setLoading(false);
@@ -59,12 +61,12 @@ export default function ProfileSection() {
             if (!response.ok) throw new Error();
 
             setToken('');
-            navigate('/login');
+            router.push('/auth/login');
         } catch(error) {
             if (error instanceof HttpError) {
                 if (error.status === 401) {
                     setMessageModalMessage("Unauthorized: the profile hasn't been deleted");
-                    setMessageModalOnClick(() => () => navigate('/login'));
+                    setMessageModalOnClick(() => () => router.push('/auth/login'));
                     setIsMessageModalOpen(true);
                     return;
                 }
@@ -87,7 +89,7 @@ export default function ProfileSection() {
             <p className="text-2xl text-center">Your id: {userId}</p>
 
             <button 
-                className="font-[Nunito] text-red-600 underline text-xl cursor-pointer" 
+                className="text-red-600 underline text-xl cursor-pointer" 
                 onClick={() => setIsModalOpen(true)}
             >
                 Delete profile
