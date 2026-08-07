@@ -1,7 +1,9 @@
-import HomeSection from "@/components/HomeSection/HomeSection";
+import Link from "next/link";
 
 export default function HomePage() {
     return (
-        <HomeSection />
+        <Link href="/docs">
+            Go to docs
+        </Link>
     )
 }

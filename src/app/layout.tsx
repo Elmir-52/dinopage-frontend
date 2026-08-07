@@ -2,8 +2,6 @@ import type { Metadata } from 'next'
 import './globals.css';
 import { Roboto } from 'next/font/google'
 import { NextFontWithVariable } from 'next/dist/compiled/@next/font';
-import Header from '@/components/Header/Header';
-import StoreProvider from '@/providers/StoreProvider';
 
 const roboto: NextFontWithVariable = Roboto({
     subsets: ['cyrillic', 'latin'],
@@ -26,10 +24,7 @@ export default function RootLayout({
             className={`${roboto.className}`}
         >
             <body>
-                <StoreProvider>
-                    <Header />
-                    {children}
-                </StoreProvider>
+                {children}
             </body>
         </html>
     )

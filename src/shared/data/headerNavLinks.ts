@@ -1,6 +1,6 @@
 export const HEADER_NAV_LINKS = [
     {
-        path: '/',
+        path: '/docs',
         name: 'Home',
     },
     {
