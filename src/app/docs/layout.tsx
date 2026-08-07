@@ -1,7 +1,7 @@
 import Header from '@/components/Header/Header';
 import StoreProvider from '@/providers/StoreProvider';
 
-export default function RootLayout({
+export default function DocsLayout({
     children,
 }: {
     children: React.ReactNode
