@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import menuVisibilityReducer from "./menuVisibilitySlice";
 import requiredNoteReducer from "./requiredNoteSlice";
-import editorStateReducer from "./editorStateSlice";
+import editorStateReducer from "@/store/features/editorStateSlice";
 
 export const makeStore = () => {
     return configureStore({

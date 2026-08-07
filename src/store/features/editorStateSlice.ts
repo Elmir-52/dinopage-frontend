@@ -1,5 +1,5 @@
+import { formatStateSelector, FormatStateSelector } from "@/components/TipTap/utils/formatStateSelector";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import { formatStateSelector, type FormatStateSelector } from "../components/TipTap/utils/formatStateSelector";
 
 interface SetEditorStateActionPayload {
     editorState: FormatStateSelector;
