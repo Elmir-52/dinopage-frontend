@@ -1,6 +1,7 @@
 'use client'
 
 import { MONTHS } from '@/shared/data/months';
+import { Paths } from '@/shared/enums/paths.enum';
 import { Note } from '@/shared/types/note';
 import Link from 'next/link';
 
@@ -14,7 +15,7 @@ export default function NoteCard({ content }: PropsButtonNote) {
 
     return(
         <Link 
-            href={`/docs/pages/${content.noteId}`}
+            href={`${Paths.PAGES}/${content.noteId}`}
             prefetch={false}
             className='flex flex-col justify-between items-center w-full h-45 p-2 cursor-pointer 
             rounded-2xl shadow-xl bg-white transition-transform hover:scale-104'

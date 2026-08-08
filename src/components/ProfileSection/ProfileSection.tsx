@@ -8,6 +8,7 @@ import MessageModal, { MessageModalOnClick } from "@/components/MessageModal/Mes
 import { User } from "@/shared/types/user";
 import { HttpError } from "@/errors/httpError";
 import { setToken } from "@/utils/authService";
+import { Paths } from "@/shared/enums/paths.enum";
 
 export default function ProfileSection() {
     const router = useRouter();
@@ -35,7 +36,7 @@ export default function ProfileSection() {
             } catch(error) {
                 if (error instanceof HttpError) {
                     if (error.status === 401) {
-                        router.push('/auth/login');
+                        router.push(Paths.LOGIN);
                         return;
                     }
                 }
@@ -61,12 +62,12 @@ export default function ProfileSection() {
             if (!response.ok) throw new Error();
 
             setToken('');
-            router.push('/auth/login');
+            router.push(Paths.LOGIN);
         } catch(error) {
             if (error instanceof HttpError) {
                 if (error.status === 401) {
                     setMessageModalMessage("Unauthorized: the profile hasn't been deleted");
-                    setMessageModalOnClick(() => () => router.push('/auth/login'));
+                    setMessageModalOnClick(() => () => router.push(Paths.LOGIN));
                     setIsMessageModalOpen(true);
                     return;
                 }

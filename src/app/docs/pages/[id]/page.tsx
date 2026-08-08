@@ -2,6 +2,7 @@
 
 import TipTap from "@/components/TipTap/TipTap";
 import { HttpError } from "@/errors/httpError";
+import { Paths } from "@/shared/enums/paths.enum";
 import { Note } from "@/shared/types/note";
 import { requestToBackend } from "@/utils/requestToBackend";
 import { useParams, useRouter } from "next/navigation";
@@ -21,7 +22,7 @@ export default function PagesPage() {
                 });
 
                 if (!response.ok) {
-                    router.push('/docs');
+                    router.push(Paths.DOCS);
                     return;
                 }
 
@@ -30,7 +31,7 @@ export default function PagesPage() {
             } catch(error) {
                 if (error instanceof HttpError) {
                     if (error.status === 401) {
-                        router.push('/auth/login');
+                        router.push(Paths.LOGIN);
                         return;
                     }
                 }

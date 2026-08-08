@@ -2,6 +2,7 @@
 
 import Form from "@/components/Form/Form";
 import { HttpError } from "@/errors/httpError";
+import { Paths } from "@/shared/enums/paths.enum";
 import { AuthResponse } from "@/shared/types/authResponse";
 import { UserFormData } from "@/shared/types/user";
 import { setToken } from "@/utils/authService";
@@ -33,7 +34,7 @@ export default function RegistrationSection() {
     
             const { accessToken }: AuthResponse = data;
             setToken(accessToken);
-            router.push('/profile');
+            router.push(Paths.PROFILE);
         } catch(error) {
             if (error instanceof HttpError) throw error;
 

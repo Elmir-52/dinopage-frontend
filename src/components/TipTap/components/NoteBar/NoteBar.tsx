@@ -8,6 +8,7 @@ import { HttpError } from "@/errors/httpError";
 import Modal from "@/components/Modal/Modal";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import { Paths } from "@/shared/enums/paths.enum";
 
 interface NoteBarProps {
     noteTitleInputRef: React.RefObject<HTMLInputElement | null>
@@ -39,7 +40,7 @@ export default function NoteBar({ noteTitleInputRef }: NoteBarProps) {
 
             if (!response.ok) throw new Error();
 
-            router.push('/docs');
+            router.push(Paths.DOCS);
         } catch(error) {
             if (error instanceof HttpError) {
                 if (error.status === 401) {
@@ -63,11 +64,11 @@ export default function NoteBar({ noteTitleInputRef }: NoteBarProps) {
 
             if (!response.ok) throw new Error();
 
-            router.push('/docs');
+            router.push(Paths.DOCS);
         } catch(error) {
             if (error instanceof HttpError) {
                 if (error.status === 401) {
-                    router.push('/auth/login');
+                    router.push(Paths.LOGIN);
                     return;
                 }
             }
@@ -81,7 +82,7 @@ export default function NoteBar({ noteTitleInputRef }: NoteBarProps) {
         <div className='w-70 h-full p-2.5'>
             <div className="flex flex-col items-start gap-2.5">
                 <Link
-                    href='/docs'
+                    href={Paths.DOCS}
                     className="flex items-center gap-4 w-full rounded-xl px-2.5 py-1.5 
                     text-xl cursor-pointer hover:bg-gray-200"
                 >

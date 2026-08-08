@@ -7,6 +7,7 @@ import { HttpError } from "@/errors/httpError";
 import { AuthResponse } from "@/shared/types/authResponse";
 import { setToken } from "@/utils/authService";
 import Form from "@/components/Form/Form";
+import { Paths } from "@/shared/enums/paths.enum";
 
 export default function LoginSection() {
     const router = useRouter();
@@ -34,7 +35,7 @@ export default function LoginSection() {
     
             const { accessToken }: AuthResponse = data;
             setToken(accessToken);
-            router.push('/profile');
+            router.push(Paths.PROFILE);
         } catch(error) {
             if (error instanceof HttpError) throw error;
 
@@ -52,7 +53,7 @@ export default function LoginSection() {
             <Form buttonText='Log in' submitFunction={(user: UserFormData) => login(user)} />
             
             <Link
-                href='/auth/register' 
+                href={Paths.REGISTER}
                 className="text-2xl text-blue-600 underline"
             >
                 Register
