@@ -11,6 +11,7 @@ import { NOTE_CARD_BACKGROUNDS } from "@/shared/data/noteCardBackgrounds";
 import CreateNoteButton from "@/components/CreateNoteButton/CreateNoteButton";
 import MessageModal, { MessageModalOnClick } from "@/components/MessageModal/MessageModal";
 import Modal from "@/components/Modal/Modal";
+import { Paths } from "@/shared/enums/paths.enum";
 
 // NoteCard импортируется динамически без ssr, ибо внутри него есть код создания даты,
 // при разных часовых поясах будет ошибка гидратации
@@ -42,7 +43,7 @@ export default function HomeSection() {
             } catch(error) {
                 if (error instanceof HttpError) {
                     if (error.status === 401) {
-                        router.push('/auth/login');
+                        router.push(Paths.LOGIN);
                         return;
                     }
                 }
@@ -76,7 +77,7 @@ export default function HomeSection() {
         } catch(error) {
             if (error instanceof HttpError) {
                 if (error.status === 401) {
-                    router.push('/auth/login');
+                    router.push(Paths.LOGIN);
                     return;
                 }
             }
