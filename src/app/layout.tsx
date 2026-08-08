@@ -8,7 +8,7 @@ const roboto: NextFontWithVariable = Roboto({
     variable: '--font-roboto'
 });
 
-export const metaData: Metadata = {
+export const metadata: Metadata = {
     title: 'Dinopage',
     description: 'App for writing notes.'
 }
