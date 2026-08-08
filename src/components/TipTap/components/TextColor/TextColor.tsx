@@ -1,5 +1,7 @@
+'use client'
+
 import { useCurrentEditor } from "@tiptap/react";
-import { COLOR_BUTTONS } from "../../data/colorButtons";
+import { COLOR_BUTTONS } from "@components/TipTap/data/colorButtons";
 
 export default function TextColor() {
     const { editor } = useCurrentEditor()

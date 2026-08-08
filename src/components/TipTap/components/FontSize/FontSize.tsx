@@ -1,6 +1,8 @@
+'use client'
+
 import { useCurrentEditor } from "@tiptap/react";
 import { useEffect, useState } from "react";
-import { FONT_SIZE_LIST } from "../../data/fontSizeList";
+import { FONT_SIZE_LIST } from "@components/TipTap/data/fontSizeList";
 
 type ChangeFontSizeEvent = React.FocusEvent<HTMLInputElement, Element> | React.ChangeEvent<HTMLSelectElement>;
 

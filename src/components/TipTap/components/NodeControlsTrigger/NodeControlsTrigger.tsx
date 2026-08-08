@@ -1,10 +1,12 @@
+'use client'
+
 import { ChevronRight } from "lucide-react";
-import NodeControls from "../NodeControls/NodeControls";
+import NodeControls from "@components/TipTap/components/NodeControls/NodeControls";
 import { useMemo, useState } from "react";
 import { flip, safePolygon, shift, useFloating, useHover, useInteractions } from "@floating-ui/react";
-import { useAppSelector } from "../../../../hook";
 import { useCurrentEditor } from "@tiptap/react";
-import { createNodeControlsArray, type NodeControl } from "../../utils/createNodeControlsArray";
+import { useAppSelector } from "@/store/hooks";
+import { createNodeControlsArray, NodeControl } from "@components/TipTap/utils/createNodeControlsArray";
 
 export default function NodeControlsTrigger() {
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -37,7 +39,7 @@ export default function NodeControlsTrigger() {
         <>
             <button 
                 className="w-full flex items-center justify-between pl-2 rounded-md cursor-pointer
-                hover:bg-gray-200 text-xl font-[Nunito]"
+                hover:bg-gray-200 text-xl"
                 ref={refs.setReference}
                 {...getReferenceProps()}
             >

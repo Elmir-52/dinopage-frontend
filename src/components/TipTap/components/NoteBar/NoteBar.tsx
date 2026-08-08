@@ -1,12 +1,13 @@
 import { useCurrentEditor } from "@tiptap/react"
-import { requestToBackend } from "../../../../utils/requestToBackend";
-import type { UpdateNote } from "../../../../shared/types/note";
-import { Link, useNavigate, useParams, type NavigateFunction } from "react-router";
 import { useState } from "react";
-import Modal from "../../../Modal/Modal";
-import MessageModal from "../../../MessageModal/MessageModal";
-import { HttpError } from "../../../../errors/httpError";
 import { Save, Trash2 } from "lucide-react";
+import MessageModal from "@/components/MessageModal/MessageModal";
+import { UpdateNote } from "@/shared/types/note";
+import { requestToBackend } from "@/utils/requestToBackend";
+import { HttpError } from "@/errors/httpError";
+import Modal from "@/components/Modal/Modal";
+import { useParams, useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface NoteBarProps {
     noteTitleInputRef: React.RefObject<HTMLInputElement | null>
@@ -14,8 +15,8 @@ interface NoteBarProps {
 
 export default function NoteBar({ noteTitleInputRef }: NoteBarProps) {
     const { editor } = useCurrentEditor();
-    const { noteId } = useParams();
-    const navigate: NavigateFunction = useNavigate();
+    const { id } = useParams<{ id: string }>();
+    const router = useRouter();
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [isMessageModalOpen, setIsMessageModalOpen] = useState<boolean>(false);
     const [messageModalMessage, setMessageModalMessage] = useState<string>('');
@@ -31,14 +32,14 @@ export default function NoteBar({ noteTitleInputRef }: NoteBarProps) {
 
         try {
             const response = await requestToBackend<UpdateNote>({
-                url: `http://localhost:3000/notes/${noteId}`,
+                url: `http://localhost:3000/notes/${id}`,
                 method: 'PATCH',
                 body: updateNote
             });
 
             if (!response.ok) throw new Error();
 
-            navigate('/');
+            router.push('/docs');
         } catch(error) {
             if (error instanceof HttpError) {
                 if (error.status === 401) {
@@ -56,17 +57,17 @@ export default function NoteBar({ noteTitleInputRef }: NoteBarProps) {
     async function deleteNote() {
         try {
             const response = await requestToBackend({
-                url: `http://localhost:3000/notes/${noteId}`,
+                url: `http://localhost:3000/notes/${id}`,
                 method: 'DELETE'
             });
 
             if (!response.ok) throw new Error();
 
-            navigate('/');
+            router.push('/docs');
         } catch(error) {
             if (error instanceof HttpError) {
                 if (error.status === 401) {
-                    navigate('/login');
+                    router.push('/auth/login');
                     return;
                 }
             }
@@ -79,8 +80,8 @@ export default function NoteBar({ noteTitleInputRef }: NoteBarProps) {
     return (
         <div className='w-70 h-full p-2.5'>
             <div className="flex flex-col items-start gap-2.5">
-                <Link 
-                    to='/' 
+                <Link
+                    href='/docs'
                     className="flex items-center gap-4 w-full rounded-xl px-2.5 py-1.5 
                     text-xl cursor-pointer hover:bg-gray-200"
                 >

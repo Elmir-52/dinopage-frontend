@@ -1,3 +1,5 @@
+'use client'
+
 import { EditorContent, EditorContext, useEditor } from "@tiptap/react";
 import { BubbleMenu } from "@tiptap/react/menus";
 import StarterKit from "@tiptap/starter-kit";
@@ -5,9 +7,9 @@ import { TextStyleKit } from '@tiptap/extension-text-style';
 import { useEffect, useMemo, useRef } from "react";
 import Code from "@tiptap/extension-code";
 import NoteBar from "./components/NoteBar/NoteBar";
-import type { Note } from "../../shared/types/note";
 import BubbleToolbar from "./components/BubbleToolbar/BubbleToolbar";
 import { CustomHeading } from "./extensions/custom-heading";
+import { Note } from "@/shared/types/note";
 
 interface TipTapProps {
     note: Note
@@ -38,6 +40,7 @@ export default function TipTap({ note }: TipTapProps) {
             },
         },
         content: note.content ? JSON.parse(note.content) : '',
+        immediatelyRender: false,
     });
 
     const providerValue = useMemo(() => ({ editor }), [editor]);
@@ -74,9 +77,12 @@ export default function TipTap({ note }: TipTapProps) {
                         className="w-full min-h-full"
                     />
 
-                    <BubbleMenu className="z-10" editor={editor}>
-                        <BubbleToolbar editor={editor} />
-                    </BubbleMenu>
+                    {
+                        editor &&
+                        <BubbleMenu className="z-10" editor={editor}>
+                            <BubbleToolbar editor={editor} />
+                        </BubbleMenu>
+                    }
                 </div>
             </div>
         </EditorContext.Provider>

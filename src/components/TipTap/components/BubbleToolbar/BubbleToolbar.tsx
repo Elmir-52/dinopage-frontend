@@ -1,13 +1,15 @@
+'use client'
+
 import { Editor, useEditorState } from "@tiptap/react";
-import MarkControls from "../MarkControls/MarkControls";
-import TextColor from "../TextColor/TextColor";
-import FontSize from "../FontSize/FontSize";
+import MarkControls from "@components/TipTap/components/MarkControls/MarkControls";
+import TextColor from "@components/TipTap/components/TextColor/TextColor";
+import FontSize from "@components/TipTap/components/FontSize/FontSize";
 import { useEffect } from "react";
-import NodeControlsTrigger from "../NodeControlsTrigger/NodeControlsTrigger";
-import { useAppDispatch } from "../../../../hook";
-import { formatStateSelector } from "../../utils/formatStateSelector";
-import { setEditorState } from "../../../../store/editorStateSlice";
-import Divider from "../../../Divider/Divider";
+import NodeControlsTrigger from "@components/TipTap/components/NodeControlsTrigger/NodeControlsTrigger";
+import Divider from "@components/Divider/Divider";
+import { useAppDispatch } from "@/store/hooks";
+import { formatStateSelector } from "@components/TipTap/utils/formatStateSelector";
+import { setEditorState } from "@/store/features/editorStateSlice";
 
 interface BubbleToolbarProps {
     editor: Editor
@@ -22,7 +24,7 @@ export default function BubbleToolbar({ editor }: BubbleToolbarProps) {
     
     useEffect(() => {
         dispatch(setEditorState({ editorState }));
-    }, [editorState])
+    }, [editorState]);
 
     return (
         <div 

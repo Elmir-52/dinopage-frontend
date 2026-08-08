@@ -1,5 +1,7 @@
+'use client'
+
 import { type CSSProperties, type HTMLProps } from "react";
-import type { NodeControl } from "../../utils/createNodeControlsArray";
+import type { NodeControl } from "@components/TipTap/utils/createNodeControlsArray";
 
 interface NodeControlsProps {
     ref: (node: HTMLElement | null) => void;
@@ -12,7 +14,7 @@ export default function NodeControls({ ref, style, getFloatingProps, nodeControl
     return (
         <div
             className="flex flex-col bg-white shadow-xl rounded-xl border border-solid
-            border-gray-300 p-1 text-xl font-[Nunito]"
+            border-gray-300 p-1 text-xl"
             ref={ref}
             style={style}
             {...getFloatingProps()}

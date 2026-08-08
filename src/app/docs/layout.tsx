@@ -1,4 +1,3 @@
-import Header from '@/components/Header/Header';
 import StoreProvider from '@/providers/StoreProvider';
 
 export default function DocsLayout({
@@ -8,7 +7,6 @@ export default function DocsLayout({
 }) {
     return (
         <StoreProvider>
-            <Header />
             {children}
         </StoreProvider>
     )
