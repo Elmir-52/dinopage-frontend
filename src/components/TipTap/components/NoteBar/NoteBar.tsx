@@ -33,7 +33,7 @@ export default function NoteBar({ noteTitleInputRef }: NoteBarProps) {
 
         try {
             const response = await requestToBackend<UpdateNote>({
-                url: `http://localhost:3000/notes/${id}`,
+                url: `${process.env.NEXT_PUBLIC_API_URL}/notes/${id}`,
                 method: 'PATCH',
                 body: updateNote
             });
@@ -58,7 +58,7 @@ export default function NoteBar({ noteTitleInputRef }: NoteBarProps) {
     async function deleteNote() {
         try {
             const response = await requestToBackend({
-                url: `http://localhost:3000/notes/${id}`,
+                url: `${process.env.NEXT_PUBLIC_API_URL}/notes/${id}`,
                 method: 'DELETE'
             });
 

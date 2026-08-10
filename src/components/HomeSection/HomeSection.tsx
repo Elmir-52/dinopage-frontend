@@ -32,7 +32,7 @@ export default function HomeSection() {
         async function getUserNotes() {
             try {
                 const response = await requestToBackend({
-                    url: 'http://localhost:3000/notes',
+                    url: `${process.env.NEXT_PUBLIC_API_URL}/notes`,
                     method: 'GET'
                 })
 
@@ -66,7 +66,7 @@ export default function HomeSection() {
         
         try {
             const response = await requestToBackend<CreateNote>({
-                url: 'http://localhost:3000/notes',
+                url: `${process.env.NEXT_PUBLIC_API_URL}/notes`,
                 method: 'POST',
                 body: newNote
             });
