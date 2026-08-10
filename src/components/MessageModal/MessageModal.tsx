@@ -1,8 +1,8 @@
 'use client'
 
-import { useEffect, useRef } from "react";
 
-export type MessageModalOnClick = () => void;
+import { useEffect, useRef } from "react";
+import { MessageModalOnClick } from "@components/MessageModal/MessageModal.types";
 
 interface MessageModalProps {
     message: string
