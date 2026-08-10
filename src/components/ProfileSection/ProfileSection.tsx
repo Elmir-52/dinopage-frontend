@@ -24,7 +24,7 @@ export default function ProfileSection() {
         async function getUserData() {
             try {
                 let response = await requestToBackend({
-                    url: 'http://localhost:3000/users/me',
+                    url: `${process.env.NEXT_PUBLIC_API_URL}/users/me`,
                     method: 'GET'
                 });
 
@@ -55,7 +55,7 @@ export default function ProfileSection() {
     async function deleteUser() {
         try {
             let response = await requestToBackend({
-                url: 'http://localhost:3000/users/me',
+                url: `${process.env.NEXT_PUBLIC_API_URL}/users/me`,
                 method: 'DELETE'
             });
 

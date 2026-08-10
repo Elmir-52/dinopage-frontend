@@ -17,7 +17,7 @@ export default function PagesPage() {
         async function getNote(noteId :string) {
             try {
                 let response = await requestToBackend({
-                    url: `http://localhost:3000/notes/${noteId}`,
+                    url: `${process.env.NEXT_PUBLIC_API_URL}/notes/${noteId}`,
                     method: 'GET'
                 });
 
