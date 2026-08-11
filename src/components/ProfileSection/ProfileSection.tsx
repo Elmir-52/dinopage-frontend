@@ -13,9 +13,8 @@ import { MessageModalState } from "@components/MessageModal/MessageModal.types";
 
 export default function ProfileSection() {
     const router = useRouter();
-    const [userEmail, setUserEmail] = useState<string>('');
-    const [userId, setUserId] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(true);
+    const [user, setUser] = useState<User>();
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [messageModalState, setMessageModalState] = useState<MessageModalState>({
         isOpen: false,
@@ -32,9 +31,8 @@ export default function ProfileSection() {
 
                 if (!response.ok) throw new Error();
 
-                const userResponse: User = await response.json();
-                setUserEmail(userResponse.email);
-                setUserId(userResponse.userId);
+                const data: User = await response.json();
+                setUser(data);
             } catch(error) {
                 if (error instanceof HttpError) {
                     if (error.status === 401) {
@@ -100,8 +98,8 @@ export default function ProfileSection() {
 
     return (
         <section className="flex flex-col items-center gap-16 w-[90%] m-auto my-32">
-            <h2 className="text-5xl font-medium text-center">Hello, {userEmail.split('@')[0]}</h2>
-            <p className="text-2xl text-center">Your id: {userId}</p>
+            <h2 className="text-5xl font-medium text-center">Hello, {user?.email.split('@')[0]}</h2>
+            <p className="text-2xl text-center">Your id: {user?.userId}</p>
 
             <button 
                 className="text-red-600 underline text-xl cursor-pointer" 
