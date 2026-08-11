@@ -4,11 +4,12 @@ import { useEffect, useState } from "react";
 import Modal from '@/components//Modal/Modal';
 import { useRouter } from "next/navigation";
 import { requestToBackend } from "@/utils/requestToBackend";
-import MessageModal, { MessageModalOnClick } from "@/components/MessageModal/MessageModal";
+import MessageModal from "@/components/MessageModal/MessageModal";
 import { User } from "@/shared/types/user";
 import { HttpError } from "@/errors/httpError";
 import { setToken } from "@/utils/authService";
 import { Paths } from "@/shared/enums/paths.enum";
+import { MessageModalState } from "@components/MessageModal/MessageModal.types";
 
 export default function ProfileSection() {
     const router = useRouter();
@@ -16,9 +17,10 @@ export default function ProfileSection() {
     const [userId, setUserId] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(true);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const [isMessageModalOpen, setIsMessageModalOpen] = useState<boolean>(false);
-    const [messageModalMessage, setMessageModalMessage] = useState<string>('');
-    const [messageModalOnClick, setMessageModalOnClick] = useState<MessageModalOnClick>(() => () => {});
+    const [messageModalState, setMessageModalState] = useState<MessageModalState>({
+        isOpen: false,
+        message: '',
+    });
 
     useEffect(() => {
         async function getUserData() {
@@ -41,9 +43,11 @@ export default function ProfileSection() {
                     }
                 }
 
-                setMessageModalMessage("Something went wrong, please try again later");
-                setMessageModalOnClick(() => () => router.push('/docs'));
-                setIsMessageModalOpen(true);
+                setMessageModalState({
+                    isOpen: true,
+                    message: "Something went wrong, please try again later",
+                    onClick: () => router.push(Paths.DOCS)
+                });
             } finally {
                 setLoading(false);
             }
@@ -66,16 +70,26 @@ export default function ProfileSection() {
         } catch(error) {
             if (error instanceof HttpError) {
                 if (error.status === 401) {
-                    setMessageModalMessage("Unauthorized: the profile hasn't been deleted");
-                    setMessageModalOnClick(() => () => router.push(Paths.LOGIN));
-                    setIsMessageModalOpen(true);
+                    setMessageModalState({
+                        isOpen: true,
+                        message: "Unauthorized: the profile hasn't been deleted",
+                        onClick: () => router.push(Paths.LOGIN)
+                    });
                     return;
                 }
             }
-            setMessageModalMessage("The profile hasn't been delete, please try again later");
-            setMessageModalOnClick(() => () => {});
-            setIsMessageModalOpen(true);
+            setMessageModalState({
+                isOpen: true,
+                message: "The profile hasn't been delete, please try again later"
+            });
         }
+    }
+
+    function toggleIsMessageModalOpen(isOpen: boolean) {
+        setMessageModalState(prev => ({ 
+            ...prev,
+            isOpen
+        }));
     }
 
     if (loading) return(
@@ -104,10 +118,10 @@ export default function ProfileSection() {
             />
 
             <MessageModal
-                message={messageModalMessage}
-                isMessageModalOpen={isMessageModalOpen}
-                setIsMessageModalOpen={(open: boolean) => setIsMessageModalOpen(open)}
-                onClick={() => messageModalOnClick()}
+                message={messageModalState.message}
+                isMessageModalOpen={messageModalState.isOpen}
+                setIsMessageModalOpen={toggleIsMessageModalOpen}
+                onClick={messageModalState.onClick}
             />
         </section>
     );
