@@ -31,7 +31,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@components/*": ["./src/components/*"]
-    }
+    },
+    "forceConsistentCasingInFileNames": true
   },
   "include": [
     "./src",

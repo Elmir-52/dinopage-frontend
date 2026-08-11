@@ -9,6 +9,7 @@ import Modal from "@/components/Modal/Modal";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { Paths } from "@/shared/enums/paths.enum";
+import { MessageModalState } from "@/components/MessageModal/MessageModal.types";
 
 interface NoteBarProps {
     noteTitleInputRef: React.RefObject<HTMLInputElement | null>
@@ -19,8 +20,10 @@ export default function NoteBar({ noteTitleInputRef }: NoteBarProps) {
     const { id } = useParams<{ id: string }>();
     const router = useRouter();
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const [isMessageModalOpen, setIsMessageModalOpen] = useState<boolean>(false);
-    const [messageModalMessage, setMessageModalMessage] = useState<string>('');
+    const [messageModalState, setMessageModalState] = useState<MessageModalState>({
+        isOpen: false,
+        message: '',
+    });
 
     async function saveNote() {
         let noteTitle: string | undefined = noteTitleInputRef.current?.value;
@@ -33,7 +36,7 @@ export default function NoteBar({ noteTitleInputRef }: NoteBarProps) {
 
         try {
             const response = await requestToBackend<UpdateNote>({
-                url: `http://localhost:3000/notes/${id}`,
+                url: `${process.env.NEXT_PUBLIC_API_URL}/notes/${id}`,
                 method: 'PATCH',
                 body: updateNote
             });
@@ -44,21 +47,25 @@ export default function NoteBar({ noteTitleInputRef }: NoteBarProps) {
         } catch(error) {
             if (error instanceof HttpError) {
                 if (error.status === 401) {
-                    setMessageModalMessage("Unauthorized: the note hasn't been saved");
-                    setIsMessageModalOpen(true);
+                    setMessageModalState({
+                        isOpen: true,
+                        message: "Unauthorized: the note hasn't been saved"
+                    });
                     return;
                 }
             }
 
-            setMessageModalMessage("The note hasn't been saved, save the note locally to your device, and try again later");
-            setIsMessageModalOpen(true);
+            setMessageModalState({
+                isOpen: true,
+                message: "The note hasn't been saved, save the note locally to your device, and try again later"
+            });
         }
     }
 
     async function deleteNote() {
         try {
             const response = await requestToBackend({
-                url: `http://localhost:3000/notes/${id}`,
+                url: `${process.env.NEXT_PUBLIC_API_URL}/notes/${id}`,
                 method: 'DELETE'
             });
 
@@ -73,9 +80,18 @@ export default function NoteBar({ noteTitleInputRef }: NoteBarProps) {
                 }
             }
 
-            setMessageModalMessage("The note hasn't been deleted, please try again later");
-            setIsMessageModalOpen(true);
+            setMessageModalState({
+                isOpen: true,
+                message: "The note hasn't been deleted, please try again later"
+            });
         }
+    }
+
+    function toggleIsMessageModalOpen(isOpen: boolean) {
+        setMessageModalState(prev => ({ 
+            ...prev, 
+            isOpen
+        }));
     }
 
     return (
@@ -116,9 +132,9 @@ export default function NoteBar({ noteTitleInputRef }: NoteBarProps) {
                 />
 
                 <MessageModal
-                    message={messageModalMessage}
-                    isMessageModalOpen={isMessageModalOpen}
-                    setIsMessageModalOpen={(open: boolean) => setIsMessageModalOpen(open)}
+                    message={messageModalState.message}
+                    isMessageModalOpen={messageModalState.isOpen}
+                    setIsMessageModalOpen={toggleIsMessageModalOpen}
                 />
             </div>
         </div>

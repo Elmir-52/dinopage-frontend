@@ -9,9 +9,11 @@ import { HttpError } from "@/errors/httpError";
 import { randomColor } from "@/utils/randomColor";
 import { NOTE_CARD_BACKGROUNDS } from "@/shared/data/noteCardBackgrounds";
 import CreateNoteButton from "@/components/CreateNoteButton/CreateNoteButton";
-import MessageModal, { MessageModalOnClick } from "@/components/MessageModal/MessageModal";
+import MessageModal from "@/components/MessageModal/MessageModal";
 import Modal from "@/components/Modal/Modal";
 import { Paths } from "@/shared/enums/paths.enum";
+import { MessageModalState } from "@components/MessageModal/MessageModal.types";
+
 
 // NoteCard импортируется динамически без ssr, ибо внутри него есть код создания даты,
 // при разных часовых поясах будет ошибка гидратации
@@ -24,15 +26,16 @@ export default function HomeSection() {
     const [rerender, setRerender] = useState<boolean>(false);
     const [result, setResult] = useState<Note[] | undefined>();
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const [isMessageModalOpen, setIsMessageModalOpen] = useState<boolean>(false);
-    const [messageModalMessage, setMessageModalMessage] = useState<string>('');
-    const [messageModalOnClick, setMessageModalOnClick] = useState<MessageModalOnClick>(() => () => {});
+    const [messageModalState, setMessageModalState] = useState<MessageModalState>({
+        isOpen: false,
+        message: '',
+    });
 
     useEffect(() => {
         async function getUserNotes() {
             try {
                 const response = await requestToBackend({
-                    url: 'http://localhost:3000/notes',
+                    url: `${process.env.NEXT_PUBLIC_API_URL}/notes`,
                     method: 'GET'
                 })
 
@@ -48,9 +51,11 @@ export default function HomeSection() {
                     }
                 }
 
-                setMessageModalMessage("Something went wrong, please try again later");
-                setMessageModalOnClick(() => () => {});
-                setIsMessageModalOpen(true);
+                setMessageModalState({
+                    isOpen: true,
+                    message: 'Something went wrong, please try again later',
+                    onClick: toggleRerender
+                });
             }
         }
 
@@ -66,14 +71,14 @@ export default function HomeSection() {
         
         try {
             const response = await requestToBackend<CreateNote>({
-                url: 'http://localhost:3000/notes',
+                url: `${process.env.NEXT_PUBLIC_API_URL}/notes`,
                 method: 'POST',
                 body: newNote
             });
 
             if (!response.ok) throw new Error();
 
-            setRerender(prev => !prev);
+            toggleRerender();
         } catch(error) {
             if (error instanceof HttpError) {
                 if (error.status === 401) {
@@ -82,12 +87,23 @@ export default function HomeSection() {
                 }
             }
 
-            setMessageModalMessage("A note hasn't been created, please try again later");
-            setMessageModalOnClick(() => () => {});
-            setIsMessageModalOpen(true);
+            setMessageModalState({
+                isOpen: true,
+                message: "A note hasn't been created, please try again later"
+            });
         }
     }, []);
 
+    function toggleRerender() {
+        setRerender(prev => !prev);
+    }
+
+    function toggleIsMessageModalOpen(isOpen: boolean) {
+        setMessageModalState(prev => ({ 
+            ...prev, 
+            isOpen
+        }));
+    }
         
     return (
         <section className="grid grid-cols-[repeat(auto-fill,150px)] justify-center items-center 
@@ -108,10 +124,10 @@ export default function HomeSection() {
             />
 
             <MessageModal
-                message={messageModalMessage}
-                isMessageModalOpen={isMessageModalOpen}
-                setIsMessageModalOpen={(open: boolean) => setIsMessageModalOpen(open)}
-                onClick={() => messageModalOnClick()}
+                message={messageModalState.message}
+                isMessageModalOpen={messageModalState.isOpen}
+                setIsMessageModalOpen={toggleIsMessageModalOpen}
+                onClick={messageModalState.onClick}
             />
         </section>
     );
