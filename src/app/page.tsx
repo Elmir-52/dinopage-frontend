@@ -1,3 +1,4 @@
+import { WINDOW_CONTROL_BUTTONS_BACKGROUNDS } from "@/shared/data/windowControlButtonsBackgrounds";
 import { Paths } from "@/shared/enums/paths.enum";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -63,9 +64,14 @@ export default function HomePage() {
                         sm:w-[70%]"
                     >
                         <div className="w-full h-7 md:h-10 flex items-center gap-2.5 px-4">
-                            <div className="rounded-full w-4 h-4 bg-red-500"></div>
-                            <div className="rounded-full w-4 h-4 bg-yellow-400"></div>
-                            <div className="rounded-full w-4 h-4 bg-green-500"></div>
+                            {
+                                WINDOW_CONTROL_BUTTONS_BACKGROUNDS.map(background => {
+                                    return (<div 
+                                        className={`rounded-full w-3 h-3 ${background}
+                                        md:w-4 md:h-4`}
+                                    ></div>)
+                                })
+                            }
                         </div>
                         <img
                             className="w-full"
@@ -89,9 +95,14 @@ export default function HomePage() {
                         sm:w-[70%]"
                     >
                         <div className="w-full h-7 md:h-10 flex items-center gap-2.5 px-4">
-                            <div className="rounded-full w-4 h-4 bg-red-500"></div>
-                            <div className="rounded-full w-4 h-4 bg-yellow-400"></div>
-                            <div className="rounded-full w-4 h-4 bg-green-500"></div>
+                            {
+                                WINDOW_CONTROL_BUTTONS_BACKGROUNDS.map(background => {
+                                    return (<div 
+                                        className={`rounded-full w-3 h-3 ${background}
+                                        md:w-4 md:h-4`}
+                                    ></div>)
+                                })
+                            }
                         </div>
                         <img
                             className="w-full"
