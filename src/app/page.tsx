@@ -43,11 +43,63 @@ export default function HomePage() {
             </header>
             <main>
                 <h1
-                    className="text-5xl font-semibold text-center mx-auto w-max-250
-                    px-6"
+                    className="text-5xl font-semibold text-center mx-auto w-max-250 px-6
+                    mb-20"
                 >
-                    Write your great thoughts and best ideas 💡
+                    Write your <b>great thoughts</b> and <b><i>best ideas</i></b> 💡
                 </h1>
+                <section
+                    className="mx-auto w-[90%] bg-yellow-200 p-5 pb-10 rounded-2xl mb-15"
+                >
+                    <h2
+                        className="text-4xl font-semibold mb-20"
+                    >
+                        Create notes
+                    </h2>
+
+                    <div 
+                        className="w-full rounded-xl overflow-hidden mx-auto
+                        bg-white shadow-xl border border-solid border-gray-200
+                        sm:w-[70%]"
+                    >
+                        <div className="w-full h-7 md:h-10 flex items-center gap-2.5 px-4">
+                            <div className="rounded-full w-4 h-4 bg-red-500"></div>
+                            <div className="rounded-full w-4 h-4 bg-yellow-400"></div>
+                            <div className="rounded-full w-4 h-4 bg-green-500"></div>
+                        </div>
+                        <img
+                            className="w-full"
+                            src="/creating-note-screenshot.png"
+                            alt="Creating note screenshot"
+                        />
+                    </div>
+                </section>
+                <section
+                    className="mx-auto w-[90%] bg-red-200 p-5 pb-10 rounded-2xl mb-15"
+                >
+                    <h2
+                        className="text-4xl font-semibold mb-20"
+                    >
+                        Edit the text
+                    </h2>
+
+                    <div 
+                        className="w-full rounded-xl overflow-hidden mx-auto
+                        bg-white shadow-xl border border-solid border-gray-200
+                        sm:w-[70%]"
+                    >
+                        <div className="w-full h-7 md:h-10 flex items-center gap-2.5 px-4">
+                            <div className="rounded-full w-4 h-4 bg-red-500"></div>
+                            <div className="rounded-full w-4 h-4 bg-yellow-400"></div>
+                            <div className="rounded-full w-4 h-4 bg-green-500"></div>
+                        </div>
+                        <img
+                            className="w-full"
+                            src="/edition-text-screenshot.png"
+                            alt="Edition text screenshot"
+                        />
+                    </div>
+                </section>
             </main>
         </>
     )
