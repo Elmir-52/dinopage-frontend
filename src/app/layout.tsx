@@ -9,8 +9,7 @@ const roboto: NextFontWithVariable = Roboto({
 });
 
 export const metadata: Metadata = {
-    title: 'Dinopage',
-    description: 'App for writing notes.'
+    title: 'Dinopage'
 }
 
 export default function RootLayout({
