@@ -67,6 +67,7 @@ export default function HomePage() {
                             {
                                 WINDOW_CONTROL_BUTTONS_BACKGROUNDS.map(background => {
                                     return (<div 
+                                        key={background}
                                         className={`rounded-full w-3 h-3 ${background}
                                         md:w-4 md:h-4`}
                                     ></div>)
@@ -98,6 +99,7 @@ export default function HomePage() {
                             {
                                 WINDOW_CONTROL_BUTTONS_BACKGROUNDS.map(background => {
                                     return (<div 
+                                        key={background}
                                         className={`rounded-full w-3 h-3 ${background}
                                         md:w-4 md:h-4`}
                                     ></div>)
