@@ -74,8 +74,9 @@ export default function HomePage() {
                                 })
                             }
                         </div>
-                        <img
-                            className="w-full"
+                        <Image
+                            width={1200}
+                            height={700}
                             src="/creating-note-screenshot.png"
                             alt="Creating note screenshot"
                         />
@@ -106,8 +107,9 @@ export default function HomePage() {
                                 })
                             }
                         </div>
-                        <img
-                            className="w-full"
+                        <Image
+                            width={1200}
+                            height={700}
                             src="/edition-text-screenshot.png"
                             alt="Edition text screenshot"
                         />
