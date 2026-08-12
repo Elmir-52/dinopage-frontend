@@ -41,6 +41,14 @@ export default function HomePage() {
                     </Link>
                 </nav>
             </header>
+            <main>
+                <h1
+                    className="text-5xl font-semibold text-center mx-auto w-max-250
+                    px-6"
+                >
+                    Write your great thoughts and best ideas 💡
+                </h1>
+            </main>
         </>
     )
 }
