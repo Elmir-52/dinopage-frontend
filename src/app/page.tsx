@@ -77,8 +77,8 @@ export default function HomePage() {
                         <Image
                             width={1200}
                             height={700}
-                            src="/creating-note-screenshot.png"
-                            alt="Creating note screenshot"
+                            src="/screenshot-of-note-creating.png"
+                            alt="Screenshot of the instruction for creating a note"
                         />
                     </div>
                 </section>
@@ -110,8 +110,8 @@ export default function HomePage() {
                         <Image
                             width={1200}
                             height={700}
-                            src="/edition-text-screenshot.png"
-                            alt="Edition text screenshot"
+                            src="/screenshot-of-text-editing.png"
+                            alt="Screenshot of the text editing instruction"
                         />
                     </div>
                 </section>
