@@ -3,9 +3,7 @@
 import Form from "@/components/Form/Form";
 import { HttpError } from "@/errors/httpError";
 import { Paths } from "@/shared/enums/paths.enum";
-import { AuthResponse } from "@/shared/types/authResponse";
 import { UserFormData } from "@/shared/types/user";
-import { setToken } from "@/utils/authService";
 import { useRouter } from "next/navigation";
 
 export default function RegistrationSection() {
@@ -21,6 +19,11 @@ export default function RegistrationSection() {
                 },
                 body: JSON.stringify(user),
             });
+
+            if (response.ok) {
+                router.push(Paths.PROFILE);
+                return;
+            }
     
             const data = await response.json();
     
@@ -31,10 +34,6 @@ export default function RegistrationSection() {
             if (!response.ok) {
                 throw new Error();
             }
-    
-            const { accessToken }: AuthResponse = data;
-            setToken(accessToken);
-            router.push(Paths.PROFILE);
         } catch(error) {
             if (error instanceof HttpError) throw error;
 
