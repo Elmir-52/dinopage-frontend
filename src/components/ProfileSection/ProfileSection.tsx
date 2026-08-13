@@ -7,7 +7,6 @@ import { requestToBackend } from "@/utils/requestToBackend";
 import MessageModal from "@/components/MessageModal/MessageModal";
 import { User } from "@/shared/types/user";
 import { HttpError } from "@/errors/httpError";
-import { setToken } from "@/utils/authService";
 import { Paths } from "@/shared/enums/paths.enum";
 import { MessageModalState } from "@components/MessageModal/MessageModal.types";
 
@@ -63,7 +62,6 @@ export default function ProfileSection() {
 
             if (!response.ok) throw new Error();
 
-            setToken('');
             router.push(Paths.LOGIN);
         } catch(error) {
             if (error instanceof HttpError) {
