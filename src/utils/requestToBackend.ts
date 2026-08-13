@@ -1,4 +1,3 @@
-import { getToken, setToken } from "./authService";
 import { refreshTokens } from "./refreshTokens";
 
 interface RequestToBackendProps<T> {
@@ -12,29 +11,20 @@ export async function requestToBackend<T>({
     method,
     body
 }: RequestToBackendProps<T>): Promise<Response> {
-    let accessToken = getToken();
     let response;
 
     if (!body) {
         response = await fetch(url, {
             method: method,
-            headers: {
-                'Authorization': `Bearer ${accessToken}`,
-            },
-            body: JSON.stringify(body),
+            credentials: 'include', 
         });
 
         if (response.status === 401) {
-            setToken('');
             await refreshTokens();
                 
-            accessToken = getToken();
             response = await fetch(url, {
                 method: method,
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                },
-                body: JSON.stringify(body),
+                credentials: 'include',
             });
         }
     }
@@ -42,22 +32,20 @@ export async function requestToBackend<T>({
     if (body) {
         response = await fetch(url, {
             method: method,
+            credentials: 'include',
             headers: {
-                'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(body),
         });
     
         if (response.status === 401) {
-            setToken('');
             await refreshTokens();
                 
-            accessToken = getToken();
             response = await fetch(url, {
                 method: method,
+                credentials: 'include',
                 headers: {
-                    'Authorization': `Bearer ${accessToken}`,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(body),

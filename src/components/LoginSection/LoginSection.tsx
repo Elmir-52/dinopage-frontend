@@ -4,8 +4,6 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { UserFormData } from "@/shared/types/user";
 import { HttpError } from "@/errors/httpError";
-import { AuthResponse } from "@/shared/types/authResponse";
-import { setToken } from "@/utils/authService";
 import Form from "@/components/Form/Form";
 import { Paths } from "@/shared/enums/paths.enum";
 
@@ -22,6 +20,11 @@ export default function LoginSection() {
                 },
                 body: JSON.stringify(user),
             });
+
+            if (response.ok) {
+                router.push(Paths.PROFILE);
+                return;
+            }
     
             const data = await response.json();
     
@@ -32,10 +35,6 @@ export default function LoginSection() {
             if (!response.ok) {
                 throw new Error();
             }
-    
-            const { accessToken }: AuthResponse = data;
-            setToken(accessToken);
-            router.push(Paths.PROFILE);
         } catch(error) {
             if (error instanceof HttpError) throw error;
 
