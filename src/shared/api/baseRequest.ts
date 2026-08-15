@@ -6,7 +6,9 @@ interface RequestToBackendProps<T> {
     body?: T;
 }
 
-export async function requestToBackend<T>({
+// функция обёртка, которая автоматически прикрепляет httpOnly куки (access token) к запросу, 
+// и в случае 401 статуса, делает запрос на обновление токенов и повторный запрос к бэкенду
+export async function baseRequest<T>({
     url,
     method,
     body

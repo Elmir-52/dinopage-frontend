@@ -5,7 +5,7 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import Image from "next/image";
 import { UserFormData } from "@/shared/types/user";
 import { UserFormDataSchema } from "@/schemas/userFormData";
-import { HttpError } from "@/errors/httpError";
+import { HttpError } from "@/shared/api";
 
 interface IForm {
     email: string;

@@ -3,13 +3,12 @@ import { useState } from "react";
 import { Save, Trash2 } from "lucide-react";
 import MessageModal from "@/components/MessageModal/MessageModal";
 import { UpdateNote } from "@/shared/types/note";
-import { requestToBackend } from "@/utils/requestToBackend";
-import { HttpError } from "@/errors/httpError";
 import Modal from "@/components/Modal/Modal";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { Paths } from "@/shared/enums/paths.enum";
 import { MessageModalState } from "@/components/MessageModal/MessageModal.types";
+import { baseRequest, HttpError } from "@/shared/api";
 
 interface NoteBarProps {
     noteTitleInputRef: React.RefObject<HTMLInputElement | null>
@@ -35,7 +34,7 @@ export default function NoteBar({ noteTitleInputRef }: NoteBarProps) {
         }
 
         try {
-            const response = await requestToBackend<UpdateNote>({
+            const response = await baseRequest<UpdateNote>({
                 url: `${process.env.NEXT_PUBLIC_API_URL}/notes/${id}`,
                 method: 'PATCH',
                 body: updateNote
@@ -64,7 +63,7 @@ export default function NoteBar({ noteTitleInputRef }: NoteBarProps) {
 
     async function deleteNote() {
         try {
-            const response = await requestToBackend({
+            const response = await baseRequest({
                 url: `${process.env.NEXT_PUBLIC_API_URL}/notes/${id}`,
                 method: 'DELETE'
             });

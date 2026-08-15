@@ -1,7 +1,7 @@
 'use client'
 
 import Form from "@/components/Form/Form";
-import { HttpError } from "@/errors/httpError";
+import { HttpError } from "@/shared/api";
 import { Paths } from "@/shared/enums/paths.enum";
 import { UserFormData } from "@/shared/types/user";
 import { useRouter } from "next/navigation";

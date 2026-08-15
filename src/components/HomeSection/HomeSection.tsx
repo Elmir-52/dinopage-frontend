@@ -4,8 +4,7 @@ import { useCallback, useEffect, useState  } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { CreateNote, Note } from "@/shared/types/note";
-import { requestToBackend } from "@/utils/requestToBackend";
-import { HttpError } from "@/errors/httpError";
+import { HttpError } from "@/shared/api/httpError";
 import { randomColor } from "@/utils/randomColor";
 import { NOTE_CARD_BACKGROUNDS } from "@/shared/data/noteCardBackgrounds";
 import CreateNoteButton from "@/components/CreateNoteButton/CreateNoteButton";
@@ -13,6 +12,7 @@ import MessageModal from "@/components/MessageModal/MessageModal";
 import Modal from "@/components/Modal/Modal";
 import { Paths } from "@/shared/enums/paths.enum";
 import { MessageModalState } from "@components/MessageModal/MessageModal.types";
+import { baseRequest } from "@/shared/api";
 
 
 // NoteCard импортируется динамически без ssr, ибо внутри него есть код создания даты,
@@ -34,7 +34,7 @@ export default function HomeSection() {
     useEffect(() => {
         async function getUserNotes() {
             try {
-                const response = await requestToBackend({
+                const response = await baseRequest({
                     url: `${process.env.NEXT_PUBLIC_API_URL}/notes`,
                     method: 'GET'
                 })
@@ -70,7 +70,7 @@ export default function HomeSection() {
         }
         
         try {
-            const response = await requestToBackend<CreateNote>({
+            const response = await baseRequest<CreateNote>({
                 url: `${process.env.NEXT_PUBLIC_API_URL}/notes`,
                 method: 'POST',
                 body: newNote

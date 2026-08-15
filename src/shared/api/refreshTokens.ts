@@ -1,4 +1,4 @@
-import { HttpError } from "../errors/httpError";
+import { HttpError } from "./httpError";
 
 export async function refreshTokens(): Promise<void> {
     try {

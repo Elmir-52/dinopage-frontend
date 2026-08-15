@@ -3,12 +3,11 @@
 import { useEffect, useState } from "react";
 import Modal from '@/components//Modal/Modal';
 import { useRouter } from "next/navigation";
-import { requestToBackend } from "@/utils/requestToBackend";
 import MessageModal from "@/components/MessageModal/MessageModal";
 import { User } from "@/shared/types/user";
-import { HttpError } from "@/errors/httpError";
 import { Paths } from "@/shared/enums/paths.enum";
 import { MessageModalState } from "@components/MessageModal/MessageModal.types";
+import { baseRequest, HttpError } from "@/shared/api";
 
 export default function ProfileSection() {
     const router = useRouter();
@@ -23,7 +22,7 @@ export default function ProfileSection() {
     useEffect(() => {
         async function getUserData() {
             try {
-                let response = await requestToBackend({
+                let response = await baseRequest({
                     url: `${process.env.NEXT_PUBLIC_API_URL}/users/me`,
                     method: 'GET'
                 });
@@ -55,7 +54,7 @@ export default function ProfileSection() {
 
     async function deleteUser() {
         try {
-            let response = await requestToBackend({
+            let response = await baseRequest({
                 url: `${process.env.NEXT_PUBLIC_API_URL}/users/me`,
                 method: 'DELETE'
             });
