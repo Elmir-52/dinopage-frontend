@@ -1,2 +1,2 @@
-export { baseRequest } from "./baseRequest";
-export { HttpError } from "./httpError";
+export { baseRequest } from "./base/baseRequest";
+export { HttpError } from "./base/httpError";

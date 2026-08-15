@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState  } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { CreateNote, Note } from "@/shared/types/note";
-import { HttpError } from "@/shared/api/httpError";
 import { randomColor } from "@/utils/randomColor";
 import { NOTE_CARD_BACKGROUNDS } from "@/shared/data/noteCardBackgrounds";
 import CreateNoteButton from "@/components/CreateNoteButton/CreateNoteButton";
@@ -12,7 +11,7 @@ import MessageModal from "@/components/MessageModal/MessageModal";
 import Modal from "@/components/Modal/Modal";
 import { Paths } from "@/shared/enums/paths.enum";
 import { MessageModalState } from "@components/MessageModal/MessageModal.types";
-import { baseRequest } from "@/shared/api";
+import { baseRequest, HttpError } from "@/shared/api";
 
 
 // NoteCard импортируется динамически без ssr, ибо внутри него есть код создания даты,

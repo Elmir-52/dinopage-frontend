@@ -1,8 +1,7 @@
 'use client'
 
 import TipTap from "@/components/TipTap/TipTap";
-import { baseRequest } from "@/shared/api";
-import { HttpError } from "@/shared/api/httpError";
+import { baseRequest, HttpError } from "@/shared/api";
 import { Paths } from "@/shared/enums/paths.enum";
 import { Note } from "@/shared/types/note";
 import { useParams, useRouter } from "next/navigation";
