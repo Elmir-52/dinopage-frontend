@@ -1,5 +1,5 @@
 import { WINDOW_CONTROL_BUTTONS_BACKGROUNDS } from "@/shared/data/windowControlButtonsBackgrounds";
-import { Paths } from "@/shared/enums/paths.enum";
+import { PagePaths } from "@/shared/model";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -23,7 +23,7 @@ export default function HomePage() {
                     <Link 
                         className="p-2 rounded-xl cursor-pointer bg-gray-200
                         border border-solid border-gray-400"
-                        href={Paths.MAIN}
+                        href={PagePaths.MAIN}
                     >
                         <Image 
                             src="/dino.png"
@@ -36,7 +36,7 @@ export default function HomePage() {
                     <Link 
                         className="px-5 py-2 rounded-xl cursor-pointer bg-black 
                         text-white h-full"
-                        href={Paths.DOCS}
+                        href={PagePaths.DOCS}
                     >
                         Open Dinopage
                     </Link>

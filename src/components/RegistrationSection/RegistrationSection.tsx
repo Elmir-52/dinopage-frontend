@@ -2,7 +2,7 @@
 
 import Form from "@/components/Form/Form";
 import { HttpError } from "@/shared/api";
-import { Paths } from "@/shared/enums/paths.enum";
+import { PagePaths } from "@/shared/model";
 import { UserFormData } from "@/shared/types/user";
 import { useRouter } from "next/navigation";
 
@@ -21,7 +21,7 @@ export default function RegistrationSection() {
             });
 
             if (response.ok) {
-                router.push(Paths.PROFILE);
+                router.push(PagePaths.PROFILE);
                 return;
             }
     

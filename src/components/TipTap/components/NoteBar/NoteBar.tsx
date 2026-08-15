@@ -6,9 +6,9 @@ import { UpdateNote } from "@/shared/types/note";
 import Modal from "@/components/Modal/Modal";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { Paths } from "@/shared/enums/paths.enum";
 import { MessageModalState } from "@/components/MessageModal/MessageModal.types";
 import { baseRequest, HttpError } from "@/shared/api";
+import { PagePaths } from "@/shared/model";
 
 interface NoteBarProps {
     noteTitleInputRef: React.RefObject<HTMLInputElement | null>
@@ -42,7 +42,7 @@ export default function NoteBar({ noteTitleInputRef }: NoteBarProps) {
 
             if (!response.ok) throw new Error();
 
-            router.push(Paths.DOCS);
+            router.push(PagePaths.DOCS);
         } catch(error) {
             if (error instanceof HttpError) {
                 if (error.status === 401) {
@@ -70,11 +70,11 @@ export default function NoteBar({ noteTitleInputRef }: NoteBarProps) {
 
             if (!response.ok) throw new Error();
 
-            router.push(Paths.DOCS);
+            router.push(PagePaths.DOCS);
         } catch(error) {
             if (error instanceof HttpError) {
                 if (error.status === 401) {
-                    router.push(Paths.LOGIN);
+                    router.push(PagePaths.LOGIN);
                     return;
                 }
             }
@@ -97,7 +97,7 @@ export default function NoteBar({ noteTitleInputRef }: NoteBarProps) {
         <div className='w-70 h-full p-2.5'>
             <div className="flex flex-col items-start gap-2.5">
                 <Link
-                    href={Paths.DOCS}
+                    href={PagePaths.DOCS}
                     className="flex items-center gap-4 w-full rounded-xl px-2.5 py-1.5 
                     text-xl cursor-pointer hover:bg-gray-200"
                 >

@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { UserFormData } from "@/shared/types/user";
 import Form from "@/components/Form/Form";
-import { Paths } from "@/shared/enums/paths.enum";
 import { HttpError } from "@/shared/api";
+import { PagePaths } from "@/shared/model";
 
 export default function LoginSection() {
     const router = useRouter();
@@ -22,7 +22,7 @@ export default function LoginSection() {
             });
 
             if (response.ok) {
-                router.push(Paths.PROFILE);
+                router.push(PagePaths.PROFILE);
                 return;
             }
     
@@ -52,7 +52,7 @@ export default function LoginSection() {
             <Form buttonText='Log in' submitFunction={(user: UserFormData) => login(user)} />
             
             <Link
-                href={Paths.REGISTER}
+                href={PagePaths.REGISTER}
                 className="text-2xl text-blue-600 underline"
             >
                 Register

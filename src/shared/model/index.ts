@@ -1,0 +1,1 @@
+export { PagePaths } from "./pagePaths.enum";

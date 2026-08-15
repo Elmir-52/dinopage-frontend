@@ -5,9 +5,9 @@ import Modal from '@/components//Modal/Modal';
 import { useRouter } from "next/navigation";
 import MessageModal from "@/components/MessageModal/MessageModal";
 import { User } from "@/shared/types/user";
-import { Paths } from "@/shared/enums/paths.enum";
 import { MessageModalState } from "@components/MessageModal/MessageModal.types";
 import { baseRequest, HttpError } from "@/shared/api";
+import { PagePaths } from "@/shared/model";
 
 export default function ProfileSection() {
     const router = useRouter();
@@ -34,7 +34,7 @@ export default function ProfileSection() {
             } catch(error) {
                 if (error instanceof HttpError) {
                     if (error.status === 401) {
-                        router.push(Paths.LOGIN);
+                        router.push(PagePaths.LOGIN);
                         return;
                     }
                 }
@@ -42,7 +42,7 @@ export default function ProfileSection() {
                 setMessageModalState({
                     isOpen: true,
                     message: "Something went wrong, please try again later",
-                    onClick: () => router.push(Paths.DOCS)
+                    onClick: () => router.push(PagePaths.DOCS)
                 });
             } finally {
                 setLoading(false);
@@ -61,14 +61,14 @@ export default function ProfileSection() {
 
             if (!response.ok) throw new Error();
 
-            router.push(Paths.LOGIN);
+            router.push(PagePaths.LOGIN);
         } catch(error) {
             if (error instanceof HttpError) {
                 if (error.status === 401) {
                     setMessageModalState({
                         isOpen: true,
                         message: "Unauthorized: the profile hasn't been deleted",
-                        onClick: () => router.push(Paths.LOGIN)
+                        onClick: () => router.push(PagePaths.LOGIN)
                     });
                     return;
                 }

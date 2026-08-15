@@ -2,7 +2,7 @@
 
 import TipTap from "@/components/TipTap/TipTap";
 import { baseRequest, HttpError } from "@/shared/api";
-import { Paths } from "@/shared/enums/paths.enum";
+import { PagePaths } from "@/shared/model";
 import { Note } from "@/shared/types/note";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -21,7 +21,7 @@ export default function PagesPage() {
                 });
 
                 if (!response.ok) {
-                    router.push(Paths.DOCS);
+                    router.push(PagePaths.DOCS);
                     return;
                 }
 
@@ -30,7 +30,7 @@ export default function PagesPage() {
             } catch(error) {
                 if (error instanceof HttpError) {
                     if (error.status === 401) {
-                        router.push(Paths.LOGIN);
+                        router.push(PagePaths.LOGIN);
                         return;
                     }
                 }

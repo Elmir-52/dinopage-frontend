@@ -1,16 +1,16 @@
-import { Paths } from "@/shared/enums/paths.enum";
+import { PagePaths } from "../model";
 
 export const HEADER_NAV_LINKS = [
     {
-        path: Paths.DOCS,
+        path: PagePaths.DOCS,
         name: 'Home',
     },
     {
-        path: Paths.LOGIN,
+        path: PagePaths.LOGIN,
         name: 'Login',
     },
     {
-        path: Paths.PROFILE,
+        path: PagePaths.PROFILE,
         name: 'Profile',
     }
 ]
