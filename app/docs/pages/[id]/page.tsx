@@ -1,8 +1,7 @@
 'use client'
 
 import { baseRequest, HttpError } from "@/shared/api";
-import { PagePaths } from "@/shared/model";
-import { Note } from "@/shared/types/note";
+import { Note, PagePaths } from "@/shared/model";
 import TipTap from "@/widgets/TipTap";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";

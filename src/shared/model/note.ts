@@ -12,8 +12,3 @@ export interface CreateNote {
     content: string;
     color: string;
 }
-
-export interface UpdateNote {
-    title: string;
-    content: string;
-}

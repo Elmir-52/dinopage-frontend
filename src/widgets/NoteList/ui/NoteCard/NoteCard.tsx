@@ -1,8 +1,8 @@
 'use client'
 
 import { MONTHS } from '@/shared/data/months';
+import { Note } from '@/shared/model';
 import { PagePaths } from '@/shared/model/pagePaths.enum';
-import { Note } from '@/shared/types/note';
 import Link from 'next/link';
 
 interface PropsButtonNote {
