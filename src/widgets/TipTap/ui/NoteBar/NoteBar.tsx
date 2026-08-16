@@ -16,7 +16,7 @@ interface NoteBarProps {
 
 export default function NoteBar({ noteTitleInputRef }: NoteBarProps) {
     const { editor } = useCurrentEditor();
-    const { id } = useParams<{ id: string }>()!; // здесь 100% получаем params
+    const { id } = useParams<{ id: string }>();
     const router = useRouter();
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [messageModalState, setMessageModalState] = useState<MessageModalState>({
