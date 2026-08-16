@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import { CreateNote, Note } from "@/shared/types/note";
 import { randomColor } from "@/utils/randomColor";
 import { NOTE_CARD_BACKGROUNDS } from "@/shared/data/noteCardBackgrounds";
-import CreateNoteButton from "@/components/CreateNoteButton/CreateNoteButton";
+import CreateNoteButton from "@/widgets/NoteList/ui/CreateNoteButton/CreateNoteButton";
 import MessageModal from "@/components/MessageModal/MessageModal";
 import Modal from "@/components/Modal/Modal";
 import { MessageModalState } from "@components/MessageModal/MessageModal.types";
