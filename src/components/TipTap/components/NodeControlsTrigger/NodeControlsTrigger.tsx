@@ -5,8 +5,8 @@ import NodeControls from "@components/TipTap/components/NodeControls/NodeControl
 import { useMemo, useState } from "react";
 import { flip, safePolygon, shift, useFloating, useHover, useInteractions } from "@floating-ui/react";
 import { useCurrentEditor } from "@tiptap/react";
-import { useAppSelector } from "@/store/hooks";
 import { createNodeControlsArray, NodeControl } from "@components/TipTap/utils/createNodeControlsArray";
+import { useAppSelector } from "@/shared/model";
 
 export default function NodeControlsTrigger() {
     const [isOpen, setIsOpen] = useState<boolean>(false);

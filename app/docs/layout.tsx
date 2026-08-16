@@ -1,4 +1,4 @@
-import StoreProvider from '@/providers/StoreProvider';
+import StoreProvider from "@/app/providers"
 
 export default function DocsLayout({
     children,

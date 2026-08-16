@@ -7,9 +7,9 @@ import FontSize from "@components/TipTap/components/FontSize/FontSize";
 import { useEffect } from "react";
 import NodeControlsTrigger from "@components/TipTap/components/NodeControlsTrigger/NodeControlsTrigger";
 import Divider from "@components/Divider/Divider";
-import { useAppDispatch } from "@/store/hooks";
 import { formatStateSelector } from "@components/TipTap/utils/formatStateSelector";
-import { setEditorState } from "@/store/features/editorStateSlice";
+import { useAppDispatch } from "@/shared/model";
+import { setEditorState } from "@/app/store/features/editorStateSlice";
 
 interface BubbleToolbarProps {
     editor: Editor

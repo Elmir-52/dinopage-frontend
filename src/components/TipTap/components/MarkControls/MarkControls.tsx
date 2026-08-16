@@ -2,7 +2,7 @@
 
 import { useCurrentEditor } from "@tiptap/react";
 import { createMarkControlsArray, type MarkControl } from "@components/TipTap/utils/createMarkControlsArray";
-import { useAppSelector } from "@/store/hooks";
+import { useAppSelector } from "@/shared/model";
 
 
 export default function MarkControls() {
