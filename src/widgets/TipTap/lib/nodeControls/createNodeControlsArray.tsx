@@ -1,5 +1,5 @@
 import { Editor } from '@tiptap/react';
-import type { FormatStateSelector } from './formatStateSelector';
+import { FormatStateSelector } from '../stateSelector/formatStateSelector';
 
 export interface NodeControl {
     onClick: () => void;
