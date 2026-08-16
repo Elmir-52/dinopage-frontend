@@ -16,7 +16,7 @@ import { PagePaths } from "@/shared/model";
 
 // NoteCard импортируется динамически без ssr, ибо внутри него есть код создания даты,
 // при разных часовых поясах будет ошибка гидратации
-const DynamicNoteCard = dynamic(() => import('@/components/NoteCard/NoteCard'), {
+const DynamicNoteCard = dynamic(() => import('./ui/NoteCard/NoteCard'), {
     ssr: false,
 });
 
