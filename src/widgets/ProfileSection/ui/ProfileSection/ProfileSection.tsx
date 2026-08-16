@@ -2,12 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import MessageModal from "@/components/MessageModal/MessageModal";
 import { User } from "@/shared/types/user";
-import { MessageModalState } from "@components/MessageModal/MessageModal.types";
 import { baseRequest, HttpError } from "@/shared/api";
-import { PagePaths } from "@/shared/model";
-import { Modal } from "@/shared/ui";
+import { MessageModalState, PagePaths } from "@/shared/model";
+import { MessageModal, Modal } from "@/shared/ui";
 
 export default function ProfileSection() {
     const router = useRouter();

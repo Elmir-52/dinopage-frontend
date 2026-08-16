@@ -1,8 +1,8 @@
 'use client'
 
 
+import { MessageModalOnClick } from "../../model/messageModal";
 import { useEffect, useRef } from "react";
-import { MessageModalOnClick } from "@components/MessageModal/MessageModal.types";
 
 interface MessageModalProps {
     message: string
@@ -11,7 +11,7 @@ interface MessageModalProps {
     onClick?: MessageModalOnClick;
 }
 
-export default function MessageModal({ 
+export function MessageModal({ 
     message, 
     isMessageModalOpen, 
     setIsMessageModalOpen,

@@ -6,12 +6,10 @@ import dynamic from "next/dynamic";
 import { CreateNote, Note } from "@/shared/types/note";
 import { randomColor } from "@/utils/randomColor";
 import { NOTE_CARD_BACKGROUNDS } from "@/shared/data/noteCardBackgrounds";
-import MessageModal from "@/components/MessageModal/MessageModal";
-import { MessageModalState } from "@components/MessageModal/MessageModal.types";
 import { baseRequest, HttpError } from "@/shared/api";
-import { PagePaths } from "@/shared/model";
+import { MessageModalState, PagePaths } from "@/shared/model";
 import CreateNoteButton from "../CreateNoteButton/CreateNoteButton";
-import { Modal } from "@/shared/ui";
+import { MessageModal, Modal } from "@/shared/ui";
 
 
 // NoteCard импортируется динамически без ssr, ибо внутри него есть код создания даты,
