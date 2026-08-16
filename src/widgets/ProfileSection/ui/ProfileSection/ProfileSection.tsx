@@ -2,9 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { User } from "@/shared/types/user";
 import { baseRequest, HttpError } from "@/shared/api";
-import { MessageModalState, PagePaths } from "@/shared/model";
+import { MessageModalState, PagePaths, User } from "@/shared/model";
 import { MessageModal, Modal } from "@/shared/ui";
 
 export default function ProfileSection() {
