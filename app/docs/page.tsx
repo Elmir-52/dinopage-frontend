@@ -1,4 +1,4 @@
-import Header from "@/components/Header/Header";
+import Header from "@/widgets/Header";
 import NoteList from "@/widgets/NoteList";
 
 export default function DocsPage() {
