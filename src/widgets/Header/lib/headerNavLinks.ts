@@ -1,4 +1,4 @@
-import { PagePaths } from "../model";
+import { PagePaths } from "../../../shared/model";
 
 export const HEADER_NAV_LINKS = [
     {

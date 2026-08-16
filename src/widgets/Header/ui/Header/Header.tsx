@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { HEADER_NAV_LINKS } from '@/shared/data/headerNavLinks';
+import { HEADER_NAV_LINKS } from '../../lib/headerNavLinks';
 
 export default function Header() {
     const currentPath = usePathname();
