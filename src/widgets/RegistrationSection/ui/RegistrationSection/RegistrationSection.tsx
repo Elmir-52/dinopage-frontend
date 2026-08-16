@@ -1,9 +1,8 @@
 'use client'
 
-import Form from "@/features/form";
+import Form, { UserFormData } from "@/features/form";
 import { HttpError } from "@/shared/api";
 import { PagePaths } from "@/shared/model";
-import { UserFormData } from "@/shared/types/user";
 import { useRouter } from "next/navigation";
 
 export default function RegistrationSection() {

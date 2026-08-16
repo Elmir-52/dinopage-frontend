@@ -3,8 +3,3 @@ export interface User {
     email: string,
     createdAt: string;
 }
-
-export interface UserFormData {
-    email: string;
-    password: string;
-}

@@ -1,5 +1,10 @@
 import z from "zod";
 
+export interface UserFormData {
+    email: string;
+    password: string;
+}
+
 export const UserFormDataSchema = z.object({
     email: z
         .email()

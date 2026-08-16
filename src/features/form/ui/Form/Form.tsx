@@ -3,9 +3,8 @@
 import { useEffect, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import Image from "next/image";
-import { UserFormData } from "@/shared/types/user";
-import { UserFormDataSchema } from "@/schemas/userFormData";
 import { HttpError } from "@/shared/api";
+import { UserFormData, UserFormDataSchema } from "../../model/userFormData";
 
 interface IForm {
     email: string;
