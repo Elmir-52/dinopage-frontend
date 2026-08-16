@@ -4,13 +4,13 @@ import { useCurrentEditor } from "@tiptap/react"
 import { useState } from "react";
 import { Save, Trash2 } from "lucide-react";
 import MessageModal from "@/components/MessageModal/MessageModal";
-import Modal from "@/components/Modal/Modal";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { MessageModalState } from "@/components/MessageModal/MessageModal.types";
 import { PagePaths } from "@/shared/model";
 import { updateNoteRequest } from "../../api/updateNoteRequest";
 import { deleteNoteRequest } from "../../api/deleteNoteRequest";
+import { Modal } from "@/shared/ui";
 
 interface NoteBarProps {
     noteTitleInputRef: React.RefObject<HTMLInputElement | null>

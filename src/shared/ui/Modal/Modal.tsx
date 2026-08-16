@@ -9,7 +9,7 @@ interface PropsModal {
     onClick: () => void;
 }
 
-export default function Modal({ message, isModalOpen, setIsModalOpen, onClick }: PropsModal) {
+export function Modal({ message, isModalOpen, setIsModalOpen, onClick }: PropsModal) {
     const dialog = useRef<HTMLDialogElement>(null);
 
     useEffect(() => {
