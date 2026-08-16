@@ -1,4 +1,4 @@
-import StoreProvider from "@/app/providers"
+import StoreProvider from "@/fsd-app/providers"
 
 export default function DocsLayout({
     children,

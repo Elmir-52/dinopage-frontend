@@ -2,7 +2,7 @@ import { useDispatch, useSelector, useStore } from "react-redux";
 
 // делаю исключение из правил fsd (кастомные redux хуки нужны везде в проекте, поэтому 
 // выносим их в /shared, но при этом их надо типизировать типами из /app/store)
-import { AppDispatch, AppStore, RootState } from "@/app/store";
+import { AppDispatch, AppStore, RootState } from "@/fsd-app/store";
 
 // у useAppDispatch типизация старого формата, потому что withTypes почему-то некорретно 
 // работает для него
