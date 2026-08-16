@@ -1,4 +1,4 @@
-import ProfileSection from "@/components/ProfileSection/ProfileSection";
+import ProfileSection from "@/widgets/ProfileSection";
 
 export default function ProfilePage() {
     return (
