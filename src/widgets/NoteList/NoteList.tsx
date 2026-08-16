@@ -20,7 +20,7 @@ const DynamicNoteCard = dynamic(() => import('@/components/NoteCard/NoteCard'), 
     ssr: false,
 });
 
-export default function HomeSection() {
+export default function NoteList() {
     const router = useRouter();
     const [rerender, setRerender] = useState<boolean>(false);
     const [result, setResult] = useState<Note[] | undefined>();

@@ -1,11 +1,11 @@
 import Header from "@/components/Header/Header";
-import HomeSection from "@/widgets/HomeSection";
+import NoteList from "@/widgets/NoteList";
 
 export default function DocsPage() {
     return (
         <>
             <Header />
-            <HomeSection />
+            <NoteList />
         </>
     )
 }
