@@ -1,8 +1,7 @@
 import { baseRequest, HttpError } from "@/shared/api";
 import { UpdateNote } from "../model/updateNote";
-import { PagePaths } from "@/shared/model";
+import { MessageModalState, PagePaths } from "@/shared/model";
 import { SetStateAction } from "react";
-import { MessageModalState } from "@/components/MessageModal/MessageModal.types";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export async function updateNoteRequest(

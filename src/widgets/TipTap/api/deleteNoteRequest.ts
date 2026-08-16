@@ -1,6 +1,5 @@
-import { MessageModalState } from "@/components/MessageModal/MessageModal.types";
 import { baseRequest, HttpError } from "@/shared/api";
-import { PagePaths } from "@/shared/model";
+import { MessageModalState, PagePaths } from "@/shared/model";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { SetStateAction } from "react";
 
