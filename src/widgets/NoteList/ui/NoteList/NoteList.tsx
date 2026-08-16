@@ -3,12 +3,12 @@
 import { useCallback, useEffect, useState  } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-import { randomColor } from "@/utils/randomColor";
 import { baseRequest, HttpError } from "@/shared/api";
 import { CreateNote, MessageModalState, Note, PagePaths } from "@/shared/model";
 import CreateNoteButton from "../CreateNoteButton/CreateNoteButton";
 import { MessageModal, Modal } from "@/shared/ui";
 import { NOTE_CARD_BACKGROUNDS } from "../../lib/noteCardBackgrounds";
+import { randomColor } from "../../lib/randomColor";
 
 
 // NoteCard импортируется динамически без ssr, ибо внутри него есть код создания даты,
