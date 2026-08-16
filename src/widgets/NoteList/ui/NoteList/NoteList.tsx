@@ -6,17 +6,17 @@ import dynamic from "next/dynamic";
 import { CreateNote, Note } from "@/shared/types/note";
 import { randomColor } from "@/utils/randomColor";
 import { NOTE_CARD_BACKGROUNDS } from "@/shared/data/noteCardBackgrounds";
-import CreateNoteButton from "@/widgets/NoteList/ui/CreateNoteButton/CreateNoteButton";
 import MessageModal from "@/components/MessageModal/MessageModal";
 import Modal from "@/components/Modal/Modal";
 import { MessageModalState } from "@components/MessageModal/MessageModal.types";
 import { baseRequest, HttpError } from "@/shared/api";
 import { PagePaths } from "@/shared/model";
+import CreateNoteButton from "../CreateNoteButton/CreateNoteButton";
 
 
 // NoteCard импортируется динамически без ssr, ибо внутри него есть код создания даты,
 // при разных часовых поясах будет ошибка гидратации
-const DynamicNoteCard = dynamic(() => import('./ui/NoteCard/NoteCard'), {
+const DynamicNoteCard = dynamic(() => import('../NoteCard/NoteCard'), {
     ssr: false,
 });
 
