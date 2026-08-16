@@ -2,11 +2,11 @@
 
 import { useCurrentEditor } from "@tiptap/react";
 import { useEffect, useState } from "react";
-import { FONT_SIZE_LIST } from "@components/TipTap/data/fontSizeList";
+import { FONT_SIZE_LIST } from "../../lib/fontSizeControls/fontSizeList";
 
 type ChangeFontSizeEvent = React.FocusEvent<HTMLInputElement, Element> | React.ChangeEvent<HTMLSelectElement>;
 
-export default function FontSize() {
+export default function FontSizeControls() {
     const { editor } = useCurrentEditor();
     
     const [currentFontSize, setCurrentFontSize] = useState<string | undefined>();

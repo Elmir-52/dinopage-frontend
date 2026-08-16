@@ -6,10 +6,10 @@ import StarterKit from "@tiptap/starter-kit";
 import { TextStyleKit } from '@tiptap/extension-text-style';
 import { useEffect, useMemo, useRef } from "react";
 import Code from "@tiptap/extension-code";
-import NoteBar from "./components/NoteBar/NoteBar";
-import BubbleToolbar from "./components/BubbleToolbar/BubbleToolbar";
-import { CustomHeading } from "./extensions/custom-heading";
 import { Note } from "@/shared/types/note";
+import { CustomHeading } from "../../lib/tiptapExtensions/custom-heading";
+import NoteBar from "../NoteBar/NoteBar";
+import BubbleToolbar from "../BubbleToolbar/BubbleToolbar";
 
 interface TipTapProps {
     note: Note

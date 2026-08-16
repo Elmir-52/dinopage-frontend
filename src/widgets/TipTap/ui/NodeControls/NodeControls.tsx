@@ -1,7 +1,7 @@
 'use client'
 
 import { type CSSProperties, type HTMLProps } from "react";
-import type { NodeControl } from "@components/TipTap/utils/createNodeControlsArray";
+import { NodeControl } from "../../lib/nodeControls/createNodeControlsArray";
 
 interface NodeControlsProps {
     ref: (node: HTMLElement | null) => void;

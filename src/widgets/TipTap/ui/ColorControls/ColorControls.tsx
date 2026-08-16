@@ -1,9 +1,9 @@
 'use client'
 
 import { useCurrentEditor } from "@tiptap/react";
-import { COLOR_BUTTONS } from "@components/TipTap/data/colorButtons";
+import { COLOR_CONTROLS } from "../../lib/colorControls/colorControls";
 
-export default function TextColor() {
+export default function ColorControls() {
     const { editor } = useCurrentEditor()
     
     return(
@@ -17,18 +17,18 @@ export default function TextColor() {
                 <span className="font-semibold text-lg leading-0">A</span>
             </button>
             {
-                COLOR_BUTTONS.map(colorButton => {
+                COLOR_CONTROLS.map(colorControl => {
                     return <button 
                         className="border-2 border-solid rounded-lg
                         cursor-pointer bg-white"
-                        key={colorButton.text}
-                        onClick={() => editor?.chain().focus().setColor(colorButton.textColor).run()} 
-                        style={{borderColor: colorButton.textColor}}
-                        title={colorButton.text}
+                        key={colorControl.text}
+                        onClick={() => editor?.chain().focus().setColor(colorControl.textColor).run()} 
+                        style={{borderColor: colorControl.textColor}}
+                        title={colorControl.text}
                     >
                         <span 
                             className="font-semibold text-lg leading-0"
-                            style={{color: colorButton.textColor}}
+                            style={{color: colorControl.textColor}}
                         >
                             A
                         </span>

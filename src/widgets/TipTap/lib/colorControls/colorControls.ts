@@ -1,9 +1,9 @@
-interface ColorButton { 
+interface ColorControl { 
     text: string;
     textColor: string;
 }
 
-export const COLOR_BUTTONS: ColorButton[] = [
+export const COLOR_CONTROLS: ColorControl[] = [
     {
         text: 'Red',
         textColor: '#ff0000',

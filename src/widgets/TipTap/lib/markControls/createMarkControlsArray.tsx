@@ -1,7 +1,7 @@
 import { Editor } from '@tiptap/react';
 import { Bold, CodeXml, Italic, Strikethrough, Underline } from 'lucide-react'
 import type { ReactNode } from 'react';
-import type { FormatStateSelector } from './formatStateSelector';
+import type { FormatStateSelector } from '../stateSelector/formatStateSelector';
 
 export interface MarkControl {
     onClick: () => void;

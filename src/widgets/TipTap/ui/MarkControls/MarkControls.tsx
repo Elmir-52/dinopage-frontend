@@ -1,8 +1,8 @@
 'use client'
 
 import { useCurrentEditor } from "@tiptap/react";
-import { createMarkControlsArray, type MarkControl } from "@components/TipTap/utils/createMarkControlsArray";
 import { useAppSelector } from "@/shared/model";
+import { createMarkControlsArray, MarkControl } from "../../lib/markControls/createMarkControlsArray";
 
 
 export default function MarkControls() {

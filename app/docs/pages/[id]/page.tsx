@@ -1,9 +1,9 @@
 'use client'
 
-import TipTap from "@/components/TipTap/TipTap";
 import { baseRequest, HttpError } from "@/shared/api";
 import { PagePaths } from "@/shared/model";
 import { Note } from "@/shared/types/note";
+import TipTap from "@/widgets/TipTap";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 

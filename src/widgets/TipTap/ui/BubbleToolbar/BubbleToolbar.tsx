@@ -1,15 +1,15 @@
 'use client'
 
 import { Editor, useEditorState } from "@tiptap/react";
-import MarkControls from "@components/TipTap/components/MarkControls/MarkControls";
-import TextColor from "@components/TipTap/components/TextColor/TextColor";
-import FontSize from "@components/TipTap/components/FontSize/FontSize";
 import { useEffect } from "react";
-import NodeControlsTrigger from "@components/TipTap/components/NodeControlsTrigger/NodeControlsTrigger";
-import Divider from "@components/Divider/Divider";
-import { formatStateSelector } from "@components/TipTap/utils/formatStateSelector";
 import { useAppDispatch } from "@/shared/model";
-import { setEditorState } from "@/app/store/features/editorStateSlice";
+import { formatStateSelector } from "../../lib/stateSelector/formatStateSelector";
+import NodeControlsTrigger from "../NodeControlsTrigger/NodeControlsTrigger";
+import MarkControls from "../MarkControls/MarkControls";
+import ColorControls from "../ColorControls/ColorControls";
+import FontSizeControls from "../FontSizeControls/FontSizeControls";
+import { setEditorState } from "../../model/slice";
+import Divider from "../Divider/Divider";
 
 interface BubbleToolbarProps {
     editor: Editor
@@ -35,12 +35,12 @@ export default function BubbleToolbar({ editor }: BubbleToolbarProps) {
             <Divider />
             <MarkControls />
             <Divider />
-            <TextColor />
+            <ColorControls />
             {
                 editorState.isParagraph && (
                     <>
                         <Divider />
-                        <FontSize />
+                        <FontSizeControls />
                     </>
                 )
             }

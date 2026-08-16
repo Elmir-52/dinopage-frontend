@@ -1,12 +1,12 @@
 'use client'
 
 import { ChevronRight } from "lucide-react";
-import NodeControls from "@components/TipTap/components/NodeControls/NodeControls";
 import { useMemo, useState } from "react";
 import { flip, safePolygon, shift, useFloating, useHover, useInteractions } from "@floating-ui/react";
 import { useCurrentEditor } from "@tiptap/react";
-import { createNodeControlsArray, NodeControl } from "@components/TipTap/utils/createNodeControlsArray";
 import { useAppSelector } from "@/shared/model";
+import { createNodeControlsArray, NodeControl } from "../../lib/nodeControls/createNodeControlsArray";
+import NodeControls from "../NodeControls/NodeControls";
 
 export default function NodeControlsTrigger() {
     const [isOpen, setIsOpen] = useState<boolean>(false);
