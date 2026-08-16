@@ -3,9 +3,9 @@
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { UserFormData } from "@/shared/types/user";
-import Form from "@/components/Form/Form";
 import { HttpError } from "@/shared/api";
 import { PagePaths } from "@/shared/model";
+import Form from "@/features/form";
 
 export default function LoginSection() {
     const router = useRouter();

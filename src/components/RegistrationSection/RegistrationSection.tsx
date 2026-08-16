@@ -1,6 +1,6 @@
 'use client'
 
-import Form from "@/components/Form/Form";
+import Form from "@/features/form";
 import { HttpError } from "@/shared/api";
 import { PagePaths } from "@/shared/model";
 import { UserFormData } from "@/shared/types/user";
