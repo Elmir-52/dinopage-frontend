@@ -5,8 +5,8 @@ import { useMemo, useState } from "react";
 import { flip, safePolygon, shift, useFloating, useHover, useInteractions } from "@floating-ui/react";
 import { useCurrentEditor } from "@tiptap/react";
 import { useAppSelector } from "@/shared/model";
-import { createNodeControlsArray, NodeControl } from "../../lib/nodeControls/createNodeControlsArray";
 import NodeControls from "../NodeControls/NodeControls";
+import { createNodeControlsArray, NodeControl } from "../../lib/nodeControls";
 
 export default function NodeControlsTrigger() {
     const [isOpen, setIsOpen] = useState<boolean>(false);

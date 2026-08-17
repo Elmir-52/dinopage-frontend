@@ -1,7 +1,7 @@
 'use client'
 
 import { type CSSProperties, type HTMLProps } from "react";
-import { NodeControl } from "../../lib/nodeControls/createNodeControlsArray";
+import { NodeControl } from "../../lib/nodeControls";
 
 interface NodeControlsProps {
     ref: (node: HTMLElement | null) => void;
