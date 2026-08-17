@@ -2,7 +2,7 @@
 
 import { useCurrentEditor } from "@tiptap/react";
 import { useEffect, useState } from "react";
-import { FONT_SIZE_LIST } from "../../lib/fontSizeControls/fontSizeList";
+import { FONT_SIZE_CONTROLS } from "../../lib/fontSizeControls";
 
 type ChangeFontSizeEvent = React.FocusEvent<HTMLInputElement, Element> | React.ChangeEvent<HTMLSelectElement>;
 
@@ -55,7 +55,7 @@ export default function FontSizeControls() {
                 }}
             >
                 {
-                    FONT_SIZE_LIST.map((el) => {
+                    FONT_SIZE_CONTROLS.map((el) => {
                         if (currentFontSize === el.value) {
                             return <option 
                                 key={el.value} 

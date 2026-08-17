@@ -1,8 +1,8 @@
-export interface FontSizeListElement {
+export interface FontSizeControl {
     value: string,
 }
 
-export const FONT_SIZE_LIST: FontSizeListElement[] = [
+export const FONT_SIZE_CONTROLS: FontSizeControl[] = [
     {
         value: '10',
     },
