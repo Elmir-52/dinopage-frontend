@@ -1,7 +1,7 @@
 'use client'
 
 import { useCurrentEditor } from "@tiptap/react";
-import { COLOR_CONTROLS } from "../../lib/colorControls/colorControls";
+import { COLOR_CONTROLS } from "../../lib/colorControls";
 
 export default function ColorControls() {
     const { editor } = useCurrentEditor()
