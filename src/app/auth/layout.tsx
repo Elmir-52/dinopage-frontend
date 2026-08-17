@@ -1,4 +1,4 @@
-import Header from "@/widgets/Header"
+import Header from "@/widgets/header"
 
 export default function AuthLayout({
     children,

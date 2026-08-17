@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { editorStateReducer } from "@/widgets/TipTap";
+import { editorStateReducer } from "@/widgets/tip-tap";
 
 export const makeStore = () => {
     return configureStore({

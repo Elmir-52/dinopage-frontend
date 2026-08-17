@@ -2,7 +2,7 @@
 
 import { baseRequest, HttpError } from "@/shared/api";
 import { Note, PagePaths } from "@/shared/model";
-import TipTap from "@/widgets/TipTap";
+import TipTap from "@/widgets/tip-tap";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 

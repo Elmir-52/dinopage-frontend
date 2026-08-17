@@ -1,4 +1,4 @@
-import LoginSection from "@/widgets/LoginSection";
+import LoginSection from "@/widgets/login-section";
 
 export default function LoginPage() {
     return (

@@ -1,5 +1,5 @@
-import Header from "@/widgets/Header";
-import NoteList from "@/widgets/NoteList";
+import Header from "@/widgets/header";
+import NoteList from "@/widgets/note-list";
 
 export default function DocsPage() {
     return (
