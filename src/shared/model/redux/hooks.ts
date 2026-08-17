@@ -1,11 +1,11 @@
-import { useDispatch, useSelector, useStore } from "react-redux";
+import { TypedUseSelectorHook, useDispatch, useSelector, useStore } from "react-redux";
 
 // делаю исключение из правил fsd (кастомные redux хуки нужны везде в проекте, поэтому 
 // выносим их в /shared, но при этом их надо типизировать типами из /app/store)
 import { AppDispatch, AppStore, RootState } from "@/fsd-app/store";
 
-// у useAppDispatch типизация старого формата, потому что withTypes почему-то некорретно 
-// работает для него
+// типизация старого формата, потому что при использовании withTypes при сборке появляется TypeError, 
+// сообщающая, что нет такой функции как withTypes
 export const useAppDispatch: () => AppDispatch = useDispatch;
-export const useAppSelector = useSelector.withTypes<RootState>();
-export const useAppStore = useStore.withTypes<AppStore>();
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+export const useAppStore: () => AppStore = useStore;
