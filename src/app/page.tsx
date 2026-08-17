@@ -1,5 +1,4 @@
-import { WINDOW_CONTROL_BUTTONS_BACKGROUNDS } from "@/shared/data/windowControlButtonsBackgrounds";
-import { Paths } from "@/shared/enums/paths.enum";
+import { PagePaths } from "@/shared/model";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,6 +8,12 @@ export const metadata: Metadata = {
     description: 'Dinopage is a clean and fast note-taking app. Create, organize and search your notes in seconds. Free forever. No clutter — just pure productivity.',
     keywords: ['note taking app', 'online notes', 'free notes app', 'note organizer', 'dinopage', 'notes web app', 'simple notes', 'digital notebook']
 }
+
+export const WINDOW_CONTROL_BUTTONS_BACKGROUNDS: string[] = [
+    'bg-red-500',
+    'bg-yellow-400',
+    'bg-green-500'
+]
 
 export default function HomePage() {
     return (
@@ -23,7 +28,7 @@ export default function HomePage() {
                     <Link 
                         className="p-2 rounded-xl cursor-pointer bg-gray-200
                         border border-solid border-gray-400"
-                        href={Paths.MAIN}
+                        href={PagePaths.MAIN}
                     >
                         <Image 
                             src="/dino.png"
@@ -36,7 +41,7 @@ export default function HomePage() {
                     <Link 
                         className="px-5 py-2 rounded-xl cursor-pointer bg-black 
                         text-white h-full"
-                        href={Paths.DOCS}
+                        href={PagePaths.DOCS}
                     >
                         Open Dinopage
                     </Link>

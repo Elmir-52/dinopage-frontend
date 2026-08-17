@@ -1,10 +1,8 @@
 'use client'
 
-import TipTap from "@/components/TipTap/TipTap";
-import { HttpError } from "@/errors/httpError";
-import { Paths } from "@/shared/enums/paths.enum";
-import { Note } from "@/shared/types/note";
-import { requestToBackend } from "@/utils/requestToBackend";
+import { baseRequest, HttpError } from "@/shared/api";
+import { Note, PagePaths } from "@/shared/model";
+import TipTap from "@/widgets/tip-tap";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -16,13 +14,13 @@ export default function PagesPage() {
     useEffect(() => {
         async function getNote(noteId :string) {
             try {
-                let response = await requestToBackend({
+                let response = await baseRequest({
                     url: `${process.env.NEXT_PUBLIC_API_URL}/notes/${noteId}`,
                     method: 'GET'
                 });
 
                 if (!response.ok) {
-                    router.push(Paths.DOCS);
+                    router.push(PagePaths.DOCS);
                     return;
                 }
 
@@ -31,7 +29,7 @@ export default function PagesPage() {
             } catch(error) {
                 if (error instanceof HttpError) {
                     if (error.status === 401) {
-                        router.push(Paths.LOGIN);
+                        router.push(PagePaths.LOGIN);
                         return;
                     }
                 }

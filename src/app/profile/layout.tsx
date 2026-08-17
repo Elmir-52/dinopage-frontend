@@ -1,4 +1,4 @@
-import Header from '@/components/Header/Header';
+import Header from "@/widgets/header"
 
 export default function ProfileLayout({
     children,

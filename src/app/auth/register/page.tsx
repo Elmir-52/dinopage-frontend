@@ -1,4 +1,4 @@
-import RegistrationSection from "@/components/RegistrationSection/RegistrationSection";
+import RegistrationSection from "@/widgets/registration-section";
 
 export default function RegisterPage() {
     return (
