@@ -3,7 +3,7 @@
 import { Editor, useEditorState } from "@tiptap/react";
 import { useEffect } from "react";
 import { useAppDispatch } from "@/shared/model";
-import { formatStateSelector } from "../../lib/stateSelector/formatStateSelector";
+import { formatStateSelector } from "../../lib/formatStateSelector";
 import NodeControlsTrigger from "../NodeControlsTrigger/NodeControlsTrigger";
 import MarkControls from "../MarkControls/MarkControls";
 import ColorControls from "../ColorControls/ColorControls";

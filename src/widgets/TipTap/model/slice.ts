@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import { formatStateSelector, FormatStateSelector } from "../lib/stateSelector/formatStateSelector";
+import { formatStateSelector, FormatStateSelector } from "../lib/formatStateSelector";
 
 interface SetEditorStateActionPayload {
     editorState: FormatStateSelector;
