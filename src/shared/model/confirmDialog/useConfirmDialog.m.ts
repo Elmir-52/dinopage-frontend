@@ -25,3 +25,5 @@ export function useConfirmDialogModel(
         toggleIsOpen,
     }
 }
+
+export type ConfirmDialogModel = ReturnType<typeof useConfirmDialogModel>;
