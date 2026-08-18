@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import CreateNoteButton from "../CreateNoteButton/CreateNoteButton";
-import { MessageModal, Modal } from "@/shared/ui";
+import { ConfirmDialog, MessageModal } from "@/shared/ui";
 import { useNoteListViewModel } from "../../model/useNoteList.vm";
 
 // NoteCard импортируется динамически без ssr, ибо внутри него есть код создания даты,
@@ -14,7 +14,7 @@ const DynamicNoteCard = dynamic(() => import('../NoteCard/NoteCard'), {
 export default function NoteList() {
     const {
         notes,
-        modal, 
+        confirmDialog, 
         getNotesMessageModal, 
         createNoteMessageModal
     } = useNoteListViewModel();
@@ -28,13 +28,13 @@ export default function NoteList() {
                 })
             }
 
-            <CreateNoteButton onClick={modal.toggleIsModalOpen}></CreateNoteButton>
+            <CreateNoteButton onClick={confirmDialog.toggleIsOpen}></CreateNoteButton>
             
-            <Modal
-                message={modal.modalState.message}
-                isModalOpen={modal.modalState.isOpen}
-                setIsModalOpen={modal.toggleIsModalOpen}
-                onClick={modal.modalState.onClick}
+            <ConfirmDialog
+                message={confirmDialog.confirmDialogState.message}
+                isOpen={confirmDialog.confirmDialogState.isOpen}
+                setIsOpen={confirmDialog.toggleIsOpen}
+                onClick={confirmDialog.confirmDialogState.onClick}
             />
 
             <MessageModal

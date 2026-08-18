@@ -1,25 +1,25 @@
 'use client'
 
-import { ModalOnClick } from "../../model/modal/modal";
+import { ConfirmDialogOnClick } from "../../model/confirmDialog/confirmDialog";
 import { useEffect, useRef } from "react";
 
-interface PropsModal {
+interface ConfirmDialogProps {
     message: string
-    isModalOpen: boolean,
-    setIsModalOpen: (open: boolean) => void,
-    onClick: ModalOnClick;
+    isOpen: boolean,
+    setIsOpen: (open: boolean) => void,
+    onClick: ConfirmDialogOnClick;
 }
 
-export function Modal({ message, isModalOpen, setIsModalOpen, onClick }: PropsModal) {
+export function ConfirmDialog({ message, isOpen, setIsOpen, onClick }: ConfirmDialogProps) {
     const dialog = useRef<HTMLDialogElement>(null);
 
     useEffect(() => {
-        if (isModalOpen) {
+        if (isOpen) {
             dialog.current?.showModal();
         } else {
             dialog.current?.close();
         }
-    }, [isModalOpen]);
+    }, [isOpen]);
 
     return (
         <dialog 
@@ -33,7 +33,7 @@ export function Modal({ message, isModalOpen, setIsModalOpen, onClick }: PropsMo
                 <button 
                     className="w-[50%] text-red-600 text-xl cursor-pointer p-2.5 
                     border-t border-solid border-gray-500 font-semibold" 
-                    onClick={ () => setIsModalOpen(false) }
+                    onClick={ () => setIsOpen(false) }
                 >
                     No
                 </button>
@@ -41,7 +41,7 @@ export function Modal({ message, isModalOpen, setIsModalOpen, onClick }: PropsMo
                 <button 
                     className="w-[50%] text-green-700 text-xl cursor-pointer p-2.5 
                     border-t border-l border-solid border-gray-500 font-semibold" 
-                    onClick={ () => { onClick(); setIsModalOpen(false); }}
+                    onClick={ () => { onClick(); setIsOpen(false); }}
                 >
                     Yes
                 </button>
