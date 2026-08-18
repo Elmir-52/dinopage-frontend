@@ -1,58 +1,23 @@
 'use client'
 
-import { useCurrentEditor } from "@tiptap/react"
-import { useState } from "react";
 import { Save, Trash2 } from "lucide-react";
-import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { PagePaths } from "@/shared/model";
-import { updateNoteRequest } from "../../api/updateNoteRequest";
-import { deleteNoteRequest } from "../../api/deleteNoteRequest";
-import { ErrorDialogState } from "@/shared/model/errorDialog/errorDialog";
+import { ConfirmDialogModel, ErrorDialogModel, PagePaths } from "@/shared/model";
 import { ConfirmDialog, ErrorDialog, Modal } from "@/shared/ui";
 
 interface NoteBarProps {
-    noteTitleInputRef: React.RefObject<HTMLInputElement | null>
+    updateNote: () => Promise<void>;
+    confirmDialog: ConfirmDialogModel;
+    updateNoteErrorDialog: ErrorDialogModel;
+    deleteNoteErrorDialog: ErrorDialogModel;
 }
 
-export default function NoteBar({ noteTitleInputRef }: NoteBarProps) {
-    const { editor } = useCurrentEditor();
-    const { id } = useParams<{ id: string }>();
-    const router = useRouter();
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const [messageModalState, setMessageModalState] = useState<ErrorDialogState>({
-        isOpen: false,
-        message: '',
-    });
-
-    function updateNote() {
-        let noteTitle: string | undefined = noteTitleInputRef.current?.value;
-        const noteContent: string = JSON.stringify(editor?.getJSON());
-
-        updateNoteRequest(
-            id,
-            noteTitle,
-            noteContent,
-            router,
-            setMessageModalState
-        );
-    }
-
-    function deleteNote() {
-        deleteNoteRequest(
-            id,
-            router,
-            setMessageModalState
-        )
-    }
-
-    function toggleIsMessageModalOpen(isOpen: boolean) {
-        setMessageModalState(prev => ({ 
-            ...prev, 
-            isOpen
-        }));
-    }
-
+export default function NoteBar({
+    updateNote,
+    confirmDialog,
+    updateNoteErrorDialog,
+    deleteNoteErrorDialog
+}: NoteBarProps) {
     return (
         <div className='w-70 h-full p-2.5'>
             <div className="flex flex-col items-start gap-2.5">
@@ -77,24 +42,30 @@ export default function NoteBar({ noteTitleInputRef }: NoteBarProps) {
                 <button 
                     className="flex items-center gap-4 w-full rounded-xl px-2.5 py-1.5 
                     text-xl cursor-pointer hover:bg-gray-200"
-                    onClick={() => setIsModalOpen(true)}
+                    onClick={() => confirmDialog.toggleIsOpen(true)}
                 >
                     <Trash2 size={26} color="#ff0000"/>
                     Delete
                 </button>
 
-                <Modal isOpen={isModalOpen}>
+                <Modal isOpen={confirmDialog.confirmDialogState.isOpen}>
                     <ConfirmDialog
-                        message="Do you want to delete your note?" 
-                        setIsOpen={(open: boolean) => setIsModalOpen(open)}
-                        onClick={() => deleteNote()}
+                        {...confirmDialog.confirmDialogState}
+                        setIsOpen={confirmDialog.toggleIsOpen}
                     />
                 </Modal>
 
-                <Modal isOpen={messageModalState.isOpen}>
+                <Modal isOpen={updateNoteErrorDialog.errorDialogState.isOpen}>
                     <ErrorDialog
-                        message={messageModalState.message}
-                        setIsOpen={toggleIsMessageModalOpen}
+                        {...updateNoteErrorDialog.errorDialogState}
+                        setIsOpen={updateNoteErrorDialog.toggleIsOpen}
+                    />
+                </Modal>
+
+                <Modal isOpen={deleteNoteErrorDialog.errorDialogState.isOpen}>
+                    <ErrorDialog
+                        {...deleteNoteErrorDialog.errorDialogState}
+                        setIsOpen={deleteNoteErrorDialog.toggleIsOpen}
                     />
                 </Modal>
             </div>
