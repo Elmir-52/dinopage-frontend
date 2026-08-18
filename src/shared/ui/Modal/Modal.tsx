@@ -1,12 +1,13 @@
 'use client'
 
+import { ModalOnClick } from "../../model/modal/modal";
 import { useEffect, useRef } from "react";
 
 interface PropsModal {
     message: string
     isModalOpen: boolean,
     setIsModalOpen: (open: boolean) => void,
-    onClick: () => void;
+    onClick: ModalOnClick;
 }
 
 export function Modal({ message, isModalOpen, setIsModalOpen, onClick }: PropsModal) {
