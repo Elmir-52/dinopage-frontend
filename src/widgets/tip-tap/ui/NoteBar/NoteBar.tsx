@@ -9,7 +9,7 @@ import { PagePaths } from "@/shared/model";
 import { updateNoteRequest } from "../../api/updateNoteRequest";
 import { deleteNoteRequest } from "../../api/deleteNoteRequest";
 import { ErrorDialogState } from "@/shared/model/errorDialog/errorDialog";
-import { ConfirmDialog, ErrorDialog } from "@/shared/ui";
+import { ConfirmDialog, ErrorDialog, Modal } from "@/shared/ui";
 
 interface NoteBarProps {
     noteTitleInputRef: React.RefObject<HTMLInputElement | null>
@@ -83,18 +83,20 @@ export default function NoteBar({ noteTitleInputRef }: NoteBarProps) {
                     Delete
                 </button>
 
-                <ConfirmDialog
-                    message="Do you want to delete your note?"
-                    isOpen={isModalOpen}    
-                    setIsOpen={(open: boolean) => setIsModalOpen(open)}
-                    onClick={() => deleteNote()}
-                />
+                <Modal isOpen={isModalOpen}>
+                    <ConfirmDialog
+                        message="Do you want to delete your note?" 
+                        setIsOpen={(open: boolean) => setIsModalOpen(open)}
+                        onClick={() => deleteNote()}
+                    />
+                </Modal>
 
-                <ErrorDialog
-                    message={messageModalState.message}
-                    isOpen={messageModalState.isOpen}
-                    setIsOpen={toggleIsMessageModalOpen}
-                />
+                <Modal isOpen={messageModalState.isOpen}>
+                    <ErrorDialog
+                        message={messageModalState.message}
+                        setIsOpen={toggleIsMessageModalOpen}
+                    />
+                </Modal>
             </div>
         </div>
     );
