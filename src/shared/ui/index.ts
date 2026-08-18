@@ -1,2 +1,2 @@
 export { ConfirmDialog } from "./ConfirmDialog/ConfirmDialog";
-export { MessageModal } from "./MessageModal/MessageModal";
+export { ErrorDialog } from "./ErrorDialog/ErrorDialog";

@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import CreateNoteButton from "../CreateNoteButton/CreateNoteButton";
-import { ConfirmDialog, MessageModal } from "@/shared/ui";
+import { ConfirmDialog, ErrorDialog } from "@/shared/ui";
 import { useNoteListViewModel } from "../../model/useNoteList.vm";
 
 // NoteCard импортируется динамически без ssr, ибо внутри него есть код создания даты,
@@ -15,8 +15,8 @@ export default function NoteList() {
     const {
         notes,
         confirmDialog, 
-        getNotesMessageModal, 
-        createNoteMessageModal
+        getNotesErrorDialog, 
+        createNoteErrorDialog
     } = useNoteListViewModel();
         
     return (
@@ -37,18 +37,18 @@ export default function NoteList() {
                 onClick={confirmDialog.confirmDialogState.onClick}
             />
 
-            <MessageModal
-                message={getNotesMessageModal.messageModalState.message}
-                isMessageModalOpen={getNotesMessageModal.messageModalState.isOpen}
-                setIsMessageModalOpen={getNotesMessageModal.toggleIsMessageModalOpen}
-                onClick={getNotesMessageModal.messageModalState.onClick}
+            <ErrorDialog
+                message={getNotesErrorDialog.errorDialogState.message}
+                isOpen={getNotesErrorDialog.errorDialogState.isOpen}
+                setIsOpen={getNotesErrorDialog.toggleIsOpen}
+                onClick={getNotesErrorDialog.errorDialogState.onClick}
             />
 
-            <MessageModal
-                message={createNoteMessageModal.messageModalState.message}
-                isMessageModalOpen={createNoteMessageModal.messageModalState.isOpen}
-                setIsMessageModalOpen={createNoteMessageModal.toggleIsMessageModalOpen}
-                onClick={createNoteMessageModal.messageModalState.onClick}
+            <ErrorDialog
+                message={createNoteErrorDialog.errorDialogState.message}
+                isOpen={createNoteErrorDialog.errorDialogState.isOpen}
+                setIsOpen={createNoteErrorDialog.toggleIsOpen}
+                onClick={createNoteErrorDialog.errorDialogState.onClick}
             />
         </section>
     );

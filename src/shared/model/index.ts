@@ -1,4 +1,4 @@
-export { useMessageModalModel } from "./messageModal/useMessageModal.m";
+export { useErrorDialogModel } from "./errorDialog/useErrorDialog.m";
 export { useConfirmDialogModel } from "./confirmDialog/useConfirmDialog.m";
 export { PagePaths } from "./pagePaths.enum";
 export { useAppDispatch, useAppSelector, useAppStore } from "./redux/hooks";

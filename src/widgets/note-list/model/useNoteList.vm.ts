@@ -1,19 +1,19 @@
 'use client'
 
-import { useConfirmDialogModel, useMessageModalModel } from "@/shared/model";
+import { useConfirmDialogModel, useErrorDialogModel } from "@/shared/model";
 import { useNoteListModel } from "./useNoteList.m";
 
 export function useNoteListViewModel() {
     const { notes, getNotes, handleCreateNote, getNotesError, createNoteError } = useNoteListModel();
     
     const confirmDialog = useConfirmDialogModel('Create new note?', handleCreateNote);
-    const getNotesMessageModal = useMessageModalModel(getNotesError, getNotes);
-    const createNoteMessageModal = useMessageModalModel(createNoteError);
+    const getNotesErrorDialog = useErrorDialogModel(getNotesError, getNotes);
+    const createNoteErrorDialog = useErrorDialogModel(createNoteError);
 
     return {
         notes,
         confirmDialog, 
-        getNotesMessageModal, 
-        createNoteMessageModal,
+        getNotesErrorDialog, 
+        createNoteErrorDialog,
     }
 }

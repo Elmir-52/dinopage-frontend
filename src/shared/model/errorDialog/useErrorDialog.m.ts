@@ -1,13 +1,13 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import { MessageModalOnClick, MessageModalState } from "./messageModal";
+import { ErrorDialogOnClick, ErrorDialogState } from "./errorDialog";
 
-export function useMessageModalModel(
+export function useErrorDialogModel(
     error: Error | undefined,
-    onClick?: MessageModalOnClick
+    onClick?: ErrorDialogOnClick
 ) {
-    const [messageModalState, setMessageModalState] = useState<MessageModalState>({
+    const [errorDialogState, setErrorDialogState] = useState<ErrorDialogState>({
         isOpen: false,
         message: '',
         onClick
@@ -15,7 +15,7 @@ export function useMessageModalModel(
 
     useEffect(() => {
         if (error) {
-            setMessageModalState(prev => ({
+            setErrorDialogState(prev => ({
                 isOpen: true,
                 message: error.message,
                 onClick: prev.onClick
@@ -23,15 +23,15 @@ export function useMessageModalModel(
         }
     }, [error]);
 
-    function toggleIsMessageModalOpen(isOpen: boolean) {
-        setMessageModalState(prev => ({ 
+    function toggleIsOpen(isOpen: boolean) {
+        setErrorDialogState(prev => ({ 
             ...prev, 
             isOpen
         }));
     }
 
     return {
-        messageModalState,
-        toggleIsMessageModalOpen,
+        errorDialogState,
+        toggleIsOpen,
     }
 }

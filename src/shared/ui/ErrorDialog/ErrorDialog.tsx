@@ -1,31 +1,31 @@
 'use client'
 
 
-import { MessageModalOnClick } from "../../model/messageModal/messageModal";
 import { useEffect, useRef } from "react";
+import { ErrorDialogOnClick } from "../../model/errorDialog/errorDialog";
 
-interface MessageModalProps {
+interface ErrorDialogProps {
     message: string
-    isMessageModalOpen: boolean,
-    setIsMessageModalOpen: (open: boolean) => void,
-    onClick?: MessageModalOnClick;
+    isOpen: boolean,
+    setIsOpen: (open: boolean) => void,
+    onClick?: ErrorDialogOnClick;
 }
 
-export function MessageModal({ 
-    message, 
-    isMessageModalOpen, 
-    setIsMessageModalOpen,
+export function ErrorDialog({ 
+    message,
+    isOpen, 
+    setIsOpen,
     onClick
-}: MessageModalProps) {
+}: ErrorDialogProps) {
     const dialog = useRef<HTMLDialogElement>(null);
 
     useEffect(() => {
-        if (isMessageModalOpen) {
+        if (isOpen) {
             dialog.current?.showModal();
         } else {
             dialog.current?.close();
         }
-    }, [isMessageModalOpen]);
+    }, [isOpen]);
 
     return (
         <dialog ref={dialog} className="open:flex flex-col justify-between items-center w-100 
@@ -39,7 +39,7 @@ export function MessageModal({
                     if (onClick) {
                         onClick();
                     }
-                    setIsMessageModalOpen(false);
+                    setIsOpen(false);
                 }}
             >
                 Ok

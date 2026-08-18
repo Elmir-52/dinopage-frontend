@@ -5,10 +5,11 @@ import { useState } from "react";
 import { Save, Trash2 } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { MessageModalState, PagePaths } from "@/shared/model";
+import { PagePaths } from "@/shared/model";
 import { updateNoteRequest } from "../../api/updateNoteRequest";
 import { deleteNoteRequest } from "../../api/deleteNoteRequest";
-import { MessageModal, Modal } from "@/shared/ui";
+import { ErrorDialogState } from "@/shared/model/errorDialog/errorDialog";
+import { ConfirmDialog, ErrorDialog } from "@/shared/ui";
 
 interface NoteBarProps {
     noteTitleInputRef: React.RefObject<HTMLInputElement | null>
@@ -19,7 +20,7 @@ export default function NoteBar({ noteTitleInputRef }: NoteBarProps) {
     const { id } = useParams<{ id: string }>();
     const router = useRouter();
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const [messageModalState, setMessageModalState] = useState<MessageModalState>({
+    const [messageModalState, setMessageModalState] = useState<ErrorDialogState>({
         isOpen: false,
         message: '',
     });
@@ -82,17 +83,17 @@ export default function NoteBar({ noteTitleInputRef }: NoteBarProps) {
                     Delete
                 </button>
 
-                <Modal
+                <ConfirmDialog
                     message="Do you want to delete your note?"
-                    isModalOpen={isModalOpen}    
-                    setIsModalOpen={(open: boolean) => setIsModalOpen(open)}
+                    isOpen={isModalOpen}    
+                    setIsOpen={(open: boolean) => setIsModalOpen(open)}
                     onClick={() => deleteNote()}
                 />
 
-                <MessageModal
+                <ErrorDialog
                     message={messageModalState.message}
-                    isMessageModalOpen={messageModalState.isOpen}
-                    setIsMessageModalOpen={toggleIsMessageModalOpen}
+                    isOpen={messageModalState.isOpen}
+                    setIsOpen={toggleIsMessageModalOpen}
                 />
             </div>
         </div>
