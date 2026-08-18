@@ -37,19 +37,19 @@ export default function NoteList() {
                 />
             </Modal>
 
-            <ErrorDialog
-                message={getNotesErrorDialog.errorDialogState.message}
-                isOpen={getNotesErrorDialog.errorDialogState.isOpen}
-                setIsOpen={getNotesErrorDialog.toggleIsOpen}
-                onClick={getNotesErrorDialog.errorDialogState.onClick}
-            />
+            <Modal isOpen={getNotesErrorDialog.errorDialogState.isOpen}>
+                <ErrorDialog
+                    {...getNotesErrorDialog.errorDialogState}
+                    setIsOpen={getNotesErrorDialog.toggleIsOpen}
+                />
+            </Modal>
 
-            <ErrorDialog
-                message={createNoteErrorDialog.errorDialogState.message}
-                isOpen={createNoteErrorDialog.errorDialogState.isOpen}
-                setIsOpen={createNoteErrorDialog.toggleIsOpen}
-                onClick={createNoteErrorDialog.errorDialogState.onClick}
-            />
+            <Modal isOpen={createNoteErrorDialog.errorDialogState.isOpen}>
+                <ErrorDialog
+                    {...createNoteErrorDialog.errorDialogState}
+                    setIsOpen={createNoteErrorDialog.toggleIsOpen}
+                />
+            </Modal>
         </section>
     );
 }
