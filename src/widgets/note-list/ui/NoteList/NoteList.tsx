@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import CreateNoteButton from "../CreateNoteButton/CreateNoteButton";
-import { ConfirmDialog, ErrorDialog } from "@/shared/ui";
+import { ConfirmDialog, ErrorDialog, Modal } from "@/shared/ui";
 import { useNoteListViewModel } from "../../model/useNoteList.vm";
 
 // NoteCard импортируется динамически без ssr, ибо внутри него есть код создания даты,
@@ -30,12 +30,12 @@ export default function NoteList() {
 
             <CreateNoteButton onClick={confirmDialog.toggleIsOpen}></CreateNoteButton>
             
-            <ConfirmDialog
-                message={confirmDialog.confirmDialogState.message}
-                isOpen={confirmDialog.confirmDialogState.isOpen}
-                setIsOpen={confirmDialog.toggleIsOpen}
-                onClick={confirmDialog.confirmDialogState.onClick}
-            />
+            <Modal isOpen={confirmDialog.confirmDialogState.isOpen}>
+                <ConfirmDialog
+                    {...confirmDialog.confirmDialogState}
+                    setIsOpen={confirmDialog.toggleIsOpen}
+                />
+            </Modal>
 
             <ErrorDialog
                 message={getNotesErrorDialog.errorDialogState.message}

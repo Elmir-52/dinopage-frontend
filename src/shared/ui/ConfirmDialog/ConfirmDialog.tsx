@@ -1,31 +1,18 @@
 'use client'
 
 import { ConfirmDialogOnClick } from "../../model/confirmDialog/confirmDialog";
-import { useEffect, useRef } from "react";
 
 interface ConfirmDialogProps {
     message: string
-    isOpen: boolean,
     setIsOpen: (open: boolean) => void,
     onClick: ConfirmDialogOnClick;
 }
 
-export function ConfirmDialog({ message, isOpen, setIsOpen, onClick }: ConfirmDialogProps) {
-    const dialog = useRef<HTMLDialogElement>(null);
-
-    useEffect(() => {
-        if (isOpen) {
-            dialog.current?.showModal();
-        } else {
-            dialog.current?.close();
-        }
-    }, [isOpen]);
-
+export function ConfirmDialog({ message, setIsOpen, onClick }: ConfirmDialogProps) {
     return (
-        <dialog 
-            ref={dialog} 
-            className="open:flex flex-col justify-between items-center w-80 m-auto pt-7.5 rounded-3xl 
-            bg-white/10 backdrop-blur-md shadow-2xl"
+        <div
+            className="flex flex-col justify-between items-center w-80 m-auto pt-7.5
+            bg-white/20 backdrop-blur-md"
         >
             <p className="w-[80%] text-center text-2xl mb-7.5">{message}</p>
             
@@ -46,6 +33,6 @@ export function ConfirmDialog({ message, isOpen, setIsOpen, onClick }: ConfirmDi
                     Yes
                 </button>
             </div>
-        </dialog>
+        </div>
     );
 }
