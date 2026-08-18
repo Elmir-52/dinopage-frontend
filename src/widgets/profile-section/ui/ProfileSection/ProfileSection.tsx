@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { baseRequest, HttpError } from "@/shared/api";
-import {  PagePaths, User } from "@/shared/model";
+import { PagePaths, User } from "@/shared/model";
 import { ErrorDialogState } from "@/shared/model/errorDialog/errorDialog";
-import { ConfirmDialog, ErrorDialog } from "@/shared/ui";
+import { ConfirmDialog, ErrorDialog, Modal } from "@/shared/ui";
 
 export default function ProfileSection() {
     const router = useRouter();
@@ -103,19 +103,21 @@ export default function ProfileSection() {
                 Delete profile
             </button>
 
-            <ConfirmDialog
-                message="Do you want to delete your profile?"
-                isOpen={isModalOpen}
-                setIsOpen={(open: boolean) => setIsModalOpen(open)}
-                onClick={() => deleteUser()}
-            />
+            <Modal isOpen={isModalOpen}>
+                <ConfirmDialog
+                    message="Do you want to delete your profile?"
+                    setIsOpen={(open: boolean) => setIsModalOpen(open)}
+                    onClick={() => deleteUser()}
+                />
+            </Modal>
 
-            <ErrorDialog
-                message={messageModalState.message}
-                isOpen={messageModalState.isOpen}
-                setIsOpen={toggleIsMessageModalOpen}
-                onClick={messageModalState.onClick}
-            />
+            <Modal isOpen={messageModalState.isOpen}>
+                <ErrorDialog
+                    message={messageModalState.message}
+                    setIsOpen={toggleIsMessageModalOpen}
+                    onClick={messageModalState.onClick}
+                />
+            </Modal>
         </section>
     );
 }
