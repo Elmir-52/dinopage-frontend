@@ -1,4 +1,5 @@
 export { useErrorDialogModel } from "./errorDialog/useErrorDialog.m";
+export type { ErrorDialogModel } from "./errorDialog/useErrorDialog.m";
 export { useConfirmDialogModel } from "./confirmDialog/useConfirmDialog.m";
 export type { ConfirmDialogModel } from "./confirmDialog/useConfirmDialog.m";
 export { PagePaths } from "./pagePaths.enum";

@@ -35,3 +35,5 @@ export function useErrorDialogModel(
         toggleIsOpen,
     }
 }
+
+export type ErrorDialogModel = ReturnType<typeof useErrorDialogModel>;
