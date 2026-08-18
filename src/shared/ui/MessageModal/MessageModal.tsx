@@ -1,7 +1,7 @@
 'use client'
 
 
-import { MessageModalOnClick } from "../../model/messageModal";
+import { MessageModalOnClick } from "../../model/messageModal/messageModal";
 import { useEffect, useRef } from "react";
 
 interface MessageModalProps {
