@@ -1,7 +1,7 @@
 import { Editor } from "@tiptap/react";
-import { FormatStateSelector } from "../../lib/formatStateSelector";
+import { FormatStateSelector } from "../../lib/bubbleToolbar/formatStateSelector";
 import { useState } from "react";
-import { createNodeControlsArray, NodeControl } from "../../lib/nodeControls";
+import { createNodeControlsArray, NodeControl } from "../../lib/bubbleToolbar/nodeControls";
 import { safePolygon, useFloating, useHover, useInteractions } from "@floating-ui/react";
 import { flip, shift } from "@floating-ui/dom";
 

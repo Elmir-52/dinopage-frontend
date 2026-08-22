@@ -1,6 +1,6 @@
 'use client'
 
-import { ColorControl } from "../../lib/colorControls";
+import { ColorControl } from "../../lib/bubbleToolbar/colorControls";
 
 interface ColorControlsProps {
     colorControls: ColorControl[]

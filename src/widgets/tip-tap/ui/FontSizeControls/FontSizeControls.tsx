@@ -1,6 +1,6 @@
 'use client'
 
-import { FONT_SIZE_CONTROLS } from "../../lib/fontSizeControls";
+import { FONT_SIZE_CONTROLS } from "../../lib/bubbleToolbar/fontSizeControls";
 import { ChangeFontSize, SetCurrentFontSize } from "../../model/bubbleToolbar/useFontSizeControls.m";
 
 

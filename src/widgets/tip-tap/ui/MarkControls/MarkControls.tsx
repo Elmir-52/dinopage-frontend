@@ -1,6 +1,6 @@
 'use client'
 
-import { MarkControl } from "../../lib/markControls";
+import { MarkControl } from "../../lib/bubbleToolbar/markControls";
 
 interface MarkControlsProps {
     markControls: MarkControl[]
