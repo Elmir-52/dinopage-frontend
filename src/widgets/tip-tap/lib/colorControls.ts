@@ -1,43 +1,68 @@
-interface ColorControl { 
-    text: string;
-    textColor: string;
+import { Editor } from "@tiptap/react";
+
+interface Color {
+    colorName: string;
+    hexColor: string;
 }
 
-export const COLOR_CONTROLS: ColorControl[] = [
+export interface ColorControl { 
+    title: string;
+    hexColor: string;
+    onClick: () => void;
+}
+
+const COLORS: Color[] = [
     {
-        text: 'Red',
-        textColor: '#ff0000',
+        colorName: 'Red',
+        hexColor: '#ff0000',
     },
     {
-        text: 'Blue',
-        textColor: '#0000ff',
+        colorName: 'Blue',
+        hexColor: '#0000ff',
     },
     {
-        text: 'Green',
-        textColor: '#00aa00',
+        colorName: 'Green',
+        hexColor: '#00aa00',
     },
     {
-        text: 'Yellow',
-        textColor: "#FFCC00",
+        colorName: 'Yellow',
+        hexColor: "#FFCC00",
     },
     {
-        text: 'Brown',
-        textColor: '#964B00',
+        colorName: 'Brown',
+        hexColor: '#964B00',
     },
     {
-        text: 'Gray',
-        textColor: '#8E8E93',
+        colorName: 'Gray',
+        hexColor: '#8E8E93',
     },
     {
-        text: 'Orange',
-        textColor: '#FF8D28',
+        colorName: 'Orange',
+        hexColor: '#FF8D28',
     },
     {
-        text: 'Purple',
-        textColor: '#CB30E0',
+        colorName: 'Purple',
+        hexColor: '#CB30E0',
     },
     {
-        text: 'Pink',
-        textColor: '#FFC0CB',
-    },
-];
+        colorName: 'Pink',
+        hexColor: '#FFC0CB',
+    }
+]
+
+export function createColorControls(editor: Editor): ColorControl[] {
+    return [
+        {
+            title: "Default color",
+            hexColor: '#000000',
+            onClick: () => editor?.chain().focus().unsetColor().run()
+        },
+        ...COLORS.map(color => {
+            return {
+                title: color.colorName,
+                hexColor: color.hexColor,
+                onClick() { editor?.chain().focus().setColor(this.hexColor).run() }
+            }
+        })
+    ]
+};

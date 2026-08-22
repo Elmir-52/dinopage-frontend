@@ -1,33 +1,33 @@
 export interface FontSizeControl {
-    value: string,
+    fontSize: string,
 }
 
 export const FONT_SIZE_CONTROLS: FontSizeControl[] = [
     {
-        value: '10',
+        fontSize: '10',
     },
     {
-        value: '11',
+        fontSize: '11',
     },
     {
-        value: '12',
+        fontSize: '12',
     },
     {
-        value: '14',
+        fontSize: '14',
     },
     {
-        value: '16',
+        fontSize: '16',
     },
     {
-        value: '18',
+        fontSize: '18',
     },
     {
-        value: '20',
+        fontSize: '20',
     },
     {
-        value: '24',
+        fontSize: '24',
     },
     {
-        value: '30',
+        fontSize: '30',
     },
 ];
