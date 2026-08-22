@@ -1,40 +1,20 @@
 'use client'
 
 import { ChevronRight } from "lucide-react";
-import { useMemo, useState } from "react";
-import { flip, safePolygon, shift, useFloating, useHover, useInteractions } from "@floating-ui/react";
-import { useCurrentEditor } from "@tiptap/react";
-import { useAppSelector } from "@/shared/model";
 import NodeControls from "../NodeControls/NodeControls";
-import { createNodeControlsArray, NodeControl } from "../../lib/nodeControls";
+import { NodeControlsModel } from "../../model/bubbleToolbar/useNodeControls.m";
 
-export default function NodeControlsTrigger() {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
-    const { editor } = useCurrentEditor();
-    const editorState = useAppSelector(state => state.editorStateReducer.editorState);
-    
-    const nodeControls: NodeControl[] = useMemo(() => {
-        return createNodeControlsArray(editor, editorState);
-    }, [editorState]);
-    
-    const activeButton: NodeControl | undefined = nodeControls.find(nodeControl => nodeControl.isActive);
-    
-    const { refs, floatingStyles, context } = useFloating({
-        placement: 'right',
-        open: isOpen,
-        onOpenChange: setIsOpen,
-        middleware: [
-            shift(),
-            flip()
-        ]
-    });
-    
-    const hover = useHover(context, {
-        handleClose: safePolygon()
-    });
-    
-    const { getReferenceProps, getFloatingProps } = useInteractions([hover]);
-    
+type NodeControlsTriggerProps = NodeControlsModel
+
+export default function NodeControlsTrigger({
+    isNodeControlsFloatingOpen,
+    nodeControls,
+    activeButton,
+    refs,
+    floatingStyles,
+    getReferenceProps,
+    getFloatingProps
+}: NodeControlsTriggerProps) {
     return (
         <>
             <button 
@@ -49,7 +29,7 @@ export default function NodeControlsTrigger() {
                 <ChevronRight />
             </button>
 
-            {isOpen && (
+            {isNodeControlsFloatingOpen && (
                 <NodeControls
                     ref={refs.setFloating}
                     style={floatingStyles}
