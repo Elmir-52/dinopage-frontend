@@ -1,7 +1,7 @@
 import { UseFormRegister } from "react-hook-form";
-import { IForm } from "../Form/Form";
 import { useId, useState } from "react";
 import { PasswordEyeButton } from "../PasswordEyeButton/PasswordEyeButton";
+import { IForm } from "../../model/useForm.m";
 
 interface PasswordFieldProps {
     register: UseFormRegister<IForm>;

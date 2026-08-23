@@ -1,6 +1,6 @@
 import { UseFormRegister } from "react-hook-form";
-import { IForm } from "../Form/Form";
 import { useId } from "react";
+import { IForm } from "../../model/useForm.m";
 
 interface EmailFieldProps {
     register: UseFormRegister<IForm>;

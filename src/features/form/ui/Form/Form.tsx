@@ -1,18 +1,11 @@
 'use client'
 
-import { useEffect } from "react";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import { HttpError } from "@/shared/api";
-import { UserFormData, UserFormDataSchema } from "../../model/userFormData";
+import { UserFormData } from "../../model/userFormData";
 import { EmailField } from "../EmailField/EmailField";
 import { PasswordField } from "../PasswordField/PasswordField";
 import { SubmitButton } from "../SubmitButton/SubmitButton";
 import { RootErrorLabel } from "../RootErrorLabel/RootErrorLabel";
-
-export interface IForm {
-    email: string;
-    password: string;
-}
+import { useFormViewModel } from "../../model/useForm.vm";
 
 interface FormProps {
     submitButtonContent: string;
@@ -20,39 +13,14 @@ interface FormProps {
 }
 
 export default function Form({ submitButtonContent, submitFunction }: FormProps) {
-    const { register, handleSubmit, formState, watch, setError, clearErrors } = useForm<IForm>({
-        mode: 'onChange',
-    });
-
-    const rootError = formState.errors.root?.message
-    const emailError = formState.errors.email?.message;
-    const passwordError = formState.errors.password?.message;
-    
-    const emailWatch = watch('email');
-    const passwordWatch = watch('password');
-    
-    useEffect(() => {
-        if (rootError) {
-            clearErrors('root');
-        }
-    }, [ emailWatch, passwordWatch ]);
-    
-    const onSubmit: SubmitHandler<IForm> = async (data) => {
-        const result = UserFormDataSchema.safeParse(data);
-        
-        if (result.error) {
-            setError('root', { type: 'manual', message: 'Invalid data' });
-            return;
-        }
-
-        try {
-            await submitFunction(result.data);
-        } catch(error) {
-            if (error instanceof Error || error instanceof HttpError) {
-                setError('root', { type: 'manual', message: error.message });
-            }
-        }
-    }
+    const {
+        register,
+        handleSubmit,
+        onSubmit,
+        rootError,
+        emailError,
+        passwordError,
+    } = useFormViewModel(submitFunction);
 
     return (
         <form 
