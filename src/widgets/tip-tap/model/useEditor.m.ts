@@ -6,7 +6,7 @@ import { CustomHeading } from "../lib/tiptapExtensions/custom-heading";
 import Code from "@tiptap/extension-code";
 import { Note } from "@/shared/model";
 
-export function useEditorModel(note: Note) {
+export function useEditorModel(note: Note | undefined) {
     const noteTitleInputRef = useRef<HTMLInputElement | null>(null);
 
     const editor = useEditor({
@@ -29,15 +29,15 @@ export function useEditorModel(note: Note) {
                 class: 'bg-white w-full min-h-full px-15 py-3 pb-50 focus:outline-0'
             },
         },
-        content: note.content ? JSON.parse(note.content) : '',
         immediatelyRender: false,
-    });
+        content: note?.content ? JSON.parse(note.content) : '',
+    }, [note]);
 
     useEffect(() => {
         if (noteTitleInputRef.current) {
-            noteTitleInputRef.current.value = note.title;
+            noteTitleInputRef.current.value = note?.title ?? '';
         }
-    }, []);
+    }, [note]);
 
     return {
         editor,

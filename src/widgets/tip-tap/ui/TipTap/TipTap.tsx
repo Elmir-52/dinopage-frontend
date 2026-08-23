@@ -5,24 +5,22 @@ import { BubbleMenu } from "@tiptap/react/menus";
 import { useMemo } from "react";
 import NoteBar from "../NoteBar/NoteBar";
 import BubbleToolbar from "../BubbleToolbar/BubbleToolbar";
-import { Note } from "@/shared/model";
 import { useTipTapViewModel } from "../../model/useTipTap.vm";
 
-interface TipTapProps {
-    note: Note
-}
-
-export default function TipTap({ note }: TipTapProps) {
+export default function TipTap() {
     const {
+        note,
         editor,
         noteTitleInputRef,
         updateNote,
         confirmDialog,
         updateNoteErrorDialog,
         deleteNoteErrorDialog
-    } = useTipTapViewModel(note);
+    } = useTipTapViewModel();
 
     const providerValue = useMemo(() => ({ editor }), [editor]);
+
+    if (!note) return <p>Loading...</p>;
 
     return (
         <EditorContext.Provider value={providerValue}>

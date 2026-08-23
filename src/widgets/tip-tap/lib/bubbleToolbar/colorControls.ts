@@ -61,7 +61,7 @@ export function createColorControls(editor: Editor): ColorControl[] {
             return {
                 title: color.colorName,
                 hexColor: color.hexColor,
-                onClick() { editor?.chain().focus().setColor(this.hexColor).run() }
+                onClick: () => editor?.chain().focus().setColor(color.hexColor).run()
             }
         })
     ]

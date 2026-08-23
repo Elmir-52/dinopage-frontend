@@ -7,6 +7,8 @@ interface ColorControlsProps {
 }
 
 export default function ColorControls({ colorControls }: ColorControlsProps) {
+    console.log(colorControls);
+
     return(
         <div className="w-full grid grid-cols-5 items-center justify-between gap-1.5">
             {

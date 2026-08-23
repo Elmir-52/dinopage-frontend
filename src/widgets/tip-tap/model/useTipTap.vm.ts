@@ -1,9 +1,13 @@
-import { Note, useConfirmDialogModel, useErrorDialogModel } from "@/shared/model";
+import { useConfirmDialogModel, useErrorDialogModel } from "@/shared/model";
 import { useEditorModel } from "./useEditor.m";
 import { useNoteBarModel } from "./useNoteBar.m";
+import { useGetNoteDataModel } from "./useGetNoteData.m";
 
-export function useTipTapViewModel(note: Note) {
+export function useTipTapViewModel() {
+    const { note } = useGetNoteDataModel();
+
     const { editor, noteTitleInputRef } = useEditorModel(note);
+
     const { 
         updateNote, 
         deleteNote, 
@@ -16,6 +20,7 @@ export function useTipTapViewModel(note: Note) {
     const deleteNoteErrorDialog = useErrorDialogModel(deleteNoteError);
 
     return {
+        note,
         editor,
         noteTitleInputRef,
         updateNote,
