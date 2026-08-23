@@ -1,12 +1,13 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import Image from "next/image";
 import { HttpError } from "@/shared/api";
 import { UserFormData, UserFormDataSchema } from "../../model/userFormData";
+import { EmailField } from "../EmailField/EmailField";
+import { PasswordField } from "../PasswordField/PasswordField";
 
-interface IForm {
+export interface IForm {
     email: string;
     password: string;
 }
@@ -17,8 +18,6 @@ interface FormProps {
 }
 
 export default function Form({ buttonText, submitFunction }: FormProps) {
-    const [showPassword, setShowPassword] = useState<boolean>(false);
-
     const { register, handleSubmit, formState, watch, setError, clearErrors } = useForm<IForm>({
         mode: 'onChange',
     });
@@ -66,73 +65,15 @@ export default function Form({ buttonText, submitFunction }: FormProps) {
                 </label>
             } 
 
-            <div className="w-[90%] h-12 relative">
-                {emailError && 
-                    <label 
-                        className="text-xs absolute top-12.5 text-red-600" 
-                        htmlFor="email"
-                    >
-                        {emailError}
-                    </label>
-                }
+            <EmailField
+                register={register}
+                emailError={emailError}
+            />
 
-                <input 
-                    className={emailError ? 
-                        'w-full h-full text-2xl px-2 border-b-2 border-solid border-red-600 focus:outline-0 focus:border-blue-600' :
-                        'w-full h-full text-2xl px-2 border-b-2 border-solid border-gray-500 focus:outline-0 focus:border-blue-600'
-                    }
-                    type="email" 
-                    placeholder='email' 
-                    autoComplete="email"
-                    {...register('email', {
-                        required: 'This field is required',
-                        pattern: {
-                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                            message: "Invalid email"
-                        }
-                    })}
-                />
-            </div>
-
-            <div className="w-[90%] h-12 relative">
-                {passwordError && 
-                    <label 
-                        className="text-xs absolute top-12.5 text-red-600" 
-                        htmlFor="email"
-                    >
-                        {passwordError}
-                    </label>
-                }
-
-                <input
-                    className={passwordError ? 
-                        'w-full h-full text-2xl px-2 border-b-2 border-solid border-red-600 focus:outline-0 focus:border-blue-600' :
-                        'w-full h-full text-2xl px-2 border-b-2 border-solid border-gray-500 focus:outline-0 focus:border-blue-600'
-                    }
-                    type={showPassword ? 'text' : 'password'} 
-                    placeholder='password' 
-                    autoComplete="current-password"
-                    {...register('password', {
-                        required: 'This field is required',
-                        pattern: {
-                            value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/,
-                            message: "Password must be at least 8 characters, including uppercase, lowercase, a number and special character"
-                        }
-                    })}
-                />
-                <button 
-                    className="w-8 cursor-pointer absolute top-3 right-3"
-                    type="button"
-                    onClick={() => setShowPassword(prev => !prev)} 
-                >
-                    <Image
-                        width={32}
-                        height={32}
-                        src={showPassword ? '/openeye.svg' : '/closeeye.svg'} 
-                        alt="Иконка глаза"
-                    />
-                </button>
-            </div>
+            <PasswordField
+                register={register}
+                passwordError={passwordError}
+            />
         
             <button 
                 className="mt-6.5 px-12.5 py-3 rounded-xl cursor-pointer text-xl 
