@@ -1,5 +1,8 @@
+export { useErrorDialogModel } from "./errorDialog/useErrorDialog.m";
+export type { ErrorDialogModel } from "./errorDialog/useErrorDialog.m";
+export { useConfirmDialogModel } from "./confirmDialog/useConfirmDialog.m";
+export type { ConfirmDialogModel } from "./confirmDialog/useConfirmDialog.m";
 export { PagePaths } from "./pagePaths.enum";
 export { useAppDispatch, useAppSelector, useAppStore } from "./redux/hooks";
-export type { MessageModalState } from './messageModal';
 export type { User } from './user';
-export type { Note, CreateNote } from '../../shared/model/note'
+export type { Note } from '../../shared/model/note';

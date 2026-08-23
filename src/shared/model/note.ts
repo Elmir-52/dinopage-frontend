@@ -6,9 +6,3 @@ export interface Note {
     updatedAt: string;
     color: string;
 }
-
-export interface CreateNote {
-    title: string;
-    content: string;
-    color: string;
-}

@@ -1,7 +1,7 @@
 'use client'
 
 import { type CSSProperties, type HTMLProps } from "react";
-import { NodeControl } from "../../lib/nodeControls";
+import { NodeControl } from "../../lib/bubbleToolbar/nodeControls";
 
 interface NodeControlsProps {
     ref: (node: HTMLElement | null) => void;

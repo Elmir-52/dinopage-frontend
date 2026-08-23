@@ -1,2 +1,3 @@
 export { Modal } from "./Modal/Modal";
-export { MessageModal } from "./MessageModal/MessageModal";
+export { ConfirmDialog } from "./ConfirmDialog/ConfirmDialog";
+export { ErrorDialog } from "./ErrorDialog/ErrorDialog";

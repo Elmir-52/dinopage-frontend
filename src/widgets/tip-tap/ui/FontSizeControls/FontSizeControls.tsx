@@ -1,43 +1,20 @@
 'use client'
 
-import { useCurrentEditor } from "@tiptap/react";
-import { useEffect, useState } from "react";
-import { FONT_SIZE_CONTROLS } from "../../lib/fontSizeControls";
+import { FONT_SIZE_CONTROLS } from "../../lib/bubbleToolbar/fontSizeControls";
+import { ChangeFontSize, SetCurrentFontSize } from "../../model/bubbleToolbar/useFontSizeControls.m";
 
-type ChangeFontSizeEvent = React.FocusEvent<HTMLInputElement, Element> | React.ChangeEvent<HTMLSelectElement>;
 
-export default function FontSizeControls() {
-    const { editor } = useCurrentEditor();
-    
-    const [currentFontSize, setCurrentFontSize] = useState<string | undefined>();
+interface FontSizeControlsProps {
+    currentFontSize: string | undefined,
+    setCurrentFontSize: SetCurrentFontSize,
+    changeFontSize: ChangeFontSize
+}
 
-    useEffect(() => {
-        function handleSelection() {
-            const fontSize = editor?.getAttributes('textStyle').fontSize;
-            if (!fontSize) {
-                setCurrentFontSize('16');
-                return;
-            }
-            setCurrentFontSize(fontSize?.slice(0, -2));
-        }
-
-        editor?.on('selectionUpdate', handleSelection);
-        
-        return () => {
-            editor?.off('selectionUpdate', handleSelection);
-        }
-    }, [editor]);
-
-    function changeFontSize(event: ChangeFontSizeEvent) {
-        // если user решил поставить выделенному тексту 16px то у него просто 
-        // уберётся font-size inline-style, так как 16px это дефолтный размер текста
-        if (event.target.value === '16') {
-            editor?.chain().focus().unsetFontSize().run();
-        } else {
-            editor?.chain().focus().setFontSize(`${event.target.value}px`).run();
-        }
-    }
-
+export default function FontSizeControls({
+    currentFontSize,
+    setCurrentFontSize,
+    changeFontSize
+}: FontSizeControlsProps) {
     return (
         <div className="flex items-center gap-2">
             <input 
@@ -49,27 +26,27 @@ export default function FontSizeControls() {
             />
             
             <select 
-                onChange={e => { 
+                onChange={e => {
                     changeFontSize(e);
-                    setCurrentFontSize(e.target.value);
+                    setCurrentFontSize(e.target.value)
                 }}
             >
                 {
-                    FONT_SIZE_CONTROLS.map((el) => {
-                        if (currentFontSize === el.value) {
+                    FONT_SIZE_CONTROLS.map((fontSizeControl) => {
+                        if (currentFontSize === fontSizeControl.fontSize) {
                             return <option 
-                                key={el.value} 
-                                value={el.value}
+                                key={fontSizeControl.fontSize} 
+                                value={fontSizeControl.fontSize}
                                 selected
                             >
-                                {el.value}
+                                {fontSizeControl.fontSize}
                             </option>
                         } else {
                             return <option 
-                                key={el.value} 
-                                value={el.value}
+                                key={fontSizeControl.fontSize} 
+                                value={fontSizeControl.fontSize}
                             >
-                                {el.value}
+                                {fontSizeControl.fontSize}
                             </option>
                         }
                     })

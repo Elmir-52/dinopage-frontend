@@ -4,5 +4,4 @@ export const enum PagePaths {
     REGISTER = '/auth/register',
     PROFILE = '/profile',
     DOCS = '/docs',
-    PAGES = '/docs/pages'
 }
