@@ -1,89 +1,16 @@
 'use client'
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { baseRequest, HttpError } from "@/shared/api";
-import { PagePaths, User } from "@/shared/model";
-import { ErrorDialogState } from "@/shared/model/errorDialog/errorDialog";
 import { ConfirmDialog, ErrorDialog, Modal } from "@/shared/ui";
+import { useProfileViewModel } from "../../model/useProfile.vm";
 
 export default function ProfileSection() {
-    const router = useRouter();
-    const [loading, setLoading] = useState<boolean>(true);
-    const [user, setUser] = useState<User>();
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const [messageModalState, setMessageModalState] = useState<ErrorDialogState>({
-        isOpen: false,
-        message: '',
-    });
-
-    useEffect(() => {
-        async function getUserData() {
-            try {
-                let response = await baseRequest({
-                    url: `${process.env.NEXT_PUBLIC_API_URL}/users/me`,
-                    method: 'GET'
-                });
-
-                if (!response.ok) throw new Error();
-
-                const data: User = await response.json();
-                setUser(data);
-            } catch(error) {
-                if (error instanceof HttpError) {
-                    if (error.status === 401) {
-                        router.push(PagePaths.LOGIN);
-                        return;
-                    }
-                }
-
-                setMessageModalState({
-                    isOpen: true,
-                    message: "Something went wrong, please try again later",
-                    onClick: () => router.push(PagePaths.DOCS)
-                });
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        getUserData();
-    }, []);
-
-    async function deleteUser() {
-        try {
-            let response = await baseRequest({
-                url: `${process.env.NEXT_PUBLIC_API_URL}/users/me`,
-                method: 'DELETE'
-            });
-
-            if (!response.ok) throw new Error();
-
-            router.push(PagePaths.LOGIN);
-        } catch(error) {
-            if (error instanceof HttpError) {
-                if (error.status === 401) {
-                    setMessageModalState({
-                        isOpen: true,
-                        message: "Unauthorized: the profile hasn't been deleted",
-                        onClick: () => router.push(PagePaths.LOGIN)
-                    });
-                    return;
-                }
-            }
-            setMessageModalState({
-                isOpen: true,
-                message: "The profile hasn't been delete, please try again later"
-            });
-        }
-    }
-
-    function toggleIsMessageModalOpen(isOpen: boolean) {
-        setMessageModalState(prev => ({ 
-            ...prev,
-            isOpen
-        }));
-    }
+    const {
+        user,
+        loading,
+        deleteUserConfirmDialogModel,
+        getUserDataErrorDialogModel,
+        deleteUserErrorDialogModel
+    } = useProfileViewModel();
 
     if (loading) return(
         <section className="flex flex-col items-center gap-16 w-[90%] m-auto my-32">
@@ -98,24 +25,29 @@ export default function ProfileSection() {
 
             <button 
                 className="text-red-600 underline text-xl cursor-pointer" 
-                onClick={() => setIsModalOpen(true)}
+                onClick={() => deleteUserConfirmDialogModel.toggleIsOpen(true)}
             >
                 Delete profile
             </button>
 
-            <Modal isOpen={isModalOpen}>
+            <Modal isOpen={deleteUserConfirmDialogModel.confirmDialogState.isOpen}>
                 <ConfirmDialog
-                    message="Do you want to delete your profile?"
-                    setIsOpen={(open: boolean) => setIsModalOpen(open)}
-                    onClick={() => deleteUser()}
+                    {...deleteUserConfirmDialogModel.confirmDialogState}
+                    setIsOpen={deleteUserConfirmDialogModel.toggleIsOpen}
                 />
             </Modal>
 
-            <Modal isOpen={messageModalState.isOpen}>
+            <Modal isOpen={getUserDataErrorDialogModel.errorDialogState.isOpen}>
                 <ErrorDialog
-                    message={messageModalState.message}
-                    setIsOpen={toggleIsMessageModalOpen}
-                    onClick={messageModalState.onClick}
+                    {...getUserDataErrorDialogModel.errorDialogState}
+                    setIsOpen={getUserDataErrorDialogModel.toggleIsOpen}
+                />
+            </Modal>
+
+            <Modal isOpen={deleteUserErrorDialogModel.errorDialogState.isOpen}>
+                <ErrorDialog
+                    {...deleteUserErrorDialogModel.errorDialogState}
+                    setIsOpen={deleteUserErrorDialogModel.toggleIsOpen}
                 />
             </Modal>
         </section>
