@@ -7,6 +7,7 @@ import { UserFormData, UserFormDataSchema } from "../../model/userFormData";
 import { EmailField } from "../EmailField/EmailField";
 import { PasswordField } from "../PasswordField/PasswordField";
 import { SubmitButton } from "../SubmitButton/SubmitButton";
+import { RootErrorLabel } from "../RootErrorLabel/RootErrorLabel";
 
 export interface IForm {
     email: string;
@@ -59,12 +60,7 @@ export default function Form({ submitButtonContent, submitFunction }: FormProps)
             rounded-2xl relative md:w-[70%] lg:w-[50%]" 
             onSubmit={handleSubmit(onSubmit)}
         >
-            {rootError && <label 
-                    className="text-xs absolute top-2.5 text-red-600"
-                >
-                    {rootError}
-                </label>
-            } 
+            <RootErrorLabel rootError={rootError}/>
 
             <EmailField
                 register={register}
