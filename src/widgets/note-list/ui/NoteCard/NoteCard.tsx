@@ -15,7 +15,7 @@ export default function NoteCard({ content }: PropsButtonNote) {
 
     return(
         <Link 
-            href={`${PagePaths.PAGES}/${content.noteId}`}
+            href={`${PagePaths.DOCS}/${content.noteId}`}
             prefetch={false}
             className='flex flex-col justify-between items-center w-full h-45 p-2 cursor-pointer 
             rounded-2xl shadow-xl bg-white transition-transform hover:scale-104'
