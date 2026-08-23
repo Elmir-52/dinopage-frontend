@@ -16,7 +16,7 @@ export default function RegistrationSection() {
     return (
         <section className="flex flex-col items-center gap-8">
             <h3 className="text-5xl font-medium mb-4">Registration</h3>
-            <Form buttonText="Register" submitFunction={register} />
+            <Form submitButtonContent="Register" submitFunction={register} />
         </section>
     )
 }

@@ -6,6 +6,7 @@ import { HttpError } from "@/shared/api";
 import { UserFormData, UserFormDataSchema } from "../../model/userFormData";
 import { EmailField } from "../EmailField/EmailField";
 import { PasswordField } from "../PasswordField/PasswordField";
+import { SubmitButton } from "../SubmitButton/SubmitButton";
 
 export interface IForm {
     email: string;
@@ -13,11 +14,11 @@ export interface IForm {
 }
 
 interface FormProps {
-    buttonText: string;
+    submitButtonContent: string;
     submitFunction: (user: UserFormData) => Promise<void>;
 }
 
-export default function Form({ buttonText, submitFunction }: FormProps) {
+export default function Form({ submitButtonContent, submitFunction }: FormProps) {
     const { register, handleSubmit, formState, watch, setError, clearErrors } = useForm<IForm>({
         mode: 'onChange',
     });
@@ -75,12 +76,9 @@ export default function Form({ buttonText, submitFunction }: FormProps) {
                 passwordError={passwordError}
             />
         
-            <button 
-                className="mt-6.5 px-12.5 py-3 rounded-xl cursor-pointer text-xl 
-                bg-black text-white"
-            >
-                {buttonText}
-            </button>
+            <SubmitButton>
+                {submitButtonContent}
+            </SubmitButton>
         </form>
     );
 }

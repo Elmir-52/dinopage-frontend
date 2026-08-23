@@ -17,7 +17,7 @@ export default function LoginSection() {
     return (
         <section className="flex flex-col items-center gap-8">
             <h3 className="text-5xl font-medium mb-4">Login</h3>
-            <Form buttonText='Log in' submitFunction={login} />
+            <Form submitButtonContent='Log in' submitFunction={login} />
             
             <Link
                 href={PagePaths.REGISTER}
