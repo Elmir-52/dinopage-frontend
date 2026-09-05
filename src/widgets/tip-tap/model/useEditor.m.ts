@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import { CustomHeading } from "../lib/tiptapExtensions/custom-heading";
 import Code from "@tiptap/extension-code";
 import { Note } from "@/shared/model";
+import { TabExtension } from "../lib/tiptapExtensions/tab-extension";
 
 export function useEditorModel(note: Note | undefined) {
     const noteTitleInputRef = useRef<HTMLInputElement | null>(null);
@@ -23,6 +24,7 @@ export function useEditorModel(note: Note | undefined) {
                     class: 'bg-gray-200 px-2 py-[1px] border-solid border-black rounded-md text-red-600',
                 },
             }),
+            TabExtension
         ],
         editorProps: {
             attributes: {
